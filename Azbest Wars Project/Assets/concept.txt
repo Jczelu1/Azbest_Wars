@@ -1,0 +1,21 @@
+Azbest Wars
+Simple RTS Game
+simple pacman style pixel graphics
+medival theme
+3-5 maps
+story: there are two kingdoms fighting for azbest for no reason, in the end everyone dies from lung related diesease
+3-5 levels + tutorial
+the map is a grid (probably 256x256)
+player plays against ai
+player controls individual units or creates formations
+player can order units and formations to move, rush, attack, defend, retreat
+scale 1: individual units are visible
+scale 2: whole map is visible, only formations are on the map
+resources can be found on the map
+buildings produce units for resources
+multiple unit types:
+
+
+Use unity DOTS for high performance
+Optimize pathfinding
+
