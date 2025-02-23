@@ -4,22 +4,23 @@ using Unity.Mathematics;
 using Unity.Jobs;
 using Unity.Burst;
 using System.Runtime.InteropServices;
+using Unity.VisualScripting;
 
 
-public class Pathfinder : MonoBehaviour
+public class Pathfinder
 {
     const int STRAIGHT_COST = 5;
     const int DIAGONAL_COST = 7;
 
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            float startTime = Time.realtimeSinceStartup;
-            //FindPath(new int2(0, 0), new int2(456, 500), new int2(512, 512));
-            Debug.Log("Time:" + ((Time.realtimeSinceStartup - startTime)));
-        }
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetMouseButtonDown(0))
+    //    {
+    //        float startTime = Time.realtimeSinceStartup;
+    //        //FindPath(new int2(0, 0), new int2(456, 500), new int2(512, 512));
+    //        Debug.Log("Time:" + ((Time.realtimeSinceStartup - startTime)));
+    //    }
+    //}
     public NativeList<int2> FindPath(int2 start, int2 end, int2 gridSize, NativeArray<bool> walls)
     {
         NativeList<int2> path = new NativeList<int2>(Allocator.TempJob);
