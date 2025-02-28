@@ -20,8 +20,6 @@ public class MainGridScript : MonoBehaviour
     [SerializeField]
     private Tilemap Walls;
 
-    public Pathfinder MainPathfinder;
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -30,15 +28,13 @@ public class MainGridScript : MonoBehaviour
             return;
         }
         Instance = this;
+        MainGrid = new Grid<MainGridCell>(Width, Height, CellSize, GridOrigin);
+        InitGrid();
         DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
-        MainGrid = new Grid<MainGridCell>(Width, Height, CellSize, GridOrigin);
-        InitGrid();
-        MainPathfinder = new Pathfinder();
-
         BoundsInt gridBounds = new BoundsInt();
         gridBounds.xMin = Mathf.FloorToInt(GridOrigin.x);
         gridBounds.yMin = Mathf.FloorToInt(GridOrigin.y);
@@ -52,7 +48,6 @@ public class MainGridScript : MonoBehaviour
 
     private void Update()
     {
-        Clicked = false;
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 mousePos = Utils.GetMouseWorldPosition();
@@ -77,7 +72,7 @@ public class MainGridScript : MonoBehaviour
     private FlatGrid<bool> GetTilesOnTilemap(BoundsInt bounds)
     {
         FlatGrid<bool> spots = new FlatGrid<bool>(bounds.size.x, bounds.size.y);
-        Debug.Log("Bounds:" + bounds);
+        //Debug.Log("Bounds:" + bounds);
 
         for (int x = 0; x < bounds.size.x; x++)
         {

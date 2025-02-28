@@ -8,6 +8,7 @@ using Unity.Transforms;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
+[UpdateInGroup(typeof(TickSystemGroup))]
 public partial struct MoveSystem : ISystem
 {
     private BufferLookup<PathNode> _bufferLookup;
@@ -76,7 +77,7 @@ public partial struct MoveJob : IJobEntity
 
             transform.Position = new float3(targetPosition.x, targetPosition.y, transform.Position.z);
             gridPosition.Position = pathBuffer[pathData.PathIndex].PathPos;
-            Debug.Log(pathData.PathIndex);
+            //Debug.Log(pathData.PathIndex);
             pathData.PathIndex++;
         }
     }
@@ -98,7 +99,7 @@ public partial struct PathfindJob : IJobEntity
         for (int i = path.Length - 1; i > -1; i--)
         {
             pathBuffer.Add(new PathNode { PathPos = path[i] });
-            Debug.Log(path[i]);
+            //Debug.Log(path[i]);
         }
         pathData.PathIndex = 0;
         path.Dispose();
