@@ -9,7 +9,7 @@ public partial struct DefaultSystem : ISystem
     {
         //state.RequireForUpdate<Data>();
     }
-    public void OnUpdate()
+    public void OnUpdate(ref SystemState state)
     {
 
     }

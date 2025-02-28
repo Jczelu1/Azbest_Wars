@@ -59,7 +59,7 @@ public class PathfinderTester : MonoBehaviour
             int2 startPos = GetXY(Guy.transform.position);
             //Debug.Log(x2 + " " + y2);
             float startTime = Time.realtimeSinceStartup;
-            Path = _Pathfinder.FindPath(startPos, endPos, new int2(width, height), isWalkable);
+            //Path = _Pathfinder.FindPath(startPos, endPos, new int2(width, height), isWalkable);
             Debug.Log("Time:" + (Time.realtimeSinceStartup - startTime) * 1000);
             if (isWalking)
             {
