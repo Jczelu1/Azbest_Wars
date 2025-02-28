@@ -94,6 +94,11 @@ public partial struct PathfindJob : IJobEntity
         DynamicBuffer<PathNode> pathBuffer = pathLookup[entity];
 
         NativeList<int2> path = Pathfinder.FindPath(gridPosition.Position, destination, gridSize, walls);
+        //if(path.Length == 0)
+        //{
+        //    path.Dispose();
+        //    return;
+        //}
         pathBuffer.Clear();
         pathBuffer.Capacity = path.Length;
         for (int i = path.Length - 1; i > -1; i--)

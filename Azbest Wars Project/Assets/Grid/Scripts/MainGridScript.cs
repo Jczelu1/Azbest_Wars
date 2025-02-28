@@ -42,7 +42,7 @@ public class MainGridScript : MonoBehaviour
         gridBounds.yMax = gridBounds.yMin + Height;
 
         IsWalkable = GetTilesOnTilemap(gridBounds);
-        MainGrid.ShowDebugtext();
+        //MainGrid.ShowDebugtext();
         MainGrid.ShowDebugLines();
     }
 
@@ -71,7 +71,7 @@ public class MainGridScript : MonoBehaviour
 
     private FlatGrid<bool> GetTilesOnTilemap(BoundsInt bounds)
     {
-        FlatGrid<bool> spots = new FlatGrid<bool>(bounds.size.x, bounds.size.y);
+        FlatGrid<bool> spots = new FlatGrid<bool>(bounds.size.x, bounds.size.y, Allocator.Persistent);
         //Debug.Log("Bounds:" + bounds);
 
         for (int x = 0; x < bounds.size.x; x++)

@@ -8,11 +8,11 @@ public struct FlatGrid<T> where T : struct
     public int Height;
     public NativeArray<T> GridArray;
 
-    public FlatGrid(int width, int height)
+    public FlatGrid(int width, int height, Allocator allocator)
     {
         Width = width;
         Height = height;
-        GridArray = new NativeArray<T>(width*height, Allocator.Persistent);
+        GridArray = new NativeArray<T>(width*height, allocator);
     }
     public int GetIndex(int2 pos)
     {
