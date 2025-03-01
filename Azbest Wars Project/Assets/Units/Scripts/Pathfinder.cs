@@ -14,7 +14,7 @@ public class Pathfinder
     const int STRAIGHT_COST = 5;
     const int DIAGONAL_COST = 7;
 
-    //[BurstCompile]
+    [BurstCompile]
     public static NativeList<int2> FindPath(int2 start, int2 end, int2 gridSize, NativeArray<bool> isWalkable)
     {
         NativeList<int2> path = new NativeList<int2>(Allocator.TempJob);

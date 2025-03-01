@@ -6,7 +6,6 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 [UpdateInGroup(typeof(TickSystemGroup))]
 public partial struct MoveSystem : ISystem
@@ -54,7 +53,7 @@ public partial struct MoveSystem : ISystem
 }
 
 
-//[BurstCompile]
+[BurstCompile]
 public partial struct MoveJob : IJobEntity
 {
     [ReadOnly] public BufferLookup<PathNode> pathLookup;
@@ -82,7 +81,7 @@ public partial struct MoveJob : IJobEntity
         }
     }
 }
-//[BurstCompile]
+[BurstCompile]
 public partial struct PathfindJob : IJobEntity
 {
     public BufferLookup<PathNode> pathLookup;
