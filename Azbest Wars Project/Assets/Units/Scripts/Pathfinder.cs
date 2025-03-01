@@ -14,6 +14,13 @@ public struct Pathfinder
 {
     const int STRAIGHT_COST = 5;
     const int DIAGONAL_COST = 7;
+    private static readonly int2[] directions = new int2[8]
+    {
+        new int2(0, 1),   new int2(0, -1),
+        new int2(-1, 0),  new int2(1, 0),
+        new int2(-1, 1),  new int2(1, 1),
+        new int2(-1, -1), new int2(1, -1)
+    };
 
     [BurstCompile]
     public static void FindPath(int2 start, int2 end, int2 gridSize, NativeArray<bool> isWalkable, ref NativeList<int2> path)
@@ -42,24 +49,11 @@ public struct Pathfinder
         }
 
 
-        NativeArray<int2> directions = new NativeArray<int2>(8, Allocator.Temp);
-
-        directions[0] = new int2(0, 1);  // Top
-        directions[1] = new int2(0, -1); // Bottom
-        directions[2] = new int2(-1, 0); // Left
-        directions[3] = new int2(1, 0);  // Right
-        directions[4] = new int2(-1, 1); // Top-Left Diagonal
-        directions[5] = new int2(1, 1);  // Top-Right Diagonal
-        directions[6] = new int2(-1, -1); // Bottom-Left Diagonal
-        directions[7] = new int2(1, -1); // Bottom-Right Diagonal
-
-
 
         PathNode startNode = pathNodeArray[GetIndex(start, gridSize.x)];
         PathNode endNode = pathNodeArray[GetIndex(end, gridSize.x)];
         if (!endNode.isWalkable)
         {
-            directions.Dispose();
             pathNodeArray.Dispose();
             path = new NativeList<int2>(Allocator.Temp);
             return;
@@ -70,7 +64,8 @@ public struct Pathfinder
         pathNodeArray[GetIndex(start, gridSize.x)] = startNode;
 
         NativeList<int> openList = new NativeList<int>(Allocator.Temp);
-        NativeList<int> closedList = new NativeList<int>(Allocator.Temp);
+        NativeArray<bool> closedSet = new NativeArray<bool>(gridSize.x * gridSize.y, Allocator.Temp, NativeArrayOptions.ClearMemory);
+
 
         openList.Add(startNode.index);
 
@@ -94,7 +89,7 @@ public struct Pathfinder
                     break;
                 }
             }
-            closedList.Add(currentIndex);
+            closedSet[currentIndex] = true;
             //set value on array because value type
             PathNode currentNode = pathNodeArray[currentIndex];
             for (int i = 0; i < directions.Length; i++)
@@ -109,7 +104,7 @@ public struct Pathfinder
                 }
 
                 int neighbourIndex = GetIndex(neighbourPosition, gridSize.x);
-                if (closedList.Contains(neighbourIndex))
+                if (closedSet[neighbourIndex])
                 {
                     //already searched
                     continue;
@@ -137,9 +132,8 @@ public struct Pathfinder
         }
 
         openList.Dispose();
-        closedList.Dispose();
+        closedSet.Dispose();
         pathNodeArray.Dispose();
-        directions.Dispose();
         return;
     }
     private static int GetIndex(int2 pos, int width)
