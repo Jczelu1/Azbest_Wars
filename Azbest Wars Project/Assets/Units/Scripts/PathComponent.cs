@@ -15,8 +15,8 @@ public class PathAuthoring : MonoBehaviour
         }
     }
 }
-
-[InternalBufferCapacity(0)]
+//change later
+[InternalBufferCapacity(100)]
 public struct PathNode : IBufferElementData
 {
     public int2 PathPos;

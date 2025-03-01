@@ -7,23 +7,25 @@ using System.Runtime.InteropServices;
 using Unity.VisualScripting;
 using NUnit;
 using System.IO;
+using System;
 
-
-public class Pathfinder
+[BurstCompile]
+public struct Pathfinder
 {
     const int STRAIGHT_COST = 5;
     const int DIAGONAL_COST = 7;
 
     [BurstCompile]
-    public static NativeList<int2> FindPath(int2 start, int2 end, int2 gridSize, NativeArray<bool> isWalkable)
+    public static void FindPath(int2 start, int2 end, int2 gridSize, NativeArray<bool> isWalkable, ref NativeList<int2> path)
     {
-        NativeList<int2> path = new NativeList<int2>(Allocator.TempJob);
+
         NativeArray<PathNode> pathNodeArray = new NativeArray<PathNode>(gridSize.x * gridSize.y, Allocator.Temp);
 
         for (int x = 0; x < gridSize.x; x++)
         {
             for (int y = 0; y < gridSize.y; y++)
             {
+                
                 PathNode node = new PathNode();
                 node.x = x;
                 node.y = y;
@@ -60,6 +62,7 @@ public class Pathfinder
             directions.Dispose();
             pathNodeArray.Dispose();
             path = new NativeList<int2>(Allocator.Temp);
+            return;
         }
         startNode.gCost = 0;
         startNode.CalculateFCost();
@@ -137,7 +140,7 @@ public class Pathfinder
         closedList.Dispose();
         pathNodeArray.Dispose();
         directions.Dispose();
-        return path;
+        return;
     }
     private static int GetIndex(int2 pos, int width)
     {

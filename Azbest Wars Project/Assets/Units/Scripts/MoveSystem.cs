@@ -1,8 +1,11 @@
 using System;
+using System.Diagnostics;
 using System.Linq;
 using Unity.Burst;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Entities;
+using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
@@ -31,6 +34,8 @@ public partial struct MoveSystem : ISystem
         _bufferLookup.Update(ref state);
         if (MainGridScript.Instance.Clicked)
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
             PathfindJob pathfindJob = new PathfindJob()
             {
                 pathLookup = _bufferLookup,
@@ -38,7 +43,13 @@ public partial struct MoveSystem : ISystem
                 gridSize = new int2(MainGridScript.Instance.Width, MainGridScript.Instance.Height),
                 walls = MainGridScript.Instance.IsWalkable.GridArray
             };
-            state.Dependency = pathfindJob.Schedule(state.Dependency);
+            JobHandle pathJobHandle = pathfindJob.Schedule(state.Dependency);
+            pathJobHandle.Complete(); // Ensure the job is finished before measuring time
+
+            stopwatch.Stop();
+            UnityEngine.Debug.Log($"Pathfinding took {stopwatch.Elapsed}");
+
+            state.Dependency = pathJobHandle;
         }
 
         // Schedule the job across all matching entities
@@ -48,7 +59,7 @@ public partial struct MoveSystem : ISystem
             gridOrigin = MainGridScript.Instance.GridOrigin,
             cellSize = MainGridScript.Instance.CellSize
         };
-        state.Dependency = moveJob.Schedule(state.Dependency);
+        state.Dependency = moveJob.ScheduleParallel(state.Dependency);
     }
 }
 
@@ -56,7 +67,8 @@ public partial struct MoveSystem : ISystem
 [BurstCompile]
 public partial struct MoveJob : IJobEntity
 {
-    [ReadOnly] public BufferLookup<PathNode> pathLookup;
+    [ReadOnly]
+    public BufferLookup<PathNode> pathLookup;
     public float2 gridOrigin;
     public float cellSize;
 
@@ -90,16 +102,18 @@ public partial struct PathfindJob : IJobEntity
     public NativeArray<bool> walls;
     public void Execute(Entity entity, ref PathData pathData, ref GridPosition gridPosition)
     {
+        if (!pathLookup.HasBuffer(entity))
+            return;
         DynamicBuffer<PathNode> pathBuffer = pathLookup[entity];
-
-        NativeList<int2> path = Pathfinder.FindPath(gridPosition.Position, destination, gridSize, walls);
+        
+        NativeList<int2> path = new NativeList<int2>(Allocator.TempJob);
+        Pathfinder.FindPath(gridPosition.Position, destination, gridSize, walls, ref path);
         //if(path.Length == 0)
         //{
         //    path.Dispose();
         //    return;
         //}
         pathBuffer.Clear();
-        pathBuffer.Capacity = path.Length;
         for (int i = path.Length - 1; i > -1; i--)
         {
             pathBuffer.Add(new PathNode { PathPos = path[i] });
