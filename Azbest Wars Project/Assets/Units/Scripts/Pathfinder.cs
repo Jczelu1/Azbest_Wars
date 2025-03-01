@@ -38,8 +38,7 @@ public struct Pathfinder
                 //node.index = GetIndex(new int2(x, y), gridSize.x);
 
                 node.gCost = int.MaxValue;
-                node.hCost = GetDistanceCost(new int2(x, y), end);
-                node.CalculateFCost();
+                node.fCost = int.MaxValue;
                 node.previousNodeIndex = -1;
 
                 pathNodeArray[nodeIndex] = node;
@@ -58,7 +57,7 @@ public struct Pathfinder
             return;
         }
         startNode.gCost = 0;
-        startNode.CalculateFCost();
+        startNode.fCost = GetDistanceCost(start, end);
         //set value on array because value type
         pathNodeArray[startIndex] = startNode;
 
@@ -121,8 +120,7 @@ public struct Pathfinder
                 {
                     neighbourNode.previousNodeIndex = currentIndex;
                     neighbourNode.gCost = tentativeGCost;
-                    neighbourNode.hCost = GetDistanceCost(neighbourPosition, end);
-                    neighbourNode.CalculateFCost();
+                    neighbourNode.fCost = tentativeGCost+GetDistanceCost(neighbourPosition, end);
                     pathNodeArray[neighbourIndex] = neighbourNode;
 
                     if (!openList.Contains(neighbourIndex)) openList.Add(neighbourIndex);
@@ -199,13 +197,7 @@ public struct Pathfinder
     private struct PathNode
     {
         public int gCost;
-        public int hCost;
         public int fCost;
         public int previousNodeIndex;
-
-        public void CalculateFCost()
-        {
-            fCost = gCost + hCost;
-        }
     }
 }
