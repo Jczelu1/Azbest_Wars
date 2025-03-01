@@ -101813,8 +101813,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48695336797c9c34687f135c80887f72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Width: 16
-  Height: 16
+  Width: 256
+  Height: 256
   CellSize: 1
   GridOrigin: {x: 0.5, y: 0.5}
   ClickPosition:

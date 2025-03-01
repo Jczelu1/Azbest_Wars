@@ -61,15 +61,14 @@ public struct Pathfinder
         //set value on array because value type
         pathNodeArray[startIndex] = startNode;
 
-        NativeList<int> openList = new NativeList<int>(Allocator.Temp);
         NativeArray<bool> closedSet = new NativeArray<bool>(gridSize.x * gridSize.y, Allocator.Temp, NativeArrayOptions.ClearMemory);
+        MinHeap openList = new MinHeap(gridSize.x * gridSize.y, Allocator.Temp);
 
-
-        openList.Add(startIndex);
+        openList.Insert(startIndex, startNode.fCost);
 
         while (openList.Length > 0)
         {
-            int currentIndex = GetLowestFCostNodeIndex(openList, pathNodeArray);
+            int currentIndex = openList.ExtractMin();
 
 
             if (currentIndex == GetIndex(end, gridSize.x))
@@ -77,15 +76,6 @@ public struct Pathfinder
                 //end
                 path.AddRange(GetPath(pathNodeArray, endIndex, gridSize.x).AsArray());
                 break;
-            }
-
-            for (int i = 0; i < openList.Length; i++)
-            {
-                if (openList[i] == currentIndex)
-                {
-                    openList.RemoveAtSwapBack(i);
-                    break;
-                }
             }
             closedSet[currentIndex] = true;
             //set value on array because value type
@@ -122,8 +112,7 @@ public struct Pathfinder
                     neighbourNode.gCost = tentativeGCost;
                     neighbourNode.fCost = tentativeGCost+GetDistanceCost(neighbourPosition, end);
                     pathNodeArray[neighbourIndex] = neighbourNode;
-
-                    if (!openList.Contains(neighbourIndex)) openList.Add(neighbourIndex);
+                    openList.Insert(neighbourIndex, neighbourNode.fCost);
                 }
             }
         }
@@ -148,21 +137,21 @@ public struct Pathfinder
         int remaining = math.abs(xDistance - yDistance);
         return DIAGONAL_COST * math.min(xDistance, yDistance) + STRAIGHT_COST * remaining;
     }
-    private static int GetLowestFCostNodeIndex(NativeList<int> openList, NativeArray<PathNode> pathNodeArray)
-    {
-        int lowestIndex = openList[0];
-        PathNode lowestNode = pathNodeArray[lowestIndex];
-        for (int i = 1; i < openList.Length; i++)
-        {
-            PathNode checkNode = pathNodeArray[openList[i]];
-            if (checkNode.fCost < lowestNode.fCost)
-            {
-                lowestNode = checkNode;
-                lowestIndex = openList[i];
-            }
-        }
-        return lowestIndex;
-    }
+    //private static int GetLowestFCostNodeIndex(NativeList<int> openList, NativeArray<PathNode> pathNodeArray)
+    //{
+    //    int lowestIndex = openList[0];
+    //    PathNode lowestNode = pathNodeArray[lowestIndex];
+    //    for (int i = 1; i < openList.Length; i++)
+    //    {
+    //        PathNode checkNode = pathNodeArray[openList[i]];
+    //        if (checkNode.fCost < lowestNode.fCost)
+    //        {
+    //            lowestNode = checkNode;
+    //            lowestIndex = openList[i];
+    //        }
+    //    }
+    //    return lowestIndex;
+    //}
     private static bool IsInGrid(int2 pos, int2 gridSize)
     {
         return
