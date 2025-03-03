@@ -20,6 +20,10 @@ public partial struct MoveSystem : ISystem
         // Ensure system only updates if these components exist
         state.RequireForUpdate<PathData>();
         state.RequireForUpdate<LocalTransform>();
+        EntityQuery query = SystemAPI.QueryBuilder()
+            .WithAll<PathData, LocalTransform>()
+            .Build();
+        state.RequireForUpdate(query);
 
         // Initialize BufferLookup
         _bufferLookup = state.GetBufferLookup<PathNode>(false); // not Read-only

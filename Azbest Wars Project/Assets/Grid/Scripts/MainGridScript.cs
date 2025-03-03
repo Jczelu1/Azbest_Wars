@@ -14,7 +14,9 @@ public class MainGridScript : MonoBehaviour
     public float CellSize;
     public Vector2 GridOrigin;
     public FlatGrid<bool> IsWalkable;
+    [HideInInspector]
     public int2 ClickPosition;
+    [HideInInspector]
     public bool Clicked = false;
 
     [SerializeField]
