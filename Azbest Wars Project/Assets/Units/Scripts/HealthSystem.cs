@@ -21,18 +21,18 @@ public partial struct HealthSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
-        var ecb = new EntityCommandBuffer(Allocator.TempJob).AsParallelWriter();
+        //var ecb = new EntityCommandBuffer(Allocator.TempJob).AsParallelWriter();
 
-        var job = new UpdateHealthBarJob
-        {
-            ECB = ecb,
-            //HealthbarTagLookup = state.GetComponentLookup<HealthbarTag>(true),
-        };
+        //var job = new UpdateHealthBarJob
+        //{
+        //    ECB = ecb,
+        //    //HealthbarTagLookup = state.GetComponentLookup<HealthbarTag>(true),
+        //};
 
-        state.Dependency = job.ScheduleParallel(state.Dependency);
+        //state.Dependency = job.ScheduleParallel(state.Dependency);
 
-        state.Dependency.Complete(); // Ensure all changes are applied
-        new EntityCommandBuffer(Allocator.TempJob).Playback(state.EntityManager);
+        //state.Dependency.Complete(); // Ensure all changes are applied
+        //new EntityCommandBuffer(Allocator.TempJob).Playback(state.EntityManager);
     }
 
     [BurstCompile]
