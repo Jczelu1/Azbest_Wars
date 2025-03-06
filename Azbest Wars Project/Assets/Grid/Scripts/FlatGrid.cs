@@ -1,7 +1,10 @@
+using Unity.Burst;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Mathematics;
 using UnityEngine;
 
+[BurstCompile]
 public struct FlatGrid<T> where T : struct
 {
     public int Width;
@@ -12,7 +15,7 @@ public struct FlatGrid<T> where T : struct
     {
         Width = width;
         Height = height;
-        GridArray = new NativeArray<T>(width*height, allocator);
+        GridArray = new NativeArray<T>(width*height, allocator, NativeArrayOptions.ClearMemory);
     }
     public int GetIndex(int2 pos)
     {
@@ -26,5 +29,21 @@ public struct FlatGrid<T> where T : struct
     public void SetValue(int2 pos, T val)
     {
         GridArray[GetIndex(pos)] = val;
+    }
+    //unsafe my ass
+    unsafe public ref T GetRef(int index)
+    {
+        void* ptr = NativeArrayUnsafeUtility.GetUnsafePtr(GridArray);
+        return ref UnsafeUtility.ArrayElementAsRef<T>(ptr, index);
+    }
+    public T this[int2 key]
+    {
+        get => GetValue(key);
+        set => SetValue(key, value);
+    }
+    public T this[int key]
+    {
+        get => GridArray[key];
+        set => GridArray[key] = value;
     }
 }

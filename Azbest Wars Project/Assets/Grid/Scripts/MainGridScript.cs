@@ -14,6 +14,7 @@ public class MainGridScript : MonoBehaviour
     public float CellSize;
     public Vector2 GridOrigin;
     public FlatGrid<bool> IsWalkable;
+    public FlatGrid<int> Occupied;
     [HideInInspector]
     public int2 ClickPosition;
     [HideInInspector]
@@ -44,6 +45,7 @@ public class MainGridScript : MonoBehaviour
         gridBounds.yMax = gridBounds.yMin + Height;
 
         IsWalkable = GetTilesOnTilemap(gridBounds);
+        Occupied = new FlatGrid<int>(Width, Height, Allocator.Persistent);
         //MainGrid.ShowDebugtext();
         MainGrid.ShowDebugLines();
     }

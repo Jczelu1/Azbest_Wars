@@ -1,9 +1,9 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using Unity.Burst;
 using Unity.Collections;
-using Unity.Collections.LowLevel.Unsafe;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
@@ -68,12 +68,25 @@ public partial struct MoveSystem : ISystem
         {
             pathLookup = _bufferLookup,
             gridOrigin = MainGridScript.Instance.GridOrigin,
-            cellSize = MainGridScript.Instance.CellSize
+            cellSize = MainGridScript.Instance.CellSize,
+            occupied = MainGridScript.Instance.Occupied
         };
-        state.Dependency = moveJob.ScheduleParallel(state.Dependency);
+        state.Dependency = moveJob.Schedule(state.Dependency);
     }
+    void InitializeOccupiedGrid(EntityQuery entityQuery, ref FlatGrid<int> occupied)
+    {
+        var entities = entityQuery.ToEntityArray(Allocator.Temp);
+        var gridPositions = entityQuery.ToComponentDataArray<GridPosition>(Allocator.Temp);
 
+        for (int i = 0; i < entities.Length; i++)
+        {
+            int index = occupied.GetIndex(gridPositions[i].Position);
+            occupied.SetValue(index, 1);
+        }
 
+        entities.Dispose();
+        gridPositions.Dispose();
+    }
 }
 
 
@@ -84,7 +97,9 @@ public partial struct MoveJob : IJobEntity
     public BufferLookup<PathNode> pathLookup;
     public float2 gridOrigin;
     public float cellSize;
-
+    //this will cause bugs
+    [NativeDisableParallelForRestriction]
+    public FlatGrid<int> occupied;
     public void Execute(Entity entity, ref PathData pathData, ref LocalTransform transform, ref GridPosition gridPosition)
     {
         if (!pathLookup.HasBuffer(entity))
@@ -94,15 +109,31 @@ public partial struct MoveJob : IJobEntity
 
         if (pathData.PathIndex >= 0 && pathData.PathIndex < pathBuffer.Length)
         {
-            float2 targetPosition = new float2(
-                gridOrigin.x + cellSize * pathBuffer[pathData.PathIndex].PathPos.x,
-                gridOrigin.y + cellSize * pathBuffer[pathData.PathIndex].PathPos.y
-            );
+            int2 targetCell = pathBuffer[pathData.PathIndex].PathPos;
+            int targetIndex = occupied.GetIndex(targetCell);
+            ref int cellRef = ref occupied.GetRef(targetIndex);
+            //UnityEngine.Debug.Log(cellRef);
 
-            transform.Position = new float3(targetPosition.x, targetPosition.y, transform.Position.z);
-            gridPosition.Position = pathBuffer[pathData.PathIndex].PathPos;
-            //Debug.Log(pathData.PathIndex);
-            pathData.PathIndex++;
+            //atomic exchange for thread safety
+            if (Interlocked.CompareExchange(ref cellRef, 1, 0) == 0)
+            {
+                float2 targetPosition = new float2(
+                    gridOrigin.x + cellSize * pathBuffer[pathData.PathIndex].PathPos.x,
+                    gridOrigin.y + cellSize * pathBuffer[pathData.PathIndex].PathPos.y
+                );
+                transform.Position = new float3(targetPosition.x, targetPosition.y, transform.Position.z);
+                int oldIndex = occupied.GetIndex(gridPosition.Position);
+                ref int oldCellRef = ref occupied.GetRef(oldIndex);
+                //use atomic exchange because why not
+                Interlocked.Exchange(ref oldCellRef, 0);
+                gridPosition.Position = pathBuffer[pathData.PathIndex].PathPos;
+                //Debug.Log(pathData.PathIndex);
+                pathData.PathIndex++;
+            }
+        }
+        else
+        {
+            occupied.SetValue(gridPosition.Position, 1);
         }
     }
 }
@@ -127,7 +158,7 @@ public partial struct PathfindJob : IJobEntity
         ecb.AddBuffer<PathNode>(sortKey, entity);
 
         // Append the new path nodes in reverse order.
-        for (int i = path.Length - 1; i >= 0; i--)
+        for (int i = path.Length - 2; i >= 0; i--)
         {
             ecb.AppendToBuffer<PathNode>(sortKey, entity, new PathNode { PathPos = path[i] });
         }
