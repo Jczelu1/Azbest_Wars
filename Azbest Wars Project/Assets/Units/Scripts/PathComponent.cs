@@ -11,7 +11,7 @@ public class PathAuthoring : MonoBehaviour
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
             AddBuffer<PathNode>(entity);
-            AddComponent(entity, new PathData { PathIndex = 0 });
+            AddComponent(entity, new PathData { PathIndex = 0, Stuck = 0, Destination = new int2(-1,-1) });
         }
     }
 }
@@ -25,4 +25,8 @@ public struct PathNode : IBufferElementData
 public struct PathData : IComponentData
 {
     public int PathIndex;
+
+    //0 - not stuck, 1 - stuck, 2 - stuck but no other path (there is nothing we can do)
+    public byte Stuck;
+    public int2 Destination;
 }

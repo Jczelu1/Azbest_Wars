@@ -13,7 +13,7 @@ public class MainGridScript : MonoBehaviour
     public int Height;
     public float CellSize;
     public Vector2 GridOrigin;
-    public FlatGrid<bool> IsWalkable;
+    //-2 wall, -1 empty, 0+ unit
     public FlatGrid<int> Occupied;
     [HideInInspector]
     public int2 ClickPosition;
@@ -44,8 +44,8 @@ public class MainGridScript : MonoBehaviour
         gridBounds.xMax = gridBounds.xMin + Width;
         gridBounds.yMax = gridBounds.yMin + Height;
 
-        IsWalkable = GetTilesOnTilemap(gridBounds);
         Occupied = new FlatGrid<int>(Width, Height, Allocator.Persistent);
+        GetTilesOnTilemap(gridBounds, ref Occupied);
         //MainGrid.ShowDebugtext();
         MainGrid.ShowDebugLines();
     }
@@ -61,6 +61,10 @@ public class MainGridScript : MonoBehaviour
             Clicked = true;
         }
     }
+    private void OnDestroy()
+    {
+        Occupied.GridArray.Dispose();
+    }
 
     private void InitGrid()
     {
@@ -73,9 +77,9 @@ public class MainGridScript : MonoBehaviour
         }
     }
 
-    private FlatGrid<bool> GetTilesOnTilemap(BoundsInt bounds)
+    private void GetTilesOnTilemap(BoundsInt bounds, ref FlatGrid<int> occupied)
     {
-        FlatGrid<bool> spots = new FlatGrid<bool>(bounds.size.x, bounds.size.y, Allocator.Persistent);
+        //FlatGrid<bool> spots = new FlatGrid<bool>(bounds.size.x, bounds.size.y, Allocator.Persistent);
         //Debug.Log("Bounds:" + bounds);
 
         for (int x = 0; x < bounds.size.x; x++)
@@ -86,16 +90,15 @@ public class MainGridScript : MonoBehaviour
 
                 if (Walls.HasTile(new Vector3Int(tilePos.x, tilePos.y, 0)))
                 {
-                    spots.SetValue(tilePos, false);
+                    occupied.SetValue(tilePos, -2);
                     MainGrid.GetValue(tilePos).IsWalkable = false;
                 }
                 else
                 {
-                    spots.SetValue(tilePos, true);
+                    occupied.SetValue(tilePos, -1);
                     MainGrid.GetValue(tilePos).IsWalkable = true;
                 }
             }
         }
-        return spots;
     }
 }

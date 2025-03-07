@@ -23,7 +23,7 @@ public struct Pathfinder
     };
 
     [BurstCompile]
-    public static void FindPath(in int2 start, in int2 end, in int2 gridSize, in NativeArray<bool> isWalkable, ref NativeList<int2> path)
+    public static void FindPath(in int2 start, in int2 end, in int2 gridSize, in NativeArray<int> occupied, bool ignoreUnits,  ref NativeList<int2> path)
     {
         NativeArray<PathNode> pathNodeArray = new NativeArray<PathNode>(gridSize.x * gridSize.y, Allocator.Temp);
 
@@ -50,7 +50,7 @@ public struct Pathfinder
         PathNode startNode = pathNodeArray[startIndex];
         int endIndex = GetIndex(end, gridSize.x);
         PathNode endNode = pathNodeArray[endIndex];
-        if (!isWalkable[endIndex])
+        if (occupied[endIndex]==-2)
         {
             pathNodeArray.Dispose();
             path = new NativeList<int2>(Allocator.Temp);
@@ -100,9 +100,14 @@ public struct Pathfinder
                 }
 
                 PathNode neighbourNode = pathNodeArray[neighbourIndex];
-                if (!isWalkable[neighbourIndex])
+                if (occupied[neighbourIndex]==-2)
                 {
                     //unwalkable
+                    continue;
+                }
+                if (!ignoreUnits && occupied[neighbourIndex] >=0)
+                {
+                    //occupied
                     continue;
                 }
                 int tentativeGCost = currentNode.gCost + GetDistanceCost(currentPosition, neighbourPosition);

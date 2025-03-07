@@ -20,7 +20,7 @@ public partial struct MoveSystem : ISystem
         state.RequireForUpdate<PathData>();
         state.RequireForUpdate<LocalTransform>();
         EntityQuery query = SystemAPI.QueryBuilder()
-            .WithAll<PathData, LocalTransform>()
+            .WithAll<PathData, LocalTransform, TeamData>()
             .Build();
         state.RequireForUpdate(query);
 
@@ -34,13 +34,11 @@ public partial struct MoveSystem : ISystem
     {
         // Update the buffer lookup (needed for each frame)
         _bufferLookup.Update(ref state);
-
+        // Get the ECB system singleton and create a parallel writer
+        var ecbSingleton = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
+        var ecb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter();
         if (MainGridScript.Instance.Clicked)
         {
-            // Get the ECB system singleton and create a parallel writer
-            var ecbSingleton = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
-            var ecb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter();
-
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -50,7 +48,7 @@ public partial struct MoveSystem : ISystem
                 //pathLookup = _bufferLookup,
                 destination = MainGridScript.Instance.ClickPosition,
                 gridSize = new int2(MainGridScript.Instance.Width, MainGridScript.Instance.Height),
-                walls = MainGridScript.Instance.IsWalkable.GridArray,
+                occupied = MainGridScript.Instance.Occupied.GridArray,
                 ecb = ecb  // Pass ParallelWriter ECB
             };
 
@@ -62,6 +60,19 @@ public partial struct MoveSystem : ISystem
             stopwatch.Stop();
             UnityEngine.Debug.Log($"Pathfinding took {stopwatch.Elapsed}");
         }
+        StuckPathfindJob stuckJob = new StuckPathfindJob()
+        {
+            //pathLookup = _bufferLookup,
+            //destination = MainGridScript.Instance.ClickPosition,
+            gridSize = new int2(MainGridScript.Instance.Width, MainGridScript.Instance.Height),
+            occupied = MainGridScript.Instance.Occupied.GridArray,
+            ecb = ecb  // Pass ParallelWriter ECB
+        };
+        JobHandle stuckJobHandle = stuckJob.ScheduleParallel(state.Dependency);
+        // Ensure ECB commands are played back safely
+        state.Dependency = stuckJobHandle;
+        stuckJobHandle.Complete();
+
 
         // Schedule the move job in parallel
         MoveJob moveJob = new MoveJob()
@@ -115,7 +126,7 @@ public partial struct MoveJob : IJobEntity
             //UnityEngine.Debug.Log(cellRef);
 
             //atomic exchange for thread safety
-            if (Interlocked.CompareExchange(ref cellRef, 1, 0) == 0)
+            if (Interlocked.CompareExchange(ref cellRef, entity.Index, -1) == -1)
             {
                 float2 targetPosition = new float2(
                     gridOrigin.x + cellSize * pathBuffer[pathData.PathIndex].PathPos.x,
@@ -125,15 +136,21 @@ public partial struct MoveJob : IJobEntity
                 int oldIndex = occupied.GetIndex(gridPosition.Position);
                 ref int oldCellRef = ref occupied.GetRef(oldIndex);
                 //use atomic exchange because why not
-                Interlocked.Exchange(ref oldCellRef, 0);
+                Interlocked.Exchange(ref oldCellRef, -1);
                 gridPosition.Position = pathBuffer[pathData.PathIndex].PathPos;
                 //Debug.Log(pathData.PathIndex);
                 pathData.PathIndex++;
+                pathData.Stuck = 0;
+            }
+            else
+            {
+                if(pathData.Stuck != 2)
+                    pathData.Stuck = 1;
             }
         }
         else
         {
-            occupied.SetValue(gridPosition.Position, 1);
+            occupied.SetValue(gridPosition.Position, entity.Index);
         }
     }
 }
@@ -143,14 +160,16 @@ public partial struct PathfindJob : IJobEntity
     public int2 destination;
     public int2 gridSize;
     [ReadOnly]
-    public NativeArray<bool> walls;
+    public NativeArray<int> occupied;
     public EntityCommandBuffer.ParallelWriter ecb;
 
-    public void Execute(Entity entity, [EntityIndexInQuery] int sortKey, ref PathData pathData, ref GridPosition gridPosition)
+    public void Execute(Entity entity, [EntityIndexInQuery] int sortKey, ref PathData pathData, ref GridPosition gridPosition, ref TeamData teamData)
     {
+        //temporary
+        if (teamData.Team != 1) return;
         // Compute the new path.
         NativeList<int2> path = new NativeList<int2>(Allocator.Temp);
-        Pathfinder.FindPath(gridPosition.Position, destination, gridSize, walls, ref path);
+        Pathfinder.FindPath(gridPosition.Position, destination, gridSize, occupied, true, ref path);
 
         // Remove the existing PathNode dynamic buffer.
         ecb.RemoveComponent<PathNode>(sortKey, entity);
@@ -166,6 +185,52 @@ public partial struct PathfindJob : IJobEntity
         // Reset the path index.
         var newPathData = pathData;
         newPathData.PathIndex = 0;
+        newPathData.Stuck = 0;
+        newPathData.Destination = destination;
+        ecb.SetComponent(sortKey, entity, newPathData);
+
+        path.Dispose();
+    }
+}
+
+[BurstCompile]
+public partial struct StuckPathfindJob : IJobEntity
+{
+    //public int2 destination;
+    public int2 gridSize;
+    [ReadOnly]
+    public NativeArray<int> occupied;
+    public EntityCommandBuffer.ParallelWriter ecb;
+
+    public void Execute(Entity entity, [EntityIndexInQuery] int sortKey, ref PathData pathData, ref GridPosition gridPosition)
+    {
+        if (pathData.Stuck!=1)
+            return;
+        // Compute the new path.
+        NativeList<int2> path = new NativeList<int2>(Allocator.Temp);
+        Pathfinder.FindPath(gridPosition.Position, pathData.Destination, gridSize, occupied, false, ref path);
+
+        // Remove the existing PathNode dynamic buffer.
+        ecb.RemoveComponent<PathNode>(sortKey, entity);
+        // Re-add the dynamic buffer (this creates a new, empty buffer).
+        ecb.AddBuffer<PathNode>(sortKey, entity);
+
+        //no other path exists
+        if (path.Length == 0)
+        {
+            pathData.Stuck = 2;
+            return;
+        }
+        // Append the new path nodes in reverse order.
+        for (int i = path.Length - 2; i >= 0; i--)
+        {
+            ecb.AppendToBuffer<PathNode>(sortKey, entity, new PathNode { PathPos = path[i] });
+        }
+
+        // Reset the path index.
+        var newPathData = pathData;
+        newPathData.PathIndex = 0;
+        newPathData.Stuck = 0;
         ecb.SetComponent(sortKey, entity, newPathData);
 
         path.Dispose();
