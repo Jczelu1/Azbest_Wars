@@ -79,9 +79,6 @@ public class MainGridScript : MonoBehaviour
 
     private void GetTilesOnTilemap(BoundsInt bounds, ref FlatGrid<int> occupied)
     {
-        //FlatGrid<bool> spots = new FlatGrid<bool>(bounds.size.x, bounds.size.y, Allocator.Persistent);
-        //Debug.Log("Bounds:" + bounds);
-
         for (int x = 0; x < bounds.size.x; x++)
         {
             for (int y = 0; y < bounds.size.y; y++)

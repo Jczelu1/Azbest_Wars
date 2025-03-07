@@ -33,9 +33,6 @@ public struct Pathfinder
             {
                 int nodeIndex = GetIndex(new int2(x, y), gridSize.x);
                 PathNode node = new PathNode();
-                //node.x = x;
-                //node.y = y;
-                //node.index = GetIndex(new int2(x, y), gridSize.x);
 
                 node.gCost = int.MaxValue;
                 node.fCost = int.MaxValue;
