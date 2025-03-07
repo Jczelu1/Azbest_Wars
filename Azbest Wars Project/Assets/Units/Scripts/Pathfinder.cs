@@ -14,7 +14,7 @@ public struct Pathfinder
 {
     const int STRAIGHT_COST = 5;
     const int DIAGONAL_COST = 7;
-    private static readonly int2[] directions = new int2[8]
+    public static readonly int2[] directions = new int2[8]
     {
         new int2(0, 1),   new int2(0, -1),
         new int2(-1, 0),  new int2(1, 0),

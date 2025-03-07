@@ -5,6 +5,7 @@ using System.Threading;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Entities.UniversalDelegates;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -60,7 +61,21 @@ public partial struct MoveSystem : ISystem
             stopwatch.Stop();
             UnityEngine.Debug.Log($"Pathfinding took {stopwatch.Elapsed}");
         }
-
+        //attack job
+        var stopwatch2 = new Stopwatch();
+        stopwatch2.Start();
+        EnemyfindJob enemyJob = new EnemyfindJob()
+        {
+            gridSize = new int2(MainGridScript.Instance.Width, MainGridScript.Instance.Height),
+            occupied = MainGridScript.Instance.Occupied,
+            ecb = ecb
+        };
+        JobHandle enemyJobHandle = enemyJob.ScheduleParallel(state.Dependency);
+        //Ensure ECB commands are played back safely
+        state.Dependency = enemyJobHandle;
+        enemyJobHandle.Complete();
+        stopwatch2.Stop();
+        //UnityEngine.Debug.Log($"Enemyfinding took {stopwatch2.Elapsed}");
 
         //unstuck job
         StuckPathfindJob stuckJob = new StuckPathfindJob()
@@ -83,7 +98,7 @@ public partial struct MoveSystem : ISystem
             cellSize = MainGridScript.Instance.CellSize,
             occupied = MainGridScript.Instance.Occupied
         };
-        state.Dependency = moveJob.Schedule(state.Dependency);
+        state.Dependency = moveJob.ScheduleParallel(state.Dependency);
     }
     void InitializeOccupiedGrid(EntityQuery entityQuery, ref FlatGrid<int> occupied)
     {
@@ -217,6 +232,7 @@ public partial struct StuckPathfindJob : IJobEntity
         if (path.Length == 0)
         {
             pathData.Stuck = 2;
+            path.Dispose();
             return;
         }
         //Append the new path nodes in reverse order.
@@ -231,6 +247,119 @@ public partial struct StuckPathfindJob : IJobEntity
         newPathData.Stuck = 0;
         ecb.SetComponent(sortKey, entity, newPathData);
 
+        path.Dispose();
+    }
+}
+public partial struct EnemyfindJob : IJobEntity
+{
+    const int autoFindEnemyDistance = 8;
+    public int2 gridSize;
+    [ReadOnly]
+    public FlatGrid<int> occupied;
+    public EntityCommandBuffer.ParallelWriter ecb;
+
+    public void Execute(Entity entity, [EntityIndexInQuery] int sortKey, ref PathData pathData, ref GridPosition gridPosition, ref TeamData teamData)
+    {
+        // Only process team 1 for now.
+        if (teamData.Team != 1)
+            return;
+
+        int2 startPos = gridPosition.Position;
+        // Maximum possible number of nodes in the search area
+        int maxNodes = (autoFindEnemyDistance * 2 + 1) * (autoFindEnemyDistance * 2 + 1);
+        NativeList<int2> queue = new NativeList<int2>(maxNodes, Allocator.Temp);
+        NativeHashMap<int2, int2> searched = new NativeHashMap<int2, int2>(maxNodes, Allocator.Temp);
+
+        // Initialize the search with the starting position.
+        queue.Add(startPos);
+        searched.Add(startPos, new int2(-1, -1));
+
+        int2 enemyPosition = new int2(-1, -1);
+        bool foundEnemy = false;
+        int head = 0; // Use a head pointer for FIFO behavior
+
+        // Breadth-first search loop.
+        while (head < queue.Length && !foundEnemy)
+        {
+            int2 current = queue[head];
+            head++;
+
+            for (int i = 0; i < Pathfinder.directions.Length; i++)
+            {
+                int2 offset = Pathfinder.directions[i];
+                int2 neighbor = current + offset;
+
+                // Skip if already visited.
+                if (searched.ContainsKey(neighbor))
+                    continue;
+
+                // Skip if outside grid bounds.
+                if (!occupied.IsInGrid(neighbor))
+                    continue;
+
+                // Ensure neighbor is within the auto-find search radius.
+                if (math.abs(neighbor.x - startPos.x) > autoFindEnemyDistance ||
+                    math.abs(neighbor.y - startPos.y) > autoFindEnemyDistance)
+                    continue;
+
+                // If this cell is occupied by a valid enemy (and not self), mark as found.
+                if (occupied[neighbor] >= 0 && occupied[neighbor] != entity.Index)
+                {
+                    enemyPosition = neighbor;
+                    searched.Add(neighbor, current);
+                    foundEnemy = true;
+                    break;
+                }
+
+                // Skip unwalkable nodes.
+                if (occupied[neighbor] == -2)
+                    continue;
+
+                // Enqueue valid neighbor.
+                queue.Add(neighbor);
+                searched.Add(neighbor, current);
+            }
+        }
+
+        // If no enemy was found, dispose temporary collections and exit.
+        if (enemyPosition.x == -1)
+        {
+            queue.Dispose();
+            searched.Dispose();
+            return;
+        }
+
+        // Backtrack from the enemy position to build the path.
+        NativeList<int2> path = new NativeList<int2>(Allocator.Temp);
+        int2 pathNode = enemyPosition;
+        while (pathNode.x != -1)
+        {
+            path.Add(pathNode);
+            pathNode = searched[pathNode];
+        }
+        if (path.Length == 1)
+        {
+            queue.Dispose();
+            searched.Dispose();
+            return;
+        }
+        // Update the entity's path by removing the old path and appending new nodes in reverse order.
+        ecb.RemoveComponent<PathNode>(sortKey, entity);
+        ecb.AddBuffer<PathNode>(sortKey, entity);
+        for (int i = path.Length - 2; i >= 1; i--)
+        {
+            ecb.AppendToBuffer<PathNode>(sortKey, entity, new PathNode { PathPos = path[i] });
+        }
+
+        // Reset pathData
+        pathData.PathIndex = 0;
+        pathData.Stuck = 0;
+        pathData.Destination = enemyPosition;
+        ecb.SetComponent(sortKey, entity, pathData);
+
+        // Dispose of temporary native collections.
+        queue.Dispose();
+        searched.Dispose();
         path.Dispose();
     }
 }

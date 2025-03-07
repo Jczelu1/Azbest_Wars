@@ -36,6 +36,12 @@ public struct FlatGrid<T> where T : struct
         void* ptr = NativeArrayUnsafeUtility.GetUnsafePtr(GridArray);
         return ref UnsafeUtility.ArrayElementAsRef<T>(ptr, index);
     }
+    public bool IsInGrid(int2 pos)
+    {
+        return
+            pos.x >= 0 && pos.y >= 0 &&
+            pos.x < Width && pos.y < Height;
+    }
     public T this[int2 key]
     {
         get => GetValue(key);
