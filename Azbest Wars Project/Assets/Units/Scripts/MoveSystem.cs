@@ -360,7 +360,6 @@ public partial struct EnemyfindJob : IJobEntity
             searched.Dispose();
             return;
         }
-        ecb.AppendToBuffer<PathNode>(sortKey, entity, new PathNode { PathPos = path[path.Length-2] });
         // Update the entity's path by removing the old path and appending new nodes in reverse order.
         ecb.RemoveComponent<PathNode>(sortKey, entity);
         ecb.AddBuffer<PathNode>(sortKey, entity);
