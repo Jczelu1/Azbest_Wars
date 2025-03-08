@@ -8,7 +8,7 @@ public class MainGridScript : MonoBehaviour
 {
     public static MainGridScript Instance { get; private set; }
 
-    public Grid<MainGridCell> MainGrid;
+    public DummyGrid MainGrid;
     public int Width;
     public int Height;
     public float CellSize;
@@ -31,8 +31,7 @@ public class MainGridScript : MonoBehaviour
             return;
         }
         Instance = this;
-        MainGrid = new Grid<MainGridCell>(Width, Height, CellSize, GridOrigin);
-        InitGrid();
+        MainGrid = new DummyGrid(Width, Height, CellSize, GridOrigin);
         DontDestroyOnLoad(gameObject);
     }
 
@@ -68,17 +67,6 @@ public class MainGridScript : MonoBehaviour
         IsWalkable.GridArray.Dispose();
     }
 
-    private void InitGrid()
-    {
-        for (int x = 0; x < Width; x++)
-        {
-            for (int y = 0; y < Height; y++)
-            {
-                MainGrid.SetValue(new int2(x, y), new MainGridCell());
-            }
-        }
-    }
-
     private void GetTilesOnTilemap(BoundsInt bounds, ref FlatGrid<bool> isWalkable)
     {
         for (int x = 0; x < bounds.size.x; x++)
@@ -90,12 +78,10 @@ public class MainGridScript : MonoBehaviour
                 if (Walls.HasTile(new Vector3Int(tilePos.x, tilePos.y, 0)))
                 {
                     isWalkable.SetValue(tilePos, false);
-                    MainGrid.GetValue(tilePos).IsWalkable = false;
                 }
                 else
                 {
                     isWalkable.SetValue(tilePos, true);
-                    MainGrid.GetValue(tilePos).IsWalkable = true;
                 }
             }
         }
