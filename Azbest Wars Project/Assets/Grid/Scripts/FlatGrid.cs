@@ -30,12 +30,11 @@ public struct FlatGrid<T> where T : struct
     {
         GridArray[GetIndex(pos)] = val;
     }
-    //unsafe my ass
-    unsafe public ref T GetRef(int index)
-    {
-        void* ptr = NativeArrayUnsafeUtility.GetUnsafePtr(GridArray);
-        return ref UnsafeUtility.ArrayElementAsRef<T>(ptr, index);
-    }
+    //unsafe public ref T GetRef(int index)
+    //{
+    //    void* ptr = NativeArrayUnsafeUtility.GetUnsafePtr(GridArray);
+    //    return ref UnsafeUtility.ArrayElementAsRef<T>(ptr, index);
+    //}
     public bool IsInGrid(int2 pos)
     {
         return

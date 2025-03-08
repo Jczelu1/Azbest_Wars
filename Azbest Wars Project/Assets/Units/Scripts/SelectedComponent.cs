@@ -1,16 +1,20 @@
 using UnityEngine;
+using Unity.Entities;
+using Unity.Mathematics;
 
-public class SelectedComponent : MonoBehaviour
+public class SelectedAuthoring : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private class Baker : Baker<SelectedAuthoring>
     {
-        
-    }
+        public override void Bake(SelectedAuthoring authoring)
+        {
+            Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            AddComponent(entity, new SelectedData { Selected = false });
+        }
     }
+}
+public struct SelectedData : IComponentData
+{
+    public bool Selected;
 }
