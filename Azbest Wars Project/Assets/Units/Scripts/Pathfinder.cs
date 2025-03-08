@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using NUnit;
 using System.IO;
 using System;
+using Unity.Entities;
 
 [BurstCompile]
 public struct Pathfinder
@@ -23,7 +24,7 @@ public struct Pathfinder
     };
 
     [BurstCompile]
-    public static void FindPath(in int2 start, in int2 end, in int2 gridSize, in NativeArray<int> occupied, bool ignoreUnits,  ref NativeList<int2> path)
+    public static void FindPath(in int2 start, in int2 end, in int2 gridSize, in NativeArray<bool> isWalkable, in NativeArray<Entity> occupied, bool ignoreUnits,  ref NativeList<int2> path)
     {
         NativeArray<PathNode> pathNodeArray = new NativeArray<PathNode>(gridSize.x * gridSize.y, Allocator.Temp);
 
@@ -47,7 +48,7 @@ public struct Pathfinder
         PathNode startNode = pathNodeArray[startIndex];
         int endIndex = GetIndex(end, gridSize.x);
         PathNode endNode = pathNodeArray[endIndex];
-        if (occupied[endIndex]==-2)
+        if (!isWalkable[endIndex])
         {
             pathNodeArray.Dispose();
             path = new NativeList<int2>(Allocator.Temp);
@@ -97,12 +98,12 @@ public struct Pathfinder
                 }
 
                 PathNode neighbourNode = pathNodeArray[neighbourIndex];
-                if (occupied[neighbourIndex]==-2)
+                if (!isWalkable[neighbourIndex])
                 {
                     //unwalkable
                     continue;
                 }
-                if (!ignoreUnits && occupied[neighbourIndex] >=0)
+                if (!ignoreUnits && occupied[neighbourIndex] != Entity.Null)
                 {
                     //occupied
                     continue;

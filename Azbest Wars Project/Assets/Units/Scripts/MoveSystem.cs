@@ -15,6 +15,7 @@ using UnityEngine;
 public partial struct MoveSystem : ISystem
 {
     private BufferLookup<PathNode> _bufferLookup;
+    private ComponentLookup<TeamData> _teamLookup;
 
     public void OnCreate(ref SystemState state)
     {
@@ -26,6 +27,7 @@ public partial struct MoveSystem : ISystem
         state.RequireForUpdate(query);
 
         _bufferLookup = state.GetBufferLookup<PathNode>(true);
+        _teamLookup = state.GetComponentLookup<TeamData>(true);
     }
     public void OnStartRunning(ref SystemState state)
     {
@@ -34,6 +36,7 @@ public partial struct MoveSystem : ISystem
     public void OnUpdate(ref SystemState state)
     {
         _bufferLookup.Update(ref state);
+        _teamLookup.Update(ref state);
 
         var ecbSingleton = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
         var ecb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter();
@@ -50,6 +53,7 @@ public partial struct MoveSystem : ISystem
                 destination = MainGridScript.Instance.ClickPosition,
                 gridSize = new int2(MainGridScript.Instance.Width, MainGridScript.Instance.Height),
                 occupied = MainGridScript.Instance.Occupied.GridArray,
+                isWalkable = MainGridScript.Instance.IsWalkable.GridArray,
                 ecb = ecb
             };
 
@@ -68,7 +72,9 @@ public partial struct MoveSystem : ISystem
         {
             gridSize = new int2(MainGridScript.Instance.Width, MainGridScript.Instance.Height),
             occupied = MainGridScript.Instance.Occupied,
-            ecb = ecb
+            isWalkable = MainGridScript.Instance.IsWalkable,
+            ecb = ecb,
+            teamLookup = _teamLookup,
         };
         JobHandle enemyJobHandle = enemyJob.ScheduleParallel(state.Dependency);
         //Ensure ECB commands are played back safely
@@ -82,6 +88,7 @@ public partial struct MoveSystem : ISystem
         {
             gridSize = new int2(MainGridScript.Instance.Width, MainGridScript.Instance.Height),
             occupied = MainGridScript.Instance.Occupied.GridArray,
+            isWalkable = MainGridScript.Instance.IsWalkable.GridArray,
             ecb = ecb 
         };
         JobHandle stuckJobHandle = stuckJob.ScheduleParallel(state.Dependency);
@@ -98,7 +105,7 @@ public partial struct MoveSystem : ISystem
             cellSize = MainGridScript.Instance.CellSize,
             occupied = MainGridScript.Instance.Occupied
         };
-        state.Dependency = moveJob.ScheduleParallel(state.Dependency);
+        state.Dependency = moveJob.Schedule(state.Dependency);
     }
     void InitializeOccupiedGrid(EntityQuery entityQuery, ref FlatGrid<int> occupied)
     {
@@ -126,7 +133,7 @@ public partial struct MoveJob : IJobEntity
     public float cellSize;
     //this will cause bugs
     [NativeDisableParallelForRestriction]
-    public FlatGrid<int> occupied;
+    public FlatGrid<Entity> occupied;
     public void Execute(Entity entity, ref PathData pathData, ref LocalTransform transform, ref GridPosition gridPosition)
     {
         if (!pathLookup.HasBuffer(entity))
@@ -137,23 +144,18 @@ public partial struct MoveJob : IJobEntity
         if (pathData.PathIndex >= 0 && pathData.PathIndex < pathBuffer.Length)
         {
             int2 targetCell = pathBuffer[pathData.PathIndex].PathPos;
-            int targetIndex = occupied.GetIndex(targetCell);
-            ref int cellRef = ref occupied.GetRef(targetIndex);
             //UnityEngine.Debug.Log(cellRef);
 
-            //atomic exchange for thread safety
-            if (Interlocked.CompareExchange(ref cellRef, entity.Index, -1) == -1)
+            if (occupied[targetCell] == Entity.Null)
             {
                 float2 targetPosition = new float2(
                     gridOrigin.x + cellSize * pathBuffer[pathData.PathIndex].PathPos.x,
                     gridOrigin.y + cellSize * pathBuffer[pathData.PathIndex].PathPos.y
                 );
                 transform.Position = new float3(targetPosition.x, targetPosition.y, transform.Position.z);
-                int oldIndex = occupied.GetIndex(gridPosition.Position);
-                ref int oldCellRef = ref occupied.GetRef(oldIndex);
-                //use atomic exchange because why not
-                Interlocked.Exchange(ref oldCellRef, -1);
+                occupied[gridPosition.Position] = Entity.Null;
                 gridPosition.Position = pathBuffer[pathData.PathIndex].PathPos;
+                occupied.SetValue(gridPosition.Position, entity);
                 //Debug.Log(pathData.PathIndex);
                 pathData.PathIndex++;
                 pathData.Stuck = 0;
@@ -166,7 +168,7 @@ public partial struct MoveJob : IJobEntity
         }
         else
         {
-            occupied.SetValue(gridPosition.Position, entity.Index);
+            occupied.SetValue(gridPosition.Position, entity);
         }
     }
 }
@@ -176,7 +178,9 @@ public partial struct PathfindJob : IJobEntity
     public int2 destination;
     public int2 gridSize;
     [ReadOnly]
-    public NativeArray<int> occupied;
+    public NativeArray<Entity> occupied;
+    [ReadOnly]
+    public NativeArray<bool> isWalkable;
     public EntityCommandBuffer.ParallelWriter ecb;
 
     public void Execute(Entity entity, [EntityIndexInQuery] int sortKey, ref PathData pathData, ref GridPosition gridPosition, ref TeamData teamData)
@@ -185,7 +189,7 @@ public partial struct PathfindJob : IJobEntity
         if (teamData.Team != 1) return;
 
         NativeList<int2> path = new NativeList<int2>(Allocator.Temp);
-        Pathfinder.FindPath(gridPosition.Position, destination, gridSize, occupied, true, ref path);
+        Pathfinder.FindPath(gridPosition.Position, destination, gridSize, isWalkable, occupied, true, ref path);
 
         //there is no other way to do this for some reason
         ecb.RemoveComponent<PathNode>(sortKey, entity);
@@ -213,7 +217,9 @@ public partial struct StuckPathfindJob : IJobEntity
 {
     public int2 gridSize;
     [ReadOnly]
-    public NativeArray<int> occupied;
+    public NativeArray<Entity> occupied;
+    [ReadOnly]
+    public NativeArray<bool> isWalkable;
     public EntityCommandBuffer.ParallelWriter ecb;
 
     public void Execute(Entity entity, [EntityIndexInQuery] int sortKey, ref PathData pathData, ref GridPosition gridPosition)
@@ -222,7 +228,7 @@ public partial struct StuckPathfindJob : IJobEntity
             return;
 
         NativeList<int2> path = new NativeList<int2>(Allocator.Temp);
-        Pathfinder.FindPath(gridPosition.Position, pathData.Destination, gridSize, occupied, false, ref path);
+        Pathfinder.FindPath(gridPosition.Position, pathData.Destination, gridSize, isWalkable, occupied, false, ref path);
 
         //there is no other way to do this for some reason
         ecb.RemoveComponent<PathNode>(sortKey, entity);
@@ -250,18 +256,24 @@ public partial struct StuckPathfindJob : IJobEntity
         path.Dispose();
     }
 }
+[BurstCompile]
 public partial struct EnemyfindJob : IJobEntity
 {
     const int autoFindEnemyDistance = 8;
     public int2 gridSize;
     [ReadOnly]
-    public FlatGrid<int> occupied;
+    public FlatGrid<Entity> occupied;
+    [ReadOnly]
+    public FlatGrid<bool> isWalkable;
     public EntityCommandBuffer.ParallelWriter ecb;
+    [ReadOnly]
+    public ComponentLookup<TeamData> teamLookup;
 
-    public void Execute(Entity entity, [EntityIndexInQuery] int sortKey, ref PathData pathData, ref GridPosition gridPosition, ref TeamData teamData)
+    public void Execute(Entity entity, [EntityIndexInQuery] int sortKey, ref PathData pathData, ref GridPosition gridPosition)
     {
         // Only process team 1 for now.
-        if (teamData.Team != 1)
+        int team = teamLookup[entity].Team;
+        if (team != 1)
             return;
 
         int2 startPos = gridPosition.Position;
@@ -296,24 +308,29 @@ public partial struct EnemyfindJob : IJobEntity
                 // Skip if outside grid bounds.
                 if (!occupied.IsInGrid(neighbor))
                     continue;
+                //unwalkable
+                if (!isWalkable[neighbor])
+                    continue;
 
                 // Ensure neighbor is within the auto-find search radius.
                 if (math.abs(neighbor.x - startPos.x) > autoFindEnemyDistance ||
                     math.abs(neighbor.y - startPos.y) > autoFindEnemyDistance)
                     continue;
 
-                // If this cell is occupied by a valid enemy (and not self), mark as found.
-                if (occupied[neighbor] >= 0 && occupied[neighbor] != entity.Index)
+                //maybe also continue if tile also occupied by other unit
+                if (occupied[neighbor] != Entity.Null && occupied[neighbor] != entity)
                 {
-                    enemyPosition = neighbor;
-                    searched.Add(neighbor, current);
-                    foundEnemy = true;
-                    break;
+                    Entity enemyEntity = occupied[neighbor];
+                    // Check if the enemy is on a different team.
+                    if (teamLookup[enemyEntity].Team != team)
+                    {
+                        // Mark enemy as found
+                        enemyPosition = neighbor;
+                        searched.Add(neighbor, current);
+                        foundEnemy = true;
+                        break;
+                    }
                 }
-
-                // Skip unwalkable nodes.
-                if (occupied[neighbor] == -2)
-                    continue;
 
                 // Enqueue valid neighbor.
                 queue.Add(neighbor);
@@ -337,19 +354,23 @@ public partial struct EnemyfindJob : IJobEntity
             path.Add(pathNode);
             pathNode = searched[pathNode];
         }
-        if (path.Length == 1)
+        if (path.Length <= 1)
         {
             queue.Dispose();
             searched.Dispose();
             return;
         }
+        ecb.AppendToBuffer<PathNode>(sortKey, entity, new PathNode { PathPos = path[path.Length-2] });
         // Update the entity's path by removing the old path and appending new nodes in reverse order.
         ecb.RemoveComponent<PathNode>(sortKey, entity);
         ecb.AddBuffer<PathNode>(sortKey, entity);
-        for (int i = path.Length - 2; i >= 1; i--)
-        {
-            ecb.AppendToBuffer<PathNode>(sortKey, entity, new PathNode { PathPos = path[i] });
-        }
+
+        ecb.AppendToBuffer<PathNode>(sortKey, entity, new PathNode { PathPos = path[path.Length - 2] });
+        //for (int i = path.Length - 2; i >= 1; i--)
+        //{
+        //    ecb.AppendToBuffer<PathNode>(sortKey, entity, new PathNode { PathPos = path[i] });
+        //}
+
 
         // Reset pathData
         pathData.PathIndex = 0;

@@ -3,7 +3,7 @@ using Unity.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-
+using Unity.Entities;
 public class MainGridScript : MonoBehaviour
 {
     public static MainGridScript Instance { get; private set; }
@@ -13,8 +13,8 @@ public class MainGridScript : MonoBehaviour
     public int Height;
     public float CellSize;
     public Vector2 GridOrigin;
-    //-2 wall, -1 empty, 0+ unit
-    public FlatGrid<int> Occupied;
+    public FlatGrid<Entity> Occupied;
+    public FlatGrid<bool> IsWalkable;
     [HideInInspector]
     public int2 ClickPosition;
     [HideInInspector]
@@ -44,8 +44,9 @@ public class MainGridScript : MonoBehaviour
         gridBounds.xMax = gridBounds.xMin + Width;
         gridBounds.yMax = gridBounds.yMin + Height;
 
-        Occupied = new FlatGrid<int>(Width, Height, Allocator.Persistent);
-        GetTilesOnTilemap(gridBounds, ref Occupied);
+        Occupied = new FlatGrid<Entity>(Width, Height, Allocator.Persistent);
+        IsWalkable = new FlatGrid<bool>(Width, Height, Allocator.Persistent);
+        GetTilesOnTilemap(gridBounds, ref IsWalkable);
         //MainGrid.ShowDebugtext();
         MainGrid.ShowDebugLines();
     }
@@ -64,6 +65,7 @@ public class MainGridScript : MonoBehaviour
     private void OnDestroy()
     {
         Occupied.GridArray.Dispose();
+        IsWalkable.GridArray.Dispose();
     }
 
     private void InitGrid()
@@ -77,7 +79,7 @@ public class MainGridScript : MonoBehaviour
         }
     }
 
-    private void GetTilesOnTilemap(BoundsInt bounds, ref FlatGrid<int> occupied)
+    private void GetTilesOnTilemap(BoundsInt bounds, ref FlatGrid<bool> isWalkable)
     {
         for (int x = 0; x < bounds.size.x; x++)
         {
@@ -87,12 +89,12 @@ public class MainGridScript : MonoBehaviour
 
                 if (Walls.HasTile(new Vector3Int(tilePos.x, tilePos.y, 0)))
                 {
-                    occupied.SetValue(tilePos, -2);
+                    isWalkable.SetValue(tilePos, false);
                     MainGrid.GetValue(tilePos).IsWalkable = false;
                 }
                 else
                 {
-                    occupied.SetValue(tilePos, -1);
+                    isWalkable.SetValue(tilePos, true);
                     MainGrid.GetValue(tilePos).IsWalkable = true;
                 }
             }
