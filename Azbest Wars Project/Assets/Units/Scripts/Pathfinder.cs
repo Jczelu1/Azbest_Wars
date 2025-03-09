@@ -54,6 +54,12 @@ public struct Pathfinder
             path = new NativeList<int2>(Allocator.Temp);
             return;
         }
+        if (!ignoreUnits && occupied[endIndex] != Entity.Null)
+        {
+            pathNodeArray.Dispose();
+            path = new NativeList<int2>(Allocator.Temp);
+            return;
+        }
         startNode.gCost = 0;
         startNode.fCost = GetDistanceCost(start, end);
         //set value on array because value type

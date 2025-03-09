@@ -27,6 +27,6 @@ public partial class ClickManageSystem : SystemBase
     protected override void OnUpdate()
     {
         //Debug.Log("tick");
-        MainGridScript.Instance.Clicked = false;
+        MainGridScript.Instance.RightClick = false;
     }
 }

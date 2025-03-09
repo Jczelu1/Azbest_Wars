@@ -13,10 +13,6 @@ public partial struct HealthSystem : ISystem
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<HealthData>();
-        EntityQuery query = SystemAPI.QueryBuilder()
-            .WithAll<HealthData>()
-            .Build();
-        state.RequireForUpdate(query);
     }
 
     public void OnUpdate(ref SystemState state)

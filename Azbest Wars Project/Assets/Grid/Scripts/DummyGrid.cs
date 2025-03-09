@@ -9,7 +9,7 @@ public class DummyGrid
     public int Width { get; private set; }
     private float CellSize;
     private Vector3 GridPosition;
-    public TextMeshPro[,] gridText;
+    //public TextMeshPro[,] gridText;
 
     private bool debugText = false;
     public DummyGrid(int width, int height, float cellSize, Vector3 gridOrigin)
@@ -33,6 +33,10 @@ public class DummyGrid
     {
         return new Vector3(x * CellSize + GridPosition.x, y * CellSize + GridPosition.y);
     }
+    public Vector3 GetWorldPosition(int2 pos)
+    {
+        return new Vector3(pos.x * CellSize + GridPosition.x, pos.y * CellSize + GridPosition.y);
+    }
     public void ShowDebugLines()
     {
         for (int x = 0; x < Width; x++)
@@ -43,6 +47,12 @@ public class DummyGrid
         {
             Debug.DrawLine(GetWorldPosition(0, y) - new Vector3(CellSize, CellSize) * .5f, GetWorldPosition(Width, y) - new Vector3(CellSize, CellSize) * .5f, Color.red, 100f);
         }
+    }
+    public GameObject CreateSprite(GameObject selectPrefab, int2 position)
+    {
+        GameObject obj = GameObject.Instantiate(selectPrefab);
+        obj.transform.position = GetWorldPosition(position);
+        return obj;
     }
     //public void ShowDebugtext()
     //{

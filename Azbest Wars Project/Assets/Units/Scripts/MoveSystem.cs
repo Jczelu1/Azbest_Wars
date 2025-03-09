@@ -21,11 +21,6 @@ public partial struct MoveSystem : ISystem
     {
         state.RequireForUpdate<UnitStateData>();
         state.RequireForUpdate<LocalTransform>();
-        EntityQuery query = SystemAPI.QueryBuilder()
-            .WithAll<UnitStateData, LocalTransform, TeamData>()
-            .Build();
-        state.RequireForUpdate(query);
-
         _bufferLookup = state.GetBufferLookup<PathNode>(true);
         _teamLookup = state.GetComponentLookup<TeamData>(true);
     }
@@ -43,14 +38,14 @@ public partial struct MoveSystem : ISystem
 
 
         //pathfind job
-        if (MainGridScript.Instance.Clicked)
+        if (MainGridScript.Instance.RightClick)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
             PathfindJob pathfindJob = new PathfindJob()
             {
-                destination = MainGridScript.Instance.ClickPosition,
+                destination = MainGridScript.Instance.RightClickPosition,
                 gridSize = new int2(MainGridScript.Instance.Width, MainGridScript.Instance.Height),
                 occupied = MainGridScript.Instance.Occupied.GridArray,
                 isWalkable = MainGridScript.Instance.IsWalkable.GridArray,
@@ -172,10 +167,12 @@ public partial struct PathfindJob : IJobEntity
     public NativeArray<bool> isWalkable;
     public EntityCommandBuffer.ParallelWriter ecb;
 
-    public void Execute(Entity entity, [EntityIndexInQuery] int sortKey, ref UnitStateData unitState, ref GridPosition gridPosition, ref TeamData teamData)
+    public void Execute(Entity entity, [EntityIndexInQuery] int sortKey, ref UnitStateData unitState, ref GridPosition gridPosition, ref TeamData teamData, ref SelectedData selected)
     {
         //temporary
         if (teamData.Team != 1) return;
+        if (!selected.Selected) return;
+        selected.Selected = false;
 
         NativeList<int2> path = new NativeList<int2>(Allocator.Temp);
         Pathfinder.FindPath(gridPosition.Position, destination, gridSize, isWalkable, occupied, true, ref path);

@@ -1,4 +1,5 @@
 using System.IO;
+using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Mathematics;
 using UnityEngine;
@@ -15,10 +16,23 @@ public class MainGridScript : MonoBehaviour
     public Vector2 GridOrigin;
     public FlatGrid<Entity> Occupied;
     public FlatGrid<bool> IsWalkable;
+    public int PlayerTeam = 0;
+
     [HideInInspector]
-    public int2 ClickPosition;
+    public int2 RightClickPosition;
     [HideInInspector]
-    public bool Clicked = false;
+    public bool RightClick = false;
+
+    [SerializeField]
+    private GameObject selectSpritePrefab;
+    private bool Selecting = false;
+    [HideInInspector]
+    public int2 SelectStartPosition;
+    [HideInInspector]
+    public int2 SelectEndPosition;
+    private List<GameObject> SelectSprites = new List<GameObject>();
+    [HideInInspector]
+    public bool Selected = false;
 
     [SerializeField]
     private Tilemap Walls;
@@ -52,14 +66,68 @@ public class MainGridScript : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(1))
         {
             Vector3 mousePos = Utils.GetMouseWorldPosition();
             int2 endPos = MainGrid.GetXY(mousePos);
             if (endPos.x == -1) return;
-            ClickPosition = endPos;
-            Clicked = true;
+            RightClickPosition = endPos;
+            RightClick = true;
         }
+
+        
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("s");
+            Vector3 mousePos = Utils.GetMouseWorldPosition();
+            int2 startPos = MainGrid.GetXY(mousePos);
+            if (startPos.x == -1) return;
+            SelectStartPosition = startPos;
+            Selecting = true;
+            SelectSprites.Add(MainGrid.CreateSprite(selectSpritePrefab, startPos));
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            Selecting = false;
+            Selected = true;
+            Debug.Log(SelectStartPosition + " " + SelectEndPosition);
+            foreach (var sprite in SelectSprites)
+            {
+                Destroy(sprite);
+            }
+            SelectSprites.Clear();
+        }
+        if (Selecting)
+        {
+            Vector3 mousePos = Utils.GetMouseWorldPosition();
+            int2 endPos = MainGrid.GetXY(mousePos);
+            if (endPos.x == -1) return;
+            if (endPos.x == SelectEndPosition.x && endPos.y == SelectEndPosition.y)
+                return;
+            SelectEndPosition = endPos;
+            foreach (var sprite in SelectSprites)
+            {
+                Destroy(sprite);
+            }
+            SelectSprites.Clear();
+            int minX = Mathf.Min(SelectStartPosition.x, SelectEndPosition.x);
+            int maxX = Mathf.Max(SelectStartPosition.x, SelectEndPosition.x);
+            int minY = Mathf.Min(SelectStartPosition.y, SelectEndPosition.y);
+            int maxY = Mathf.Max(SelectStartPosition.y, SelectEndPosition.y);
+            for (int x = minX; x <= maxX; x++)
+            {
+                SelectSprites.Add(MainGrid.CreateSprite(selectSpritePrefab, new int2(x, minY)));
+                if (minY != maxY)
+                    SelectSprites.Add(MainGrid.CreateSprite(selectSpritePrefab, new int2(x, maxY)));
+            }
+            for (int y = minY + 1; y < maxY; y++)
+            {
+                SelectSprites.Add(MainGrid.CreateSprite(selectSpritePrefab, new int2(minX, y)));
+                if (minX != maxX)
+                    SelectSprites.Add(MainGrid.CreateSprite(selectSpritePrefab, new int2(maxX, y)));
+            }
+        }
+        
     }
     private void OnDestroy()
     {
