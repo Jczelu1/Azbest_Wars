@@ -12,6 +12,7 @@ using Unity.Transforms;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
+[BurstCompile]
 [UpdateInGroup(typeof(TickSystemGroup))]
 [UpdateBefore(typeof(MoveSystem))]
 public partial struct PathfindSystem : ISystem
@@ -60,7 +61,7 @@ public partial struct PathfindSystem : ISystem
         //Ensure ECB commands are played back safely
         ecbSystem.Update(state.WorldUnmanaged);
         stopwatch.Stop();
-        UnityEngine.Debug.Log($"Pathfinding took {stopwatch.Elapsed}");
+        //UnityEngine.Debug.Log($"Pathfinding took {stopwatch.Elapsed}");
     }
 }
 
@@ -92,7 +93,6 @@ public partial struct PathfindJob : IJobEntity
         if (rightClick && selected.Selected)
         {
             UnityEngine.Debug.Log("pathfind");
-            selected.Selected = false;
 
             //maybe do this???
             unitState.MovementState = 0;
@@ -203,7 +203,7 @@ public partial struct PathfindJob : IJobEntity
                 path.Add(pathNode);
                 pathNode = searched[pathNode];
             }
-            if (path.Length <= 1)
+            if (path.Length <= 2)
             {
                 queue.Dispose();
                 searched.Dispose();

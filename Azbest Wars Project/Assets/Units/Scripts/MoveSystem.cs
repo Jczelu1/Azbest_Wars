@@ -12,18 +12,17 @@ using Unity.Transforms;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
+[BurstCompile]
 [UpdateInGroup(typeof(TickSystemGroup))]
 public partial struct MoveSystem : ISystem
 {
     private BufferLookup<PathNode> _bufferLookup;
-    private ComponentLookup<TeamData> _teamLookup;
 
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<UnitStateData>();
         state.RequireForUpdate<LocalTransform>();
         _bufferLookup = state.GetBufferLookup<PathNode>(true);
-        _teamLookup = state.GetComponentLookup<TeamData>(true);
     }
     public void OnStartRunning(ref SystemState state)
     {

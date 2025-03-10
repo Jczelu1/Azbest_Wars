@@ -32,7 +32,12 @@ public class MainGridScript : MonoBehaviour
     public int2 SelectEndPosition;
     private List<GameObject> SelectSprites = new List<GameObject>();
     [HideInInspector]
+    public bool UpdateSelected = false;
+
+    [HideInInspector]
     public bool Selected = false;
+    [HideInInspector]
+    public byte SetMoveState = 255;
 
     [SerializeField]
     private Tilemap Walls;
@@ -66,7 +71,7 @@ public class MainGridScript : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonUp(1))
+        if (Selected && Input.GetMouseButtonUp(1))
         {
             Vector3 mousePos = Utils.GetMouseWorldPosition();
             int2 endPos = MainGrid.GetXY(mousePos);
@@ -83,19 +88,21 @@ public class MainGridScript : MonoBehaviour
             int2 startPos = MainGrid.GetXY(mousePos);
             if (startPos.x == -1) return;
             SelectStartPosition = startPos;
+            Selected = false;
             Selecting = true;
             SelectSprites.Add(MainGrid.CreateSprite(selectSpritePrefab, startPos));
         }
         if (Input.GetMouseButtonUp(0))
         {
             Selecting = false;
-            Selected = true;
             Debug.Log(SelectStartPosition + " " + SelectEndPosition);
             foreach (var sprite in SelectSprites)
             {
                 Destroy(sprite);
             }
             SelectSprites.Clear();
+            UpdateSelected = true;
+            Selected = true;
         }
         if (Selecting)
         {
@@ -127,7 +134,22 @@ public class MainGridScript : MonoBehaviour
                     SelectSprites.Add(MainGrid.CreateSprite(selectSpritePrefab, new int2(maxX, y)));
             }
         }
-        
+
+        if (Selected && Input.GetKeyDown(KeyCode.Q))
+        {
+            Debug.Log("q");
+            SetMoveState = 0;
+        }
+        if (Selected && Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("e");
+            SetMoveState = 1;
+        }
+        if (Selected && Input.GetKeyDown(KeyCode.R))
+        {
+            Debug.Log("r");
+            SetMoveState = 2;
+        }
     }
     private void OnDestroy()
     {
