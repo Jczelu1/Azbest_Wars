@@ -10,7 +10,7 @@ public class UnitStateAuthoring : MonoBehaviour
         {
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
-            AddComponent(entity, new UnitStateData { PathIndex = 0, Moving = false, Stuck = 0, Destination = new int2(-1, -1), PathfindState = 0 });
+            AddComponent(entity, new UnitStateData { PathIndex = 0, Moving = false, Stuck = 0, Destination = new int2(-1, -1), MovementState = 0 });
         }
     }
 }
@@ -21,6 +21,6 @@ public struct UnitStateData : IComponentData
     //0 - not stuck, 1 - stuck, 2 - stuck but no other path (there is nothing we can do)
     public byte Stuck;
     public int2 Destination;
-    //0 - stationary, 1 - following a path, 2 - enemy search
-    public byte PathfindState;
+    //0 - defend/stationary, 1 - attack, 2 - retreat
+    public byte MovementState;
 }
