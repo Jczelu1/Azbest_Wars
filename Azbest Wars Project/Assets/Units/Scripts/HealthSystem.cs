@@ -8,6 +8,7 @@ using Unity.Transforms;
 using UnityEngine;
 
 [UpdateInGroup(typeof(TickSystemGroup))]
+[UpdateAfter(typeof(MeleAttackSystem))]
 public partial struct HealthSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
@@ -17,7 +18,10 @@ public partial struct HealthSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
-        //var ecb = new EntityCommandBuffer(Allocator.TempJob).AsParallelWriter();
+        var ecbSingleton = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
+        var ecb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged);
+        var ecbSystem = World.DefaultGameObjectInjectionWorld
+            .GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
 
         //var job = new UpdateHealthBarJob
         //{
@@ -25,12 +29,36 @@ public partial struct HealthSystem : ISystem
         //    //HealthbarTagLookup = state.GetComponentLookup<HealthbarTag>(true),
         //};
 
-        //state.Dependency = job.ScheduleParallel(state.Dependency);
+        var job = new DieJob
+        {
+            ecb = ecb,
+            occupied = MainGridScript.Instance.Occupied
+        };
+
+        state.Dependency = job.Schedule(state.Dependency);
 
         //state.Dependency.Complete(); // Ensure all changes are applied
         //new EntityCommandBuffer(Allocator.TempJob).Playback(state.EntityManager);
     }
+    [BurstCompile]
+    public partial struct DieJob : IJobEntity
+    {
+        public EntityCommandBuffer ecb;
 
+        public FlatGrid<Entity> occupied;
+        public void Execute(Entity entity, ref HealthData healthData, ref GridPosition gridPosition, in DynamicBuffer<Child> children)
+        {
+            if(healthData.Health <= 0)
+            {
+                ecb.DestroyEntity(entity);
+                occupied[gridPosition.Position] = Entity.Null;
+                foreach (var child in children)
+                {
+                    ecb.DestroyEntity(child.Value);
+                }
+            }
+        }
+    }
     [BurstCompile]
     public partial struct UpdateHealthBarJob : IJobEntity
     {
