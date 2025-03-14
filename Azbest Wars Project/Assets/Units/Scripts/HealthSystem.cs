@@ -11,6 +11,7 @@ using UnityEngine;
 [UpdateAfter(typeof(MeleAttackSystem))]
 public partial struct HealthSystem : ISystem
 {
+    public ComponentLookup<HealthbarTag> healthbarLookup;
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<HealthData>();
@@ -65,13 +66,12 @@ public partial struct HealthSystem : ISystem
         public EntityCommandBuffer.ParallelWriter ECB;
         //[ReadOnly] public ComponentLookup<HealthbarTag> HealthbarTagLookup;
 
-        public void Execute(Entity entity, in DynamicBuffer<Child> children, ref HealthData healthData, in LocalTransform localTransform, [ChunkIndexInQuery] int chunkIndex)
+        public void Execute(Entity entity, in DynamicBuffer<Child> children, ref HealthData healthData, in LocalTransform localTransform, [ChunkIndexInQuery] int chunkIndex, ComponentLookup<HealthbarTag> healthbarLookup)
         {
             //if (!HealthLookup.TryGetComponent(entity, out var healthData)) return;
-            healthData.Health = healthData.Health - 1;
             foreach (var child in children)
             {
-                //if (!HealthbarTagLookup.HasComponent(child.Value)) continue;
+                if(!healthbarLookup.HasComponent(child.Value)) continue;
 
                 float healthPercentage = math.clamp(healthData.Health / healthData.MaxValue, 0f, 1f);
                 //new float3(math.clamp(healthData.Value / healthData.MaxValue, 0f, 1f), 1f, 1f)

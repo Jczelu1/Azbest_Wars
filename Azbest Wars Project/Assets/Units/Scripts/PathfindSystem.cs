@@ -354,6 +354,16 @@ public partial struct PathfindJob : IJobEntity
             queue.Dispose();
             searched.Dispose();
         }
+        //stop
+        else if(unitState.MovementState == 3)
+        {
+            unitState.MovementState = 0;
+            ecb.RemoveComponent<PathNode>(sortKey, entity);
+            ecb.AddBuffer<PathNode>(sortKey, entity);
+            unitState.PathIndex = 0;
+            unitState.Stuck = 0;
+            ecb.SetComponent(sortKey, entity, unitState);
+        }
 
         //unstuck
         else if (unitState.Stuck == 1)

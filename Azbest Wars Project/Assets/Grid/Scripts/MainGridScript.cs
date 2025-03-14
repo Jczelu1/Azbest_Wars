@@ -32,7 +32,7 @@ public class MainGridScript : MonoBehaviour
     public int2 SelectEndPosition;
     private List<GameObject> SelectSprites = new List<GameObject>();
     [HideInInspector]
-    public bool UpdateSelected = false;
+    public bool UpdateSelected = true;
 
     [HideInInspector]
     public bool Selected = false;
@@ -137,18 +137,19 @@ public class MainGridScript : MonoBehaviour
 
         if (Selected && Input.GetKeyDown(KeyCode.Q))
         {
-            Debug.Log("q");
             SetMoveState = 0;
         }
         if (Selected && Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("e");
             SetMoveState = 1;
         }
         if (Selected && Input.GetKeyDown(KeyCode.R))
         {
-            Debug.Log("r");
             SetMoveState = 2;
+        }
+        if (Selected && Input.GetKeyDown(KeyCode.F))
+        {
+            SetMoveState = 3;
         }
     }
     private void OnDestroy()

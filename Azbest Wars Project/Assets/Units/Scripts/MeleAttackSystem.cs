@@ -63,7 +63,6 @@ public partial struct MeleAttackJob : IJobEntity
         int team = teamLookup[entity].Team;
         if (team != 1)
             return;
-        UnityEngine.Debug.Log("attack");
         int2 startPos = gridPosition.Position;
 
         int2 enemyPosition = new int2(-1, -1);
