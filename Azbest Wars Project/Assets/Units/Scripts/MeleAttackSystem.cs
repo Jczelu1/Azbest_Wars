@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -63,6 +62,7 @@ public partial struct MeleAttackJob : IJobEntity
         int team = teamLookup[entity].Team;
         if (team != 1)
             return;
+        if (unitState.Moved) return;
         int2 startPos = gridPosition.Position;
 
         int2 enemyPosition = new int2(-1, -1);
@@ -95,6 +95,9 @@ public partial struct MeleAttackJob : IJobEntity
             return;
         }
         //make damage random
-        healthLookup[enemyEntity] = new HealthData { Health = healthLookup[enemyEntity].Health - meleAttack.Damage, MaxValue = healthLookup[enemyEntity].MaxValue };
+        HealthData newHealthData = healthLookup[enemyEntity];
+        newHealthData.Health -= meleAttack.Damage;
+        Debug.Log("damage: " + meleAttack.Damage);
+        healthLookup[enemyEntity] = newHealthData;
     }
 }

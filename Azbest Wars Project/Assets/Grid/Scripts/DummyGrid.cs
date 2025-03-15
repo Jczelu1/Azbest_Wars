@@ -11,7 +11,7 @@ public class DummyGrid
     private Vector3 GridPosition;
     //public TextMeshPro[,] gridText;
 
-    private bool debugText = false;
+    //private bool debugText = false;
     public DummyGrid(int width, int height, float cellSize, Vector3 gridOrigin)
     {
         Height = height;
