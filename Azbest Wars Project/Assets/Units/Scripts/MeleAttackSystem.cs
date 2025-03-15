@@ -97,7 +97,6 @@ public partial struct MeleAttackJob : IJobEntity
         //make damage random
         HealthData newHealthData = healthLookup[enemyEntity];
         newHealthData.Health -= meleAttack.Damage;
-        Debug.Log("damage: " + meleAttack.Damage);
         healthLookup[enemyEntity] = newHealthData;
     }
 }
