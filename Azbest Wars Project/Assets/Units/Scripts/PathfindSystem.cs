@@ -317,6 +317,7 @@ public partial struct PathfindJob : IJobEntity
                 // Validate position
                 if (!occupied.IsInGrid(newPos)) continue;
                 if (!isWalkable[newPos]) continue;
+                if (unitState.Stuck == 1 && occupied[newPos] != Entity.Null) continue;
 
                 // Check if moving away from enemy
                 float newDistance = math.lengthsq(newPos - enemyPosition);
