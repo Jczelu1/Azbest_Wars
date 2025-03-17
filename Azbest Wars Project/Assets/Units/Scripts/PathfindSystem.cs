@@ -179,6 +179,7 @@ public partial struct PathfindJob : IJobEntity
                             foundEnemy = true;
                             break;
                         }
+                        else if (unitState.Stuck == 1) continue;
                     }
 
                     // Enqueue valid neighbor.
