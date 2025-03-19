@@ -6,11 +6,14 @@ public class TeamAuthoring : MonoBehaviour
 {
     [SerializeField]
     byte team;
+    [SerializeField]
+    SpriteRenderer spriteRenderer;
 
     private class Baker : Baker<TeamAuthoring>
     {
         public override void Bake(TeamAuthoring authoring)
         {
+            authoring.spriteRenderer.color = TeamColors.Instance.teamColors[authoring.team];
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
             AddComponent(entity, new TeamData { Team = authoring.team });

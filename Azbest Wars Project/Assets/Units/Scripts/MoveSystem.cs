@@ -71,17 +71,36 @@ public partial struct MoveJob : IJobEntity
 
             if (occupied[targetCell] == Entity.Null)
             {
+                //rotation
+                if (targetCell.x - gridPosition.Position.x < 0)
+                {
+                    transform.Rotation = Quaternion.Euler(0,0,0);
+                }
+                else if (targetCell.x - gridPosition.Position.x > 0)
+                {
+                    transform.Rotation = Quaternion.Euler(0, 180, 0);
+                }
+                else if (targetCell.y - gridPosition.Position.y < 0)
+                {
+                    transform.Rotation = Quaternion.Euler(0, 180, 0);
+                }
+                else
+                {
+                    transform.Rotation = Quaternion.Euler(0, 0, 0);
+                }
                 float2 targetPosition = new float2(
-                    gridOrigin.x + cellSize * pathBuffer[unitState.PathIndex].PathPos.x,
-                    gridOrigin.y + cellSize * pathBuffer[unitState.PathIndex].PathPos.y
+                    gridOrigin.x + cellSize * targetCell.x,
+                    gridOrigin.y + cellSize * targetCell.y
                 );
                 transform.Position = new float3(targetPosition.x, targetPosition.y, transform.Position.z);
                 occupied[gridPosition.Position] = Entity.Null;
-                gridPosition.Position = pathBuffer[unitState.PathIndex].PathPos;
+                gridPosition.Position = targetCell;
                 occupied.SetValue(gridPosition.Position, entity);
                 //Debug.Log(pathData.PathIndex);
                 unitState.PathIndex++;
                 unitState.Stuck = 0;
+
+                
             }
             else
             {

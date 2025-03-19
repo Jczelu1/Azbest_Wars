@@ -56,12 +56,9 @@ public partial struct MeleAttackJob : IJobEntity
     [ReadOnly]
     public ComponentLookup<TeamData> teamLookup;
     public ComponentLookup<HealthData> healthLookup;
-    public void Execute(Entity entity, ref UnitStateData unitState, ref GridPosition gridPosition, ref MeleAttackData meleAttack)
+    public void Execute(Entity entity, ref UnitStateData unitState, ref GridPosition gridPosition, ref MeleAttackData meleAttack, ref LocalTransform transform)
     {
-        //temporary
         int team = teamLookup[entity].Team;
-        if (team != 1)
-            return;
         if (unitState.Moved) return;
         int2 startPos = gridPosition.Position;
 
@@ -94,6 +91,24 @@ public partial struct MeleAttackJob : IJobEntity
         {
             return;
         }
+        //rotation
+        if (enemyPosition.x - gridPosition.Position.x < 0)
+        {
+            transform.Rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (enemyPosition.x - gridPosition.Position.x > 0)
+        {
+            transform.Rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else if (enemyPosition.y - gridPosition.Position.y < 0)
+        {
+            transform.Rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else
+        {
+            transform.Rotation = Quaternion.Euler(0, 0, 0);
+        }
+
         //make damage random
         HealthData newHealthData = healthLookup[enemyEntity];
         newHealthData.Health -= meleAttack.Damage;

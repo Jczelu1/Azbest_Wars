@@ -84,10 +84,7 @@ public partial struct PathfindJob : IJobEntity
 
     public void Execute(Entity entity, [EntityIndexInQuery] int sortKey, ref UnitStateData unitState, ref GridPosition gridPosition, ref SelectedData selected)
     {
-        //temporary
         int team = teamLookup[entity].Team;
-        if (team != 1)
-            return;
 
         //pathfind to selected location
         if (rightClick && selected.Selected)

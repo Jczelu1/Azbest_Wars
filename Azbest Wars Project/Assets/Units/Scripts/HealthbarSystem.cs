@@ -4,6 +4,7 @@ using Unity.Transforms;
 using UnityEngine;
 
 [UpdateInGroup(typeof(TickSystemGroup))]
+[UpdateAfter(typeof(MeleAttackSystem))]
 public partial class HealthbarSystem : SystemBase
 {
     protected override void OnUpdate()
