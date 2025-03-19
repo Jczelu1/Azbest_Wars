@@ -64,7 +64,6 @@ public partial struct MoveJob : IJobEntity
 
         if (unitState.PathIndex >= 0 && unitState.PathIndex < pathBuffer.Length)
         {
-            UnityEngine.Debug.Log("move");
             unitState.Moved = true;
             int2 targetCell = pathBuffer[unitState.PathIndex].PathPos;
             //UnityEngine.Debug.Log(cellRef);

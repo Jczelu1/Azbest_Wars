@@ -79,7 +79,6 @@ public class MainGridScript : MonoBehaviour
             RightClickPosition = endPos;
             RightClick = true;
         }
-
         
         if (Input.GetMouseButtonDown(0))
         {

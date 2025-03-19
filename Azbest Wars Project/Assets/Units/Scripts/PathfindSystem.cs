@@ -89,7 +89,6 @@ public partial struct PathfindJob : IJobEntity
         //pathfind to selected location
         if (rightClick && selected.Selected)
         {
-            UnityEngine.Debug.Log("pathfind");
 
             //maybe do this???
             unitState.MovementState = 0;
@@ -121,7 +120,6 @@ public partial struct PathfindJob : IJobEntity
         //pathfind to enemy
         else if (unitState.MovementState == 1)
         {
-            UnityEngine.Debug.Log("attack");
             int2 startPos = gridPosition.Position;
             // Maximum possible number of nodes in the search area
             int maxNodes = (autoFindEnemyDistance * 2 + 1) * (autoFindEnemyDistance * 2 + 1);
@@ -233,7 +231,6 @@ public partial struct PathfindJob : IJobEntity
         //retreat
         else if (unitState.MovementState == 2)
         {
-            UnityEngine.Debug.Log("retreat");
             int2 startPos = gridPosition.Position;
             // Maximum possible number of nodes in the search area
             int maxNodes = (autoFindEnemyDistance * 2 + 1) * (autoFindEnemyDistance * 2 + 1);
