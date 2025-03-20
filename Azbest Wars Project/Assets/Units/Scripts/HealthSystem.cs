@@ -24,12 +24,6 @@ public partial struct HealthSystem : ISystem
         var ecbSystem = World.DefaultGameObjectInjectionWorld
             .GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
 
-        //var job = new UpdateHealthBarJob
-        //{
-        //    ECB = ecb,
-        //    //HealthbarTagLookup = state.GetComponentLookup<HealthbarTag>(true),
-        //};
-
         var job = new DieJob
         {
             ecb = ecb,
@@ -37,9 +31,6 @@ public partial struct HealthSystem : ISystem
         };
 
         state.Dependency = job.Schedule(state.Dependency);
-
-        //state.Dependency.Complete(); // Ensure all changes are applied
-        //new EntityCommandBuffer(Allocator.TempJob).Playback(state.EntityManager);
     }
     [BurstCompile]
     public partial struct DieJob : IJobEntity
