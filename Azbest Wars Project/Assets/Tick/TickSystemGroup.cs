@@ -4,7 +4,7 @@ using UnityEngine;
 
 public partial class TickSystemGroup : ComponentSystemGroup
 {
-    private float Tickrate = .5f;
+    public static float Tickrate = .5f;
 
     protected override void OnCreate()
     {

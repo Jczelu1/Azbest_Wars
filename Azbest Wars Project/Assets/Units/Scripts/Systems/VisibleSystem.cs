@@ -25,7 +25,7 @@ public partial class VisibleSystem : SystemBase
             spriteRenderer.enabled = visible.SetVisible;
             foreach (var child in children)
             {
-                if (EntityManager.HasComponent<SpriteRenderer>(child.Value))
+                if (EntityManager.HasComponent<SpriteRenderer>(child.Value) && EntityManager.HasComponent<HealthbarTag>(child.Value))
                 {
                     var childSpriteRenderer = EntityManager.GetComponentObject<SpriteRenderer>(child.Value);
                     childSpriteRenderer.enabled = visible.SetVisible;

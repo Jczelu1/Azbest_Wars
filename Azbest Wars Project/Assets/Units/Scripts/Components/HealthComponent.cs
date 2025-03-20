@@ -13,7 +13,7 @@ public class HealthAuthoring : MonoBehaviour
         {
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
-            AddComponent(entity, new HealthData { Health = authoring.health, MaxValue = authoring.health });
+            AddComponent(entity, new HealthData { Health = authoring.health, MaxValue = authoring.health, Attacked = false });
         }
     }
 }
@@ -21,4 +21,6 @@ public struct HealthData : IComponentData
 {
     public float Health;
     public float MaxValue;
+    public bool Attacked;
+    public bool Dead;
 }
