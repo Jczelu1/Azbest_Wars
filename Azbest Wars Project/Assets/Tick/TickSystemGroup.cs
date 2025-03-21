@@ -15,8 +15,7 @@ public partial class TickSystemGroup : ComponentSystemGroup
     protected override void OnUpdate()
     {
         base.OnUpdate();
-        //Debug.Log("tick");
-        //MainGridScript.Instance.Clicked = false;
+        //Debug.Log(RateManager.ShouldGroupUpdate(this));
     }
 }
 
