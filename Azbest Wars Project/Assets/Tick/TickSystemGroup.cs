@@ -4,19 +4,15 @@ using UnityEngine;
 
 public partial class TickSystemGroup : ComponentSystemGroup
 {
-    public static float Tickrate = .5f;
+    //time between updates in miliseconds
+    public static uint Tickrate = 500;
 
     protected override void OnCreate()
     {
         base.OnCreate();
-        RateManager = new RateUtils.FixedRateCatchUpManager(Tickrate);
+        RateManager = new RateUtils.VariableRateManager(Tickrate, false);
     }
-    
-    protected override void OnUpdate()
-    {
-        base.OnUpdate();
-        //Debug.Log(RateManager.ShouldGroupUpdate(this));
-    }
+ 
 }
 
 [UpdateInGroup(typeof(TickSystemGroup))]

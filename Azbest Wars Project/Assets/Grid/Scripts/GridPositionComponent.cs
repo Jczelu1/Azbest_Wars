@@ -20,8 +20,8 @@ public class GridPositionComponent : MonoBehaviour
         if (MainGridScript.Instance != null && MainGridScript.Instance.MainGrid != null)
         {
             Vector3 position = transform.position;
-            position.x -= width / 2 - .5f;
-            position.y -= height / 2 - .5f;
+            position.x -= ((float)width / 2) - .5f;
+            position.y -= ((float)height / 2) - .5f;
             startGridPosition = MainGridScript.Instance.MainGrid.GetXY(position);
         }
     }

@@ -9,11 +9,10 @@ public partial class HealthbarSystem : SystemBase
 {
     protected override void OnUpdate()
     {
-
+        SetColorSystem.lastTickTime = SystemAPI.Time.ElapsedTime;
+        SetColorSystem.reset = true;
         Entities.WithoutBurst().ForEach((Entity entity, ref HealthData healthData, ref TeamData team, in DynamicBuffer<Child> children) =>
         {
-            SetColorSystem.lastTickTime = SystemAPI.Time.ElapsedTime;
-            SetColorSystem.reset = true;
             EntityManager.GetComponentObject<SpriteRenderer>(entity).color = TeamColors.colors[team.Team];
             if (!healthData.Attacked)
             {
@@ -43,7 +42,7 @@ public partial class SetColorSystem : SystemBase
     public static bool reset = true;
     protected override void OnUpdate()
     {
-        if(reset && SystemAPI.Time.ElapsedTime - lastTickTime > TickSystemGroup.Tickrate / 2)
+        if(reset && (SystemAPI.Time.ElapsedTime - lastTickTime)*1000 > TickSystemGroup.Tickrate / 2)
         {
             reset = false;
             Entities.WithoutBurst().ForEach((Entity entity, ref HealthData healthData, ref TeamData team, in DynamicBuffer<Child> children) =>
