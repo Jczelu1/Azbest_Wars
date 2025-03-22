@@ -37,7 +37,7 @@ public partial struct MoveSystem : ISystem
             pathLookup = _bufferLookup,
             gridOrigin = MainGridScript.Instance.GridOrigin,
             cellSize = MainGridScript.Instance.CellSize,
-            occupied = MainGridScript.Instance.Occupied
+            occupied = MainGridScript.Instance.Occupied,
         };
         //not parallel because race conditions when moving to a tile
         state.Dependency = moveJob.Schedule(state.Dependency);
@@ -52,6 +52,7 @@ public partial struct MoveJob : IJobEntity
     public BufferLookup<PathNode> pathLookup;
     public float2 gridOrigin;
     public float cellSize;
+
     //this will cause bugs
     [NativeDisableParallelForRestriction]
     public FlatGrid<Entity> occupied;
