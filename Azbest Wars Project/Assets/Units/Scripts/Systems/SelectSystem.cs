@@ -32,7 +32,7 @@ public partial class SelectSystem : SystemBase
                 if (SystemAPI.HasComponent<SelectedTag>(child.Value))
                 {
                     var sr = EntityManager.GetComponentObject<SpriteRenderer>(child.Value);
-                    sr.enabled = false;
+                    sr.sortingLayerID = SortingLayer.NameToID("Hidden");
                 }
             }
         }).Run();
@@ -67,7 +67,7 @@ public partial class SelectSystem : SystemBase
                             if (SystemAPI.HasComponent<SelectedTag>(child.Value))
                             {
                                 var sr = EntityManager.GetComponentObject<SpriteRenderer>(child.Value);
-                                sr.enabled = true;
+                                sr.sortingLayerID = SortingLayer.NameToID("Unit");
                             }
                         }
                     }
