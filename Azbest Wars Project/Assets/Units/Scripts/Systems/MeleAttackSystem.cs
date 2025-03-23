@@ -48,7 +48,6 @@ public partial struct MeleAttackSystem : ISystem
 }
 
 
-[BurstCompile]
 public partial struct MeleAttackJob : IJobEntity
 {
     [ReadOnly]
@@ -64,7 +63,7 @@ public partial struct MeleAttackJob : IJobEntity
 
         int2 enemyPosition = new int2(-1, -1);
         Entity enemyEntity = Entity.Null;
-
+        
         if (meleAttack.Range == 1)
         {
             for (int i = 0; i < 8; i++)
@@ -74,7 +73,7 @@ public partial struct MeleAttackJob : IJobEntity
                     continue;
                 if (occupied[checkPos] == Entity.Null) continue;
                 enemyEntity = occupied[checkPos];
-                if (teamLookup[enemyEntity].Team != team)
+                if (teamLookup[enemyEntity].Team != team && healthLookup.HasComponent(enemyEntity))
                 {
                     // Mark enemy as found
                     enemyPosition = checkPos;
@@ -114,5 +113,6 @@ public partial struct MeleAttackJob : IJobEntity
         newHealthData.Health -= meleAttack.Damage;
         newHealthData.Attacked = true;
         healthLookup[enemyEntity] = newHealthData;
+        
     }
 }

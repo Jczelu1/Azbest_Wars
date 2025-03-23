@@ -5,12 +5,17 @@ using UnityEngine.Rendering;
 using Unity.Mathematics;
 using Unity.Collections;
 using Unity.Jobs;
+using UnityEngine;
 
 [BurstCompile]
 [UpdateInGroup(typeof(TickSystemGroup))]
+[UpdateAfter(typeof(MoveSystem))]
 public partial struct SpawnerSystem : ISystem
 {
-    public void OnCreate(ref SystemState state) { }
+    public void OnCreate(ref SystemState state) 
+    {
+
+    }
 
     public void OnDestroy(ref SystemState state) { }
 
@@ -37,9 +42,8 @@ public partial struct SpawnerSystem : ISystem
                 {
                     continue;
                 }
-
                 // Instantiate the prefab directly using the EntityManager.
-                Entity newEntity = entityManager.Instantiate(spawner.ValueRO.Prefab);
+                Entity newEntity = entityManager.Instantiate(spawner.ValueRW.Prefab);
 
                 // Calculate the target world position.
                 float2 targetPosition = new float2(
@@ -52,6 +56,32 @@ public partial struct SpawnerSystem : ISystem
                     newEntity,
                     LocalTransform.FromPosition(new float3(targetPosition.x, targetPosition.y, 0))
                 );
+                GridPosition newGridPosition = entityManager.GetComponentData<GridPosition>(newEntity);
+                newGridPosition.Position.x = newPosition.x;
+                newGridPosition.Position.y = newPosition.y;
+                entityManager.SetComponentData(
+                    newEntity,
+                    newGridPosition
+                );
+                TeamData team = entityManager.GetComponentData<TeamData>(entity);
+                entityManager.SetComponentData(
+                    newEntity,
+                    team
+                );
+
+                //set team color
+                entityManager.GetComponentObject<SpriteRenderer>(newEntity).color = TeamColors.Instance.teamColors[team.Team];
+                //disable select sprite
+
+                //testing only
+                UnitStateData unitState = entityManager.GetComponentData<UnitStateData>(newEntity);
+                unitState.MovementState = 1;
+                entityManager.SetComponentData(
+                    newEntity,
+                    unitState
+                );
+
+                occupied[newPosition] = newEntity;
 
                 // Reset the spawn timer.
                 spawner.ValueRW.NextSpawnTime = spawner.ValueRO.SpawnRate;

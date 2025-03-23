@@ -60,12 +60,11 @@ public partial struct MoveJob : IJobEntity
     {
         if (!pathLookup.HasBuffer(entity))
             return;
-
+        unitState.Moved = false;
         DynamicBuffer<PathNode> pathBuffer = pathLookup[entity];
-
         if (unitState.PathIndex >= 0 && unitState.PathIndex < pathBuffer.Length)
         {
-            unitState.Moved = true;
+            
             int2 targetCell = pathBuffer[unitState.PathIndex].PathPos;
             //UnityEngine.Debug.Log(cellRef);
 
@@ -99,12 +98,11 @@ public partial struct MoveJob : IJobEntity
                 //Debug.Log(pathData.PathIndex);
                 unitState.PathIndex++;
                 unitState.Stuck = 0;
-
-                
+                unitState.Moved = true;
             }
             else
             {
-                if(unitState.Stuck != 2)
+                if (unitState.Stuck != 2)
                     unitState.Stuck = 1;
             }
         }

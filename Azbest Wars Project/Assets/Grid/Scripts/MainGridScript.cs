@@ -51,20 +51,19 @@ public class MainGridScript : MonoBehaviour
         }
         Instance = this;
         MainGrid = new DummyGrid(Width, Height, CellSize, GridOrigin);
-        DontDestroyOnLoad(gameObject);
-    }
-
-    private void Start()
-    {
+        Occupied = new FlatGrid<Entity>(Width, Height, Allocator.Persistent);
         BoundsInt gridBounds = new BoundsInt();
         gridBounds.xMin = Mathf.FloorToInt(GridOrigin.x);
         gridBounds.yMin = Mathf.FloorToInt(GridOrigin.y);
         gridBounds.xMax = gridBounds.xMin + Width;
         gridBounds.yMax = gridBounds.yMin + Height;
-
-        Occupied = new FlatGrid<Entity>(Width, Height, Allocator.Persistent);
         IsWalkable = new FlatGrid<bool>(Width, Height, Allocator.Persistent);
         GetTilesOnTilemap(gridBounds, ref IsWalkable);
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
         //MainGrid.ShowDebugtext();
         MainGrid.ShowDebugLines();
     }

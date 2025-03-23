@@ -14,7 +14,7 @@ class SpawnerAuthoring : MonoBehaviour
             AddComponent(entity, new SpawnerData
             {
                 Prefab = GetEntity(authoring.Prefab, TransformUsageFlags.Dynamic),
-                NextSpawnTime = 0,
+                NextSpawnTime = authoring.SpawnRate,
                 SpawnRate = authoring.SpawnRate
             });
         }

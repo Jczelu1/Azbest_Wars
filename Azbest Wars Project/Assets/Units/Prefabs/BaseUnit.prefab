@@ -111,6 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 1
   height: 1
+  isBuilding: 0
 --- !u!114 &7473537162508834070
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,6 +10,8 @@ public class GridPositionComponent : MonoBehaviour
     int width = 1;
     [SerializeField]
     int height = 1;
+    [SerializeField]
+    bool isBuilding = false;
 
     private void Start()
     {
@@ -17,12 +19,20 @@ public class GridPositionComponent : MonoBehaviour
     }
     private void UpdateGridPosition()
     {
-        if (MainGridScript.Instance != null && MainGridScript.Instance.MainGrid != null)
+        if (MainGridScript.Instance == null) return;
+        Vector3 position = transform.position;
+        position.x -= ((float)width / 2) - .5f;
+        position.y -= ((float)height / 2) - .5f;
+        startGridPosition = MainGridScript.Instance.MainGrid.GetXY(position);
+        if (isBuilding)
         {
-            Vector3 position = transform.position;
-            position.x -= ((float)width / 2) - .5f;
-            position.y -= ((float)height / 2) - .5f;
-            startGridPosition = MainGridScript.Instance.MainGrid.GetXY(position);
+            for(int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    MainGridScript.Instance.IsWalkable[new int2(x + startGridPosition.x, y + startGridPosition.y)] = false;
+                }
+            }
         }
     }
 
