@@ -631,19 +631,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6286383872383973670, guid: 92bfd89fb31e252468adb06ca0f52c70, type: 3}
       propertyPath: team
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6299882327720546880, guid: 92bfd89fb31e252468adb06ca0f52c70, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6299882327720546880, guid: 92bfd89fb31e252468adb06ca0f52c70, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6299882327720546880, guid: 92bfd89fb31e252468adb06ca0f52c70, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6531874853317864133, guid: 92bfd89fb31e252468adb06ca0f52c70, type: 3}
       propertyPath: m_LocalPosition.x
@@ -702,17 +702,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Camp
       objectReference: {fileID: 0}
+    - target: {fileID: 6286383872383973670, guid: 92bfd89fb31e252468adb06ca0f52c70, type: 3}
+      propertyPath: team
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6299882327720546880, guid: 92bfd89fb31e252468adb06ca0f52c70, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6299882327720546880, guid: 92bfd89fb31e252468adb06ca0f52c70, type: 3}
       propertyPath: m_Color.g
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6299882327720546880, guid: 92bfd89fb31e252468adb06ca0f52c70, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6531874853317864133, guid: 92bfd89fb31e252468adb06ca0f52c70, type: 3}
       propertyPath: m_LocalPosition.x

@@ -6,12 +6,14 @@ using Unity.Mathematics;
 using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 [BurstCompile]
 [UpdateInGroup(typeof(TickSystemGroup))]
 [UpdateAfter(typeof(MoveSystem))]
 public partial struct SpawnerSystem : ISystem
 {
+    const int Max_Spawn_Range = 3;
     public void OnCreate(ref SystemState state) 
     {
 
@@ -33,12 +35,59 @@ public partial struct SpawnerSystem : ISystem
         {
             if (spawner.ValueRO.NextSpawnTime == 0)
             {
-                // Calculate a new grid position one cell down.
-                int2 newPosition = gridPosition.Position;
-                newPosition.y -= 1;
+                int maxNodes = (Max_Spawn_Range * 2 + 1) * (Max_Spawn_Range * 2 + 1);
+                int2 startPos = gridPosition.Position;
+                startPos.y -= 1;
+                NativeList<int2> queue = new NativeList<int2>(maxNodes, Allocator.Temp);
+                NativeHashSet<int2> searched = new NativeHashSet<int2>(maxNodes, Allocator.Temp);
+
+                // Initialize the search with the starting position.
+                queue.Add(startPos);
+                searched.Add(startPos);
+
+                int2 newPosition = new int2(-1, -1);
+                bool foundPosition = false;
+                int head = 0; // Use a head pointer for FIFO behavior
+
+                // Breadth-first search loop.
+                while (head < queue.Length && !foundPosition)
+                {
+                    int2 current = queue[head];
+                    head++;
+                    // Skip if outside grid bounds.
+                    if (!occupied.IsInGrid(current))
+                        continue;
+                    //unwalkable
+                    if (!isWalkable[current])
+                        continue;
+
+
+                    if (occupied[current] == Entity.Null)
+                    {
+                        newPosition = current;
+                        foundPosition = true;
+                        break;
+                    }
+                    for (int i = 0; i < Pathfinder.directions.Length; i++)
+                    {
+                        int2 offset = Pathfinder.directions[i];
+                        int2 neighbor = current + offset;
+
+                        // Skip if already visited.
+                        if (searched.Contains(neighbor))
+                            continue;
+                        // Ensure neighbor is within the auto-find search radius.
+                        if (math.abs(neighbor.x - startPos.x) > Max_Spawn_Range ||
+                            math.abs(neighbor.y - startPos.y) > Max_Spawn_Range)
+                            continue;
+                        // Enqueue valid neighbor.
+                        queue.Add(neighbor);
+                        searched.Add(neighbor);
+                    }
+                }
 
                 // Check if the new position is valid.
-                if (!isWalkable[newPosition] || occupied[newPosition] != Entity.Null)
+                if (newPosition.x == -1)
                 {
                     continue;
                 }
@@ -82,6 +131,7 @@ public partial struct SpawnerSystem : ISystem
                 );
 
                 occupied[newPosition] = newEntity;
+                Debug.Log(newPosition);
 
                 // Reset the spawn timer.
                 spawner.ValueRW.NextSpawnTime = spawner.ValueRO.SpawnRate;
