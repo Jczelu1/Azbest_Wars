@@ -119,7 +119,7 @@ public partial struct SpawnerSystem : ISystem
                 );
 
                 //set team color
-                entityManager.GetComponentObject<SpriteRenderer>(newEntity).color = TeamColors.Instance.teamColors[team.Team];
+                entityManager.GetComponentObject<SpriteRenderer>(newEntity).color = TeamColors.GetTeamColor(team.Team);
                 //disable select sprite
 
                 //testing only
@@ -131,7 +131,6 @@ public partial struct SpawnerSystem : ISystem
                 );
 
                 occupied[newPosition] = newEntity;
-                Debug.Log(newPosition);
 
                 // Reset the spawn timer.
                 spawner.ValueRW.NextSpawnTime = spawner.ValueRO.SpawnRate;
