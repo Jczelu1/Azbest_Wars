@@ -2,12 +2,15 @@ using UnityEngine;
 using Unity.Entities;
 using Unity.Mathematics;
 
+[RequireComponent(typeof(GridPositionComponent))]
 public class CaptureAreaAuthoring : MonoBehaviour
 {
     [SerializeField]
-    byte team;
-    [SerializeField]
     int requiredCapture;
+    [SerializeField]
+    int width;
+    [SerializeField]
+    int height;
 
     private class Baker : Baker<CaptureAreaAuthoring>
     {
@@ -15,13 +18,15 @@ public class CaptureAreaAuthoring : MonoBehaviour
         {
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
-            AddComponent(entity, new CaptureAreaData { CurrentTeam = authoring.team, CaptureProgress = 0, RequiredCapture = authoring.requiredCapture });
+            AddComponent(entity, new CaptureAreaData { CapturingTeam = 255, CaptureProgress = 0, RequiredCapture = authoring.requiredCapture, Size = new int2(authoring.width, authoring.height), Captured = true });
         }
     }
 }
 public struct CaptureAreaData : IComponentData
 {
-    public byte CurrentTeam;
+    public byte CapturingTeam;
     public int RequiredCapture;
     public int CaptureProgress;
+    public int2 Size;
+    public bool Captured;
 }

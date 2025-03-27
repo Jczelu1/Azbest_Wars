@@ -5,7 +5,8 @@ using UnityEngine;
 public class GridPositionComponent : MonoBehaviour
 {
     //private Vector3 WorldPosition;
-    private int2 startGridPosition;
+    [HideInInspector]
+    public int2 startGridPosition;
     [SerializeField]
     int width = 1;
     [SerializeField]

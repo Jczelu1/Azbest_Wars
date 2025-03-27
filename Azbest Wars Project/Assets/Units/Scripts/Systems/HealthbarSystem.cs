@@ -35,7 +35,6 @@ public partial class HealthbarSystem : SystemBase
         }).Run();
     }
 }
-
 public partial class SetColorSystem : SystemBase
 {
     public static double lastTickTime = 0;

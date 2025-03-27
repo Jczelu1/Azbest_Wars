@@ -109,6 +109,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110dce70be38d8b478a1ee4e84065ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startGridPosition:
+    x: 0
+    y: 0
   width: 1
   height: 1
   isBuilding: 0
