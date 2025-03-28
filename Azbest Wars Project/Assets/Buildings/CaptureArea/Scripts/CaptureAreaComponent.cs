@@ -24,8 +24,8 @@ public class CaptureAreaAuthoring : MonoBehaviour
                 CaptureProgress = 0,
                 RequiredCapture = authoring.requiredCapture,
                 Size = new int2(authoring.width, authoring.height),
-                Captured = true,
-                numberOfAreaMarkers = 0 });
+                Captured = true
+                });
         }
     }
 }
@@ -36,5 +36,4 @@ public struct CaptureAreaData : IComponentData
     public int CaptureProgress;
     public int2 Size;
     public bool Captured;
-    public int numberOfAreaMarkers;
 }

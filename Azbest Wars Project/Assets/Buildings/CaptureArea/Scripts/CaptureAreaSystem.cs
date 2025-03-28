@@ -78,9 +78,10 @@ public partial struct CaptureAreaSystem : ISystem
                 }
             }
             //if most units are from team that holds the area 
-            if (maxTeam == team)
+            if (maxTeam == team || maxTeam == 255)
             {
                 unitNumbers.Dispose();
+                captureArea.CaptureProgress = 0;
                 return;
             }
             int capture = maxUnits;

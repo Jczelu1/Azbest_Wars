@@ -78,17 +78,35 @@ public partial class CaptureSystem : SystemBase
         }
         Entities.WithoutBurst().ForEach((Entity entity, ref CaptureAreaData captureArea, ref TeamData team, ref DynamicBuffer<Child> children) =>
         {
-            if (!captureArea.Captured) return;
-            captureArea.Captured = false;
-            team.Team = captureArea.CapturingTeam;
-            EntityManager.GetComponentObject<SpriteRenderer>(entity).color = TeamColors.GetTeamColor(team.Team);
-
-            foreach (var child in children)
+            if (captureArea.Captured)
             {
-                if (EntityManager.HasComponent<SpriteRenderer>(child.Value) && EntityManager.HasComponent<TeamData>(child.Value))
+                captureArea.Captured = false;
+                team.Team = captureArea.CapturingTeam;
+                EntityManager.GetComponentObject<SpriteRenderer>(entity).color = TeamColors.GetTeamColor(team.Team);
+
+                foreach (var child in children)
                 {
-                    EntityManager.GetComponentObject<SpriteRenderer>(child.Value).color = TeamColors.GetTeamColor(team.Team);
-                    EntityManager.SetComponentData<TeamData>(child.Value, team);
+                    if (EntityManager.HasComponent<SpriteRenderer>(child.Value) && EntityManager.HasComponent<TeamData>(child.Value))
+                    {
+                        EntityManager.GetComponentObject<SpriteRenderer>(child.Value).color = TeamColors.GetTeamColor(team.Team);
+                        EntityManager.SetComponentData<TeamData>(child.Value, team);
+                    }
+                }
+            }
+            float capturePercentage = Mathf.Clamp01((float)captureArea.CaptureProgress / captureArea.RequiredCapture);
+            GameObjectList gameObjectList = EntityManager.GetComponentObject<GameObjectList>(entity);
+            int areaMarkers = gameObjectList.list.Count;
+            int captureMarkers = Mathf.FloorToInt(capturePercentage * (areaMarkers - 1));
+            foreach (GameObject g in EntityManager.GetComponentObject<GameObjectList>(entity).list)
+            {
+                if (captureMarkers > 0)
+                {
+                    g.GetComponent<SpriteRenderer>().color = TeamColors.GetTeamColor(captureArea.CapturingTeam);
+                    captureMarkers--;
+                }
+                else
+                {
+                    g.GetComponent<SpriteRenderer>().color = TeamColors.GetTeamColor(team.Team);
                 }
             }
         }).Run();
