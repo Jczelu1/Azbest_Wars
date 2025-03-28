@@ -16,14 +16,8 @@ public partial class CaptureSystem : SystemBase
      {
         if (!areaMarked)
         {
-            EntityArchetype prefabArchetype = EntityManager.CreateArchetype(
-                typeof(Prefab),         
-                typeof(LocalTransform), 
-                typeof(LocalToWorld)
-            );
-            Entity emptyPrefab = EntityManager.CreateEntity(prefabArchetype);
             areaMarked = true;
-            Entities.WithoutBurst().WithStructuralChanges().ForEach((Entity entity, ref GridPosition gridPosition,  ref CaptureAreaData captureArea, ref TeamData team, ref DynamicBuffer<Child> children) =>
+            Entities.WithoutBurst().ForEach((Entity entity, ref GridPosition gridPosition,  ref CaptureAreaData captureArea, ref TeamData team, ref DynamicBuffer<Child> children) =>
             {
                 Debug.Log("asdfasfd");
                 float2 gridOrigin = MainGridScript.Instance.GridOrigin;
@@ -34,19 +28,12 @@ public partial class CaptureSystem : SystemBase
                     float2 targetPosition;
                     targetPosition.x = (gridPosition.Position.x + dx) * cellSize + gridOrigin.x;
                     targetPosition.y = (gridPosition.Position.y + captureArea.Size.y) * cellSize + gridOrigin.y;
-                    Entity newEntity = EntityManager.Instantiate(emptyPrefab);
-                    //fuckery
+
                     GameObject spriteObject = new GameObject("AreaMarker");
                     spriteObject.transform.position = new Vector3(targetPosition.x, targetPosition.y, 0);
                     SpriteRenderer spriteRenderer = spriteObject.AddComponent<SpriteRenderer>();
                     spriteRenderer.sprite = SpriteHolder.Instance.areaMarkerSprite;
-                    EntityManager.AddComponentObject(newEntity, spriteRenderer);
-                    EntityManager.SetComponentData(
-                        newEntity,
-                        LocalTransform.FromPosition(new float3(targetPosition.x, targetPosition.y, 0))
-                    );
-                    DynamicBuffer<EntityData> entityBuffer = EntityManager.GetBuffer<EntityData>(entity);
-                    entityBuffer.Add(new EntityData { entity = newEntity });
+                    EntityManager.GetComponentObject<GameObjectList>(entity).list.Add(spriteObject);
                 }
                 //right
                 for (int dy = captureArea.Size.y-1; dy >= -captureArea.Size.y; dy--)
@@ -54,19 +41,12 @@ public partial class CaptureSystem : SystemBase
                     float2 targetPosition;
                     targetPosition.x = (gridPosition.Position.x + captureArea.Size.x) * cellSize + gridOrigin.x;
                     targetPosition.y = (gridPosition.Position.y + dy) * cellSize + gridOrigin.y;
-                    Entity newEntity = EntityManager.Instantiate(emptyPrefab);
-                    //fuckery
+
                     GameObject spriteObject = new GameObject("AreaMarker");
                     spriteObject.transform.position = new Vector3(targetPosition.x, targetPosition.y, 0);
                     SpriteRenderer spriteRenderer = spriteObject.AddComponent<SpriteRenderer>();
                     spriteRenderer.sprite = SpriteHolder.Instance.areaMarkerSprite;
-                    EntityManager.AddComponentObject(newEntity, spriteRenderer);
-                    EntityManager.SetComponentData(
-                        newEntity,
-                        LocalTransform.FromPosition(new float3(targetPosition.x, targetPosition.y, 0))
-                    );
-                    DynamicBuffer<EntityData> entityBuffer = EntityManager.GetBuffer<EntityData>(entity);
-                    entityBuffer.Add(new EntityData { entity = newEntity });
+                    EntityManager.GetComponentObject<GameObjectList>(entity).list.Add(spriteObject);
                 }
                 //bottom
                 for (int dx = captureArea.Size.x-1; dx >= -captureArea.Size.x; dx--)
@@ -74,19 +54,12 @@ public partial class CaptureSystem : SystemBase
                     float2 targetPosition;
                     targetPosition.x = (gridPosition.Position.x + dx) * cellSize + gridOrigin.x;
                     targetPosition.y = (gridPosition.Position.y + -captureArea.Size.y) * cellSize + gridOrigin.y;
-                    Entity newEntity = EntityManager.Instantiate(emptyPrefab);
-                    //fuckery
+
                     GameObject spriteObject = new GameObject("AreaMarker");
                     spriteObject.transform.position = new Vector3(targetPosition.x, targetPosition.y, 0);
                     SpriteRenderer spriteRenderer = spriteObject.AddComponent<SpriteRenderer>();
                     spriteRenderer.sprite = SpriteHolder.Instance.areaMarkerSprite;
-                    EntityManager.AddComponentObject(newEntity, spriteRenderer);
-                    EntityManager.SetComponentData(
-                        newEntity,
-                        LocalTransform.FromPosition(new float3(targetPosition.x, targetPosition.y, 0))
-                    );
-                    DynamicBuffer<EntityData> entityBuffer = EntityManager.GetBuffer<EntityData>(entity);
-                    entityBuffer.Add(new EntityData { entity = newEntity });
+                    EntityManager.GetComponentObject<GameObjectList>(entity).list.Add(spriteObject);
                 }
                 //left
                 for (int dy = -captureArea.Size.y + 1; dy <= captureArea.Size.y-1; dy++)
@@ -94,19 +67,12 @@ public partial class CaptureSystem : SystemBase
                     float2 targetPosition;
                     targetPosition.x = (gridPosition.Position.x + -captureArea.Size.x) * cellSize + gridOrigin.x;
                     targetPosition.y = (gridPosition.Position.y + dy) * cellSize + gridOrigin.y;
-                    Entity newEntity = EntityManager.Instantiate(emptyPrefab);
-                    //fuckery
+
                     GameObject spriteObject = new GameObject("AreaMarker");
                     spriteObject.transform.position = new Vector3(targetPosition.x, targetPosition.y, 0);
                     SpriteRenderer spriteRenderer = spriteObject.AddComponent<SpriteRenderer>();
                     spriteRenderer.sprite = SpriteHolder.Instance.areaMarkerSprite;
-                    EntityManager.AddComponentObject(newEntity, spriteRenderer);
-                    EntityManager.SetComponentData(
-                        newEntity,
-                        LocalTransform.FromPosition(new float3(targetPosition.x, targetPosition.y, 0))
-                    );
-                    DynamicBuffer<EntityData> entityBuffer = EntityManager.GetBuffer<EntityData>(entity);
-                    entityBuffer.Add(new EntityData { entity = newEntity });
+                    EntityManager.GetComponentObject<GameObjectList>(entity).list.Add(spriteObject);
                 }
             }).Run();
         }
