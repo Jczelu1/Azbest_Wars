@@ -26,6 +26,10 @@ public class MainGridScript : MonoBehaviour
     [SerializeField]
     private GameObject selectSpritePrefab;
     private bool Selecting = false;
+    [SerializeField]
+    private GameObject MoveToPrefab;
+    private GameObject MoveToObject;
+
     [HideInInspector]
     public int2 SelectStartPosition;
     [HideInInspector]
@@ -72,11 +76,17 @@ public class MainGridScript : MonoBehaviour
     {
         if (Selected && Input.GetMouseButtonUp(1))
         {
-            Vector3 mousePos = Utils.GetMouseWorldPosition();
-            int2 endPos = MainGrid.GetXY(mousePos);
-            if (endPos.x == -1) return;
-            RightClickPosition = endPos;
-            RightClick = true;
+            if (Selected)
+            {
+                Vector3 mousePos = Utils.GetMouseWorldPosition();
+                int2 endPos = MainGrid.GetXY(mousePos);
+                if (endPos.x == -1) return;
+                RightClickPosition = endPos;
+                RightClick = true;
+                Destroy(MoveToObject);
+                MoveToObject = MainGrid.CreateSprite(MoveToPrefab, endPos);
+                Destroy(MoveToObject, 0.5f);
+            }
         }
         
         if (Input.GetMouseButtonDown(0))
