@@ -33,6 +33,7 @@ public partial struct SpawnerSystem : ISystem
         // Iterate over all spawner entities.
         foreach (var (spawner, gridPosition, entity) in SystemAPI.Query<RefRW<SpawnerData>, GridPosition>().WithEntityAccess())
         {
+            if (entityManager.GetComponentData<TeamData>(entity).Team > 3) return;
             if (spawner.ValueRO.NextSpawnTime == 0)
             {
                 int maxNodes = (Max_Spawn_Range * 2 + 1) * (Max_Spawn_Range * 2 + 1);

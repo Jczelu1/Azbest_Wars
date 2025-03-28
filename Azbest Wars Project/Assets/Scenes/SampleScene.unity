@@ -926,6 +926,7 @@ MonoBehaviour:
   - {fileID: 2084055597, guid: f63a0b5e6edadf842a84addb719fbdab, type: 3}
   - {fileID: -8984361004240790378, guid: f63a0b5e6edadf842a84addb719fbdab, type: 3}
   selectedSprite: {fileID: 21300000, guid: 7b43926e06569fd4ca406ccd53e41e59, type: 3}
+  areaMarkerSprite: {fileID: 21300000, guid: 9ce5a253dab0ec34792924a0da460deb, type: 3}
 --- !u!114 &1084817518
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,6 +6,8 @@ using Unity.Mathematics;
 public class CaptureAreaAuthoring : MonoBehaviour
 {
     [SerializeField]
+    byte team;
+    [SerializeField]
     int requiredCapture;
     [SerializeField]
     int width;
@@ -18,7 +20,12 @@ public class CaptureAreaAuthoring : MonoBehaviour
         {
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
-            AddComponent(entity, new CaptureAreaData { CapturingTeam = 255, CaptureProgress = 0, RequiredCapture = authoring.requiredCapture, Size = new int2(authoring.width, authoring.height), Captured = true });
+            AddComponent(entity, new CaptureAreaData { CapturingTeam = authoring.team,
+                CaptureProgress = 0,
+                RequiredCapture = authoring.requiredCapture,
+                Size = new int2(authoring.width, authoring.height),
+                Captured = true,
+                numberOfAreaMarkers = 0 });
         }
     }
 }
@@ -29,4 +36,5 @@ public struct CaptureAreaData : IComponentData
     public int CaptureProgress;
     public int2 Size;
     public bool Captured;
+    public int numberOfAreaMarkers;
 }

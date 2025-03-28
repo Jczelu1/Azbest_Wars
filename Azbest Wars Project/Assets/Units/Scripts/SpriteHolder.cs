@@ -8,6 +8,8 @@ public class SpriteHolder : MonoBehaviour
     public Sprite[] healthbarSprites;
     [SerializeField]
     public Sprite selectedSprite;
+    [SerializeField]
+    public Sprite areaMarkerSprite;
     private void Awake()
     {
         if (Instance != null && Instance != this)
