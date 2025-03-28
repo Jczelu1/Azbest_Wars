@@ -690,7 +690,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000ef0577b42d784d042b97b75e95c35c5e
+  m_ApplyToSortingLayers: 00000000ef0577b42d784d042b97b75e95c35c5ee1e3b557
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -894,6 +894,7 @@ MonoBehaviour:
     y: 0
   RightClick: 0
   selectSpritePrefab: {fileID: 8437689277624345938, guid: 540cdb66f803c3c44aac5acfc3e38295, type: 3}
+  MoveToPrefab: {fileID: 4204288484921061643, guid: 796795bac7caf2a49ae317db37eec752, type: 3}
   SelectStartPosition:
     x: 0
     y: 0

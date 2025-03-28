@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 13cd0dc4d293a2b4b8ecd1d42c990b98
+guid: c2c2e71600be7754c8fee8a6df02924a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6752567909215077633
-    second: tent_0
+      213: 1468910330429332889
+    second: windmill_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tent_0
+      name: windmill_0
       rect:
         serializedVersion: 2
         x: 0
         y: 3
         width: 32
-        height: 26
+        height: 45
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ffa7881634f0a42a0800000000000000
-      internalID: -6752567909215077633
+      spriteID: 99d5424b92e926410800000000000000
+      internalID: 1468910330429332889
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      tent_0: -6752567909215077633
+      windmill_0: 1468910330429332889
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
