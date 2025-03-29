@@ -10,11 +10,12 @@ public class RandomValueAuthoring : MonoBehaviour
         {
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
-            AddComponent(entity, new RandomValueData { value = 0 });
+            AddComponent(entity, new RandomValueData { value = 0, randDigitIndex = 0 });
         }
     }
 }
 public struct RandomValueData : IComponentData
 {
     public float value;
+    public byte randDigitIndex;
 }

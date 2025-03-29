@@ -16,6 +16,14 @@ public partial class RandomValueSystem : SystemBase
         {
             float value = UnityEngine.Random.value;
             random.value = value;
+            random.randDigitIndex = 0;
         }).Run();
+    }
+    const byte numOfRandomDigits = 6;
+    public static byte Digit(float value, byte randDigitIndex)
+    {
+        randDigitIndex%=numOfRandomDigits;
+        int valueInt = (int)(value* math.pow(10, randDigitIndex+1));
+        return (byte)(valueInt % 10);
     }
 }
