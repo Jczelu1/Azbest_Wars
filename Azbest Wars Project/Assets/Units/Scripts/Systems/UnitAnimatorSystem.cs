@@ -4,7 +4,7 @@ using Unity.Transforms;
 using UnityEngine;
 
 [UpdateInGroup(typeof(SubTickSystemGroup))]
-[UpdateAfter(typeof(SubTickManagerSystem))]
+[UpdateBefore(typeof(SubTickManagerSystem))]
 public partial class UnitAnimatorSystem : SystemBase
 {
     protected override void OnUpdate()
@@ -15,6 +15,7 @@ public partial class UnitAnimatorSystem : SystemBase
             int subTickNumber = SubTickSystemGroup.subTickNumber;
             if (unitState.Moved)
             {
+                Debug.Log(subTickNumber);
                 subTickNumber%=animator.WalkingAnimation.Count;
                 spriteRenderer.sprite = animator.WalkingAnimation[subTickNumber];
             }

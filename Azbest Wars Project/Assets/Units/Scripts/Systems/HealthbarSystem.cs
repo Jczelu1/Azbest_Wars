@@ -35,7 +35,7 @@ public partial class HealthbarSystem : SystemBase
     }
 }
 [UpdateInGroup(typeof(SubTickSystemGroup))]
-[UpdateAfter(typeof(SubTickManagerSystem))]
+[UpdateBefore(typeof(SubTickManagerSystem))]
 public partial class SetColorSystem : SystemBase
 {
     protected override void OnUpdate()

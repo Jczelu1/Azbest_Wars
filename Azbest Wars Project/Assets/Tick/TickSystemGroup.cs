@@ -45,8 +45,8 @@ public partial class SubTickManagerSystem : SystemBase
 {
     protected override void OnUpdate()
     {
-        if (SubTickSystemGroup.subTickNumber > 3) return;
-        //Debug.Log("subtick: " + SubTickSystemGroup.subTickNumber);
         SubTickSystemGroup.subTickNumber++;
+        
+        //Debug.Log("subtick: " + SubTickSystemGroup.subTickNumber);
     }
 }

@@ -10,7 +10,7 @@ public class UnitStateAuthoring : MonoBehaviour
         {
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
-            AddComponent(entity, new UnitStateData { PathIndex = 0, Moved = false, Attacked = false, Stuck = 0, Destination = new int2(-1, -1), MovementState = 0 });
+            AddComponent(entity, new UnitStateData { PathIndex = 0, Moved = false,  Attacked = false, Stuck = 0, Destination = new int2(-1, -1), MovementState = 0 });
             AddComponent(entity, new VisibleData { Visible = false, SetVisible = false });
         }
     }

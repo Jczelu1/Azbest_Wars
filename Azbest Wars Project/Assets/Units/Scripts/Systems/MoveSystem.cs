@@ -38,6 +38,7 @@ public partial struct MoveSystem : ISystem
             gridOrigin = MainGridScript.Instance.GridOrigin,
             cellSize = MainGridScript.Instance.CellSize,
             occupied = MainGridScript.Instance.Occupied,
+            moveTransform = !SmoothMoveSystem.enabled
         };
         //not parallel because race conditions when moving to a tile
         state.Dependency = moveJob.Schedule(state.Dependency);
@@ -52,7 +53,7 @@ public partial struct MoveJob : IJobEntity
     public BufferLookup<PathNode> pathLookup;
     public float2 gridOrigin;
     public float cellSize;
-
+    public bool moveTransform;
     //this will cause bugs
     [NativeDisableParallelForRestriction]
     public FlatGrid<Entity> occupied;
@@ -87,11 +88,14 @@ public partial struct MoveJob : IJobEntity
                 {
                     transform.Rotation = Quaternion.Euler(0, 0, 0);
                 }
-                float2 targetPosition = new float2(
+                if (moveTransform)
+                {
+                    float2 targetPosition = new float2(
                     gridOrigin.x + cellSize * targetCell.x,
                     gridOrigin.y + cellSize * targetCell.y
-                );
-                transform.Position = new float3(targetPosition.x, targetPosition.y, transform.Position.z);
+                    );
+                    transform.Position = new float3(targetPosition.x, targetPosition.y, transform.Position.z);
+                }
                 occupied[gridPosition.Position] = Entity.Null;
                 gridPosition.Position = targetCell;
                 occupied.SetValue(gridPosition.Position, entity);
