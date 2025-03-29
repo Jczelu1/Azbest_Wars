@@ -20,6 +20,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public partial struct MeleAttackSystem : ISystem
 {
     const float crit_Chance = .2f;
+    const float block_Chance = .2f;
     private ComponentLookup<TeamData> _teamLookup;
     private ComponentLookup<HealthData> _healthLookup;
     public void OnCreate(ref SystemState state)
@@ -55,6 +56,9 @@ public partial struct MeleAttackSystem : ISystem
         public ComponentLookup<HealthData> healthLookup;
         public void Execute(Entity entity, ref UnitStateData unitState, ref GridPosition gridPosition, ref MeleAttackData meleAttack, ref LocalTransform transform, ref RandomValueData random)
         {
+            //block
+            if (1f - random.value < block_Chance) return;
+
             int team = teamLookup[entity].Team;
             if (unitState.Moved) return;
             int2 startPos = gridPosition.Position;
@@ -107,6 +111,8 @@ public partial struct MeleAttackSystem : ISystem
             }
 
             float damage = meleAttack.Damage;
+
+            //crit
             if(random.value < crit_Chance)
             {
                 damage *= 2;
