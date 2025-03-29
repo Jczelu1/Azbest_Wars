@@ -116,9 +116,9 @@ TextureImporter:
       name: SwordGuyWalk2_0
       rect:
         serializedVersion: 2
-        x: 2
+        x: 1
         y: 1
-        width: 13
+        width: 14
         height: 15
       alignment: 0
       pivot: {x: 0, y: 0}

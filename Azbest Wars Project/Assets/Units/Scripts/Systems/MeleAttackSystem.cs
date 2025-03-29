@@ -12,7 +12,6 @@ using Unity.Transforms;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEditor.Searcher;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 [BurstCompile]
 [UpdateInGroup(typeof(TickSystemGroup))]
@@ -56,9 +55,8 @@ public partial struct MeleAttackSystem : ISystem
         public ComponentLookup<HealthData> healthLookup;
         public void Execute(Entity entity, ref UnitStateData unitState, ref GridPosition gridPosition, ref MeleAttackData meleAttack, ref LocalTransform transform, ref RandomValueData random)
         {
-            //block
-            if (1f - random.value < block_Chance) return;
-
+            unitState.Attacked = false;
+            
             int team = teamLookup[entity].Team;
             if (unitState.Moved) return;
             int2 startPos = gridPosition.Position;
@@ -109,11 +107,12 @@ public partial struct MeleAttackSystem : ISystem
             {
                 transform.Rotation = Quaternion.Euler(0, 0, 0);
             }
-
+            unitState.Attacked = true;
             float damage = meleAttack.Damage;
-
+            //block
+            if (1f - random.value < block_Chance) return;
             //crit
-            if(random.value < crit_Chance)
+            if (random.value < crit_Chance)
             {
                 damage *= 2;
             }
@@ -122,7 +121,7 @@ public partial struct MeleAttackSystem : ISystem
             newHealthData.Health -= damage;
             newHealthData.Attacked = true;
             healthLookup[enemyEntity] = newHealthData;
-
+            
         }
     }
 }

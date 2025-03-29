@@ -1,16 +1,52 @@
+using System;
+using Unity.Collections;
+using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
+using System.Collections.Generic;
+using NUnit.Framework;
 
-public class UnitAnimatorComponent : MonoBehaviour
+public class UnitAnimatorAuthoring : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField]
+    Sprite baseSprite;
+    [SerializeField]
+    List<Sprite> walkingAnimation;
+    [SerializeField]
+    List<Sprite> attackingAnimation;
+    private class Baker : Baker<UnitAnimatorAuthoring>
     {
-        
+        public override void Bake(UnitAnimatorAuthoring authoring)
+        {
+            Entity entity = GetEntity(TransformUsageFlags.Dynamic);
+            AddComponentObject(entity, new UnitAnimatorData { 
+                BaseSprite = authoring.baseSprite,
+                WalkingAnimation = new List<Sprite>(authoring.walkingAnimation),
+                AttackingAnimation = new List<Sprite>(authoring.attackingAnimation),
+            });
+        }
+    }
+}
+public class UnitAnimatorData : IComponentData, IDisposable, ICloneable
+{
+    public Sprite BaseSprite;
+    public List<Sprite> WalkingAnimation;
+    public List<Sprite> AttackingAnimation;
+
+    public void Dispose()
+    {
+        WalkingAnimation.Clear();
+        AttackingAnimation.Clear();
     }
 
-    // Update is called once per frame
-    void Update()
+    public object Clone()
     {
-        
+        UnitAnimatorData clonee = new UnitAnimatorData
+        {
+            BaseSprite = BaseSprite,
+            WalkingAnimation = new List<Sprite>(WalkingAnimation),
+            AttackingAnimation = new List<Sprite>(AttackingAnimation)
+        };
+        return clonee;
     }
 }
