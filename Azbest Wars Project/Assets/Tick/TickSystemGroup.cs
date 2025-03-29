@@ -12,16 +12,41 @@ public partial class TickSystemGroup : ComponentSystemGroup
         base.OnCreate();
         RateManager = new RateUtils.VariableRateManager(Tickrate, false);
     }
- 
 }
-
+public partial class SubTickSystemGroup : ComponentSystemGroup
+{
+    public static int subTickNumber = 0;
+    public static bool subTickEnabled = true;
+    protected override void OnCreate()
+    {
+        base.OnCreate();
+        RateManager = new RateUtils.VariableRateManager(TickSystemGroup.Tickrate / 4, false);
+    }
+    protected override void OnUpdate()
+    {
+        if (subTickEnabled)
+        {
+            base.OnUpdate();
+        }
+    }
+}
 [UpdateInGroup(typeof(TickSystemGroup))]
-[UpdateAfter(typeof(MoveSystem))]
-public partial class ClickManageSystem : SystemBase
+[UpdateBefore(typeof(PathfindSystem))]
+public partial class TickManagerSystem : SystemBase
 {
     protected override void OnUpdate()
     {
         //Debug.Log("tick");
-        MainGridScript.Instance.RightClick = false;
+        SubTickSystemGroup.subTickNumber = 0;
+    }
+}
+[UpdateInGroup(typeof(SubTickSystemGroup))]
+public partial class SubTickManagerSystem : SystemBase
+{
+    protected override void OnUpdate()
+    {
+        if (SubTickSystemGroup.subTickNumber > 3) return;
+        //Debug.Log("subtick: " + SubTickSystemGroup.subTickNumber);
+        SubTickSystemGroup.subTickNumber++;
     }
 }

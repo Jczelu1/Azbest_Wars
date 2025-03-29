@@ -8,7 +8,8 @@ using Unity.Transforms;
 using UnityEngine;
 
 [UpdateInGroup(typeof(TickSystemGroup))]
-[UpdateAfter(typeof(MeleAttackSystem))]
+[UpdateBefore(typeof(MeleAttackSystem))]
+[UpdateBefore(typeof(PathfindSystem))]
 public partial struct HealthSystem : ISystem
 {
     public ComponentLookup<HealthbarTag> healthbarLookup;
@@ -30,7 +31,10 @@ public partial struct HealthSystem : ISystem
             occupied = MainGridScript.Instance.Occupied
         };
 
-        state.Dependency = job.Schedule(state.Dependency);
+        JobHandle jobHandle = job.Schedule(state.Dependency);
+        state.Dependency = jobHandle;
+        jobHandle.Complete();
+        ecbSystem.Update(state.WorldUnmanaged);
     }
     [BurstCompile]
     public partial struct DieJob : IJobEntity
@@ -51,27 +55,5 @@ public partial struct HealthSystem : ISystem
             }
         }
     }
-    [BurstCompile]
-    public partial struct UpdateHealthBarJob : IJobEntity
-    {
-        public EntityCommandBuffer.ParallelWriter ECB;
-        //[ReadOnly] public ComponentLookup<HealthbarTag> HealthbarTagLookup;
-
-        public void Execute(Entity entity, in DynamicBuffer<Child> children, ref HealthData healthData, in LocalTransform localTransform, [ChunkIndexInQuery] int chunkIndex, ComponentLookup<HealthbarTag> healthbarLookup)
-        {
-            //if (!HealthLookup.TryGetComponent(entity, out var healthData)) return;
-            foreach (var child in children)
-            {
-                if(!healthbarLookup.HasComponent(child.Value)) continue;
-
-                float healthPercentage = math.clamp(healthData.Health / healthData.MaxValue, 0f, 1f);
-                //new float3(math.clamp(healthData.Value / healthData.MaxValue, 0f, 1f), 1f, 1f)
-                ECB.SetComponent(chunkIndex, child.Value, new LocalTransform
-                {
-                    Scale = healthPercentage
-                });
-                
-            }
-        }
-    }
+  
 }

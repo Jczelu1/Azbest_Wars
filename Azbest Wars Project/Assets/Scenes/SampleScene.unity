@@ -918,6 +918,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthbarSprites:
+  - {fileID: 21300000, guid: 91d3da6076391fa41823a3b27e5405a3, type: 3}
   - {fileID: 1783631478, guid: f63a0b5e6edadf842a84addb719fbdab, type: 3}
   - {fileID: -1261920393, guid: f63a0b5e6edadf842a84addb719fbdab, type: 3}
   - {fileID: 1516961096, guid: f63a0b5e6edadf842a84addb719fbdab, type: 3}

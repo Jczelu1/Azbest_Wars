@@ -3,7 +3,7 @@
 	"version": 9,
 	"scale": "normal :)",
 	"key": "C",
-	"introBars": 4,
+	"introBars": 6,
 	"loopBars": 10,
 	"beatsPerBar": 8,
 	"ticksPerBeat": 4,
@@ -389,6 +389,8 @@
 				}
 			],
 			"sequence": [
+				0,
+				0,
 				0,
 				0,
 				0,
@@ -954,6 +956,8 @@
 				0,
 				0,
 				0,
+				0,
+				0,
 				1,
 				1,
 				1,
@@ -1150,6 +1154,8 @@
 				}
 			],
 			"sequence": [
+				0,
+				0,
 				1,
 				1,
 				1,
@@ -1496,6 +1502,8 @@
 				}
 			],
 			"sequence": [
+				2,
+				2,
 				2,
 				2,
 				1,
