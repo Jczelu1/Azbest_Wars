@@ -19,7 +19,6 @@ public partial class CaptureSystem : SystemBase
             areaMarked = true;
             Entities.WithoutBurst().ForEach((Entity entity, ref GridPosition gridPosition,  ref CaptureAreaData captureArea, ref TeamData team, ref DynamicBuffer<Child> children) =>
             {
-                Debug.Log("asdfasfd");
                 float2 gridOrigin = MainGridScript.Instance.GridOrigin;
                 float cellSize = MainGridScript.Instance.CellSize;
                 //top
