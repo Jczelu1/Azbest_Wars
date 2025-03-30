@@ -15,7 +15,6 @@ public partial class UnitAnimatorSystem : SystemBase
             int subTickNumber = SubTickSystemGroup.subTickNumber;
             if (unitState.Moved)
             {
-                Debug.Log(subTickNumber);
                 subTickNumber%=animator.WalkingAnimation.Count;
                 spriteRenderer.sprite = animator.WalkingAnimation[subTickNumber];
             }
