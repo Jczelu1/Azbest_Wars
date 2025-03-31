@@ -13,12 +13,12 @@ public partial class UnitAnimatorSystem : SystemBase
         {
             SpriteRenderer spriteRenderer = EntityManager.GetComponentObject<SpriteRenderer>(entity);
             int subTickNumber = SubTickSystemGroup.subTickNumber;
-            if (unitState.Moved)
+            if (unitState.Moved && animator.WalkingAnimation.Count != 0)
             {
-                subTickNumber%=animator.WalkingAnimation.Count;
+                subTickNumber %= animator.WalkingAnimation.Count;
                 spriteRenderer.sprite = animator.WalkingAnimation[subTickNumber];
             }
-            else if (unitState.Attacked)
+            else if (unitState.Attacked && animator.AttackingAnimation.Count != 0)
             {
                 subTickNumber %= animator.AttackingAnimation.Count;
                 spriteRenderer.sprite = animator.AttackingAnimation[subTickNumber];
