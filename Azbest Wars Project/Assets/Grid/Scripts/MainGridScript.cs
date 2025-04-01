@@ -28,6 +28,8 @@ public class MainGridScript : MonoBehaviour
     private bool Selecting = false;
     [SerializeField]
     private GameObject MoveToPrefab;
+    [SerializeField]
+    private GameObject CantMovePrefab;
     private GameObject MoveToObject;
 
     [HideInInspector]
@@ -82,12 +84,14 @@ public class MainGridScript : MonoBehaviour
                 int2 endPos = MainGrid.GetXY(mousePos);
                 if (endPos.x == -1) return;
                 RightClickPosition = endPos;
+                Destroy(MoveToObject);
                 if (!IsWalkable[endPos])
                 {
+                    MoveToObject = MainGrid.CreateSprite(CantMovePrefab, endPos);
+                    Destroy(MoveToObject, 0.5f);
                     return;
                 }
                 RightClick = true;
-                Destroy(MoveToObject);
                 MoveToObject = MainGrid.CreateSprite(MoveToPrefab, endPos);
                 Destroy(MoveToObject, 0.5f);
             }
