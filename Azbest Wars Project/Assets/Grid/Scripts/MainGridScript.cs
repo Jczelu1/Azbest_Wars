@@ -82,6 +82,10 @@ public class MainGridScript : MonoBehaviour
                 int2 endPos = MainGrid.GetXY(mousePos);
                 if (endPos.x == -1) return;
                 RightClickPosition = endPos;
+                if (!IsWalkable[endPos])
+                {
+                    return;
+                }
                 RightClick = true;
                 Destroy(MoveToObject);
                 MoveToObject = MainGrid.CreateSprite(MoveToPrefab, endPos);

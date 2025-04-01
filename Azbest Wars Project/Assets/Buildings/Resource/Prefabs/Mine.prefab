@@ -106,7 +106,7 @@ MonoBehaviour:
     x: 0
     y: 0
   width: 2
-  height: 3
+  height: 1
   isBuilding: 1
 --- !u!114 &5917858218762141910
 MonoBehaviour:
