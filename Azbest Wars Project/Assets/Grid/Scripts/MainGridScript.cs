@@ -5,10 +5,12 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Unity.Entities;
+using UnityEngine.InputSystem;
 public class MainGridScript : MonoBehaviour
 {
     public static MainGridScript Instance { get; private set; }
 
+    //grid
     public DummyGrid MainGrid;
     public int Width;
     public int Height;
@@ -18,20 +20,16 @@ public class MainGridScript : MonoBehaviour
     public FlatGrid<bool> IsWalkable;
     public int PlayerTeam = 0;
 
+    //right click
     [HideInInspector]
     public int2 RightClickPosition;
     [HideInInspector]
     public bool RightClick = false;
 
-    [SerializeField]
-    private GameObject selectSpritePrefab;
-    private bool Selecting = false;
-    [SerializeField]
-    private GameObject MoveToPrefab;
-    [SerializeField]
-    private GameObject CantMovePrefab;
-    private GameObject MoveToObject;
-
+    
+    //selecting
+    [HideInInspector]
+    public bool Selected = false;
     [HideInInspector]
     public int2 SelectStartPosition;
     [HideInInspector]
@@ -40,13 +38,22 @@ public class MainGridScript : MonoBehaviour
     [HideInInspector]
     public bool UpdateSelected = true;
 
-    [HideInInspector]
-    public bool Selected = false;
+    [SerializeField]
+    private GameObject selectSpritePrefab;
+    [SerializeField]
+    private GameObject MoveToPrefab;
+    [SerializeField]
+    private GameObject CantMovePrefab;
+    private GameObject MoveToObject;
+
     [HideInInspector]
     public byte SetMoveState = 255;
 
     [SerializeField]
     private Tilemap Walls;
+
+    public InputAction leftClickAction;
+    public InputAction rightClickAction;
 
     private void Awake()
     {
@@ -71,46 +78,44 @@ public class MainGridScript : MonoBehaviour
     private void Start()
     {
         //MainGrid.ShowDebugtext();
-        MainGrid.ShowDebugLines();
+        //MainGrid.ShowDebugLines();
+        leftClickAction = InputSystem.actions.FindAction("LeftClick");
+        rightClickAction = InputSystem.actions.FindAction("RightClick");
     }
 
     private void Update()
     {
-        if (Selected && Input.GetMouseButtonUp(1))
+        //pathfind
+        if (Selected && rightClickAction.WasPressedThisFrame())
         {
-            if (Selected)
+            Vector3 mousePos = Utils.GetMouseWorldPosition();
+            int2 endPos = MainGrid.GetXY(mousePos);
+            if (endPos.x == -1) return;
+            RightClickPosition = endPos;
+            Destroy(MoveToObject);
+            if (!IsWalkable[endPos])
             {
-                Vector3 mousePos = Utils.GetMouseWorldPosition();
-                int2 endPos = MainGrid.GetXY(mousePos);
-                if (endPos.x == -1) return;
-                RightClickPosition = endPos;
-                Destroy(MoveToObject);
-                if (!IsWalkable[endPos])
-                {
-                    MoveToObject = MainGrid.CreateSprite(CantMovePrefab, endPos);
-                    Destroy(MoveToObject, 0.5f);
-                    return;
-                }
-                RightClick = true;
-                MoveToObject = MainGrid.CreateSprite(MoveToPrefab, endPos);
+                MoveToObject = MainGrid.CreateSprite(CantMovePrefab, endPos);
                 Destroy(MoveToObject, 0.5f);
+                return;
             }
+            RightClick = true;
+            MoveToObject = MainGrid.CreateSprite(MoveToPrefab, endPos);
+            Destroy(MoveToObject, 0.5f);
         }
         
-        if (Input.GetMouseButtonDown(0))
+        //select
+        if (leftClickAction.WasPressedThisFrame())
         {
-            Debug.Log("s");
             Vector3 mousePos = Utils.GetMouseWorldPosition();
             int2 startPos = MainGrid.GetXY(mousePos);
             if (startPos.x == -1) return;
             SelectStartPosition = startPos;
             Selected = false;
-            Selecting = true;
             SelectSprites.Add(MainGrid.CreateSprite(selectSpritePrefab, startPos));
         }
-        if (Input.GetMouseButtonUp(0))
+        if (leftClickAction.WasReleasedThisFrame())
         {
-            Selecting = false;
             Debug.Log(SelectStartPosition + " " + SelectEndPosition);
             foreach (var sprite in SelectSprites)
             {
@@ -120,7 +125,7 @@ public class MainGridScript : MonoBehaviour
             UpdateSelected = true;
             Selected = true;
         }
-        if (Selecting)
+        if (leftClickAction.IsPressed())
         {
             Vector3 mousePos = Utils.GetMouseWorldPosition();
             int2 endPos = MainGrid.GetXY(mousePos);

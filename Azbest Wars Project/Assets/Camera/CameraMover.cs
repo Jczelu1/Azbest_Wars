@@ -55,6 +55,6 @@ public class CameraMover : MonoBehaviour
 
     private void OnDisable()
     {
-        moveAction.Disable();
+        //moveAction.Disable();
     }
 }
