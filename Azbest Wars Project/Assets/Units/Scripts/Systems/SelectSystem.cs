@@ -10,7 +10,7 @@ using UnityEngine;
 [BurstCompile]
 public partial class SelectSystem : SystemBase
 {
-    bool started = false;
+    public static bool updateSelect = true;
     protected override void OnCreate()
     {
         RequireForUpdate<SelectedData>();
@@ -18,11 +18,9 @@ public partial class SelectSystem : SystemBase
 
     protected override void OnUpdate()
     {
-        bool updateSelected = MainGridScript.Instance.UpdateSelected;
-        if (!updateSelected && started)
+        if (!updateSelect)
             return;
-        started = true;
-        MainGridScript.Instance.UpdateSelected = false;
+        updateSelect = false;
 
         Entities.WithoutBurst().ForEach((Entity entity, ref SelectedData selected, in DynamicBuffer<Child> children) =>
         {

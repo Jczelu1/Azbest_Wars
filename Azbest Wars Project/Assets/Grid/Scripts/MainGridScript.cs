@@ -21,10 +21,10 @@ public class MainGridScript : MonoBehaviour
     public int PlayerTeam = 0;
 
     //right click
-    [HideInInspector]
-    public int2 RightClickPosition;
-    [HideInInspector]
-    public bool RightClick = false;
+    //[HideInInspector]
+    //public int2 RightClickPosition;
+    //[HideInInspector]
+    //public bool RightClick = false;
 
     
     //selecting
@@ -36,7 +36,6 @@ public class MainGridScript : MonoBehaviour
     public int2 SelectEndPosition;
     private List<GameObject> SelectSprites = new List<GameObject>();
     [HideInInspector]
-    public bool UpdateSelected = true;
 
     [SerializeField]
     private GameObject selectSpritePrefab;
@@ -91,7 +90,7 @@ public class MainGridScript : MonoBehaviour
             Vector3 mousePos = Utils.GetMouseWorldPosition();
             int2 endPos = MainGrid.GetXY(mousePos);
             if (endPos.x == -1) return;
-            RightClickPosition = endPos;
+            //RightClickPosition = endPos;
             Destroy(MoveToObject);
             if (!IsWalkable[endPos])
             {
@@ -99,7 +98,8 @@ public class MainGridScript : MonoBehaviour
                 Destroy(MoveToObject, 0.5f);
                 return;
             }
-            RightClick = true;
+            PathfindSystem.PathfindClicked = true;
+            PathfindSystem.PathfindClickDestination = endPos;
             MoveToObject = MainGrid.CreateSprite(MoveToPrefab, endPos);
             Destroy(MoveToObject, 0.5f);
         }
@@ -122,8 +122,8 @@ public class MainGridScript : MonoBehaviour
                 Destroy(sprite);
             }
             SelectSprites.Clear();
-            UpdateSelected = true;
             Selected = true;
+            SelectSystem.updateSelect = true;
         }
         if (leftClickAction.IsPressed())
         {

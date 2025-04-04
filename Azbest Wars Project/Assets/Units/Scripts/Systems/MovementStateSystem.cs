@@ -16,7 +16,7 @@ using UnityEngine;
 [UpdateBefore(typeof(PathfindSystem))]
 public partial struct MovementStateSystem : ISystem
 {
-
+    public static byte SetMoveState = 255;
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<UnitStateData>();
@@ -27,7 +27,7 @@ public partial struct MovementStateSystem : ISystem
     }
     public void OnUpdate(ref SystemState state)
     {
-        if (MainGridScript.Instance.SetMoveState != 255)
+        if (SetMoveState != 255)
         {
             Debug.Log(MainGridScript.Instance.SetMoveState);
             SetMoveStateJob setJob = new SetMoveStateJob()
@@ -36,7 +36,7 @@ public partial struct MovementStateSystem : ISystem
             };
             state.Dependency = setJob.ScheduleParallel(state.Dependency);
 
-            MainGridScript.Instance.SetMoveState = 255;
+            SetMoveState = 255;
         }
         
     }
