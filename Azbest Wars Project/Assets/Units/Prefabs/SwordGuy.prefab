@@ -342,6 +342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthbar: 0
   selected: 1
+  interestPoint: 0
 --- !u!1 &3946285148434064001
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,3 +445,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthbar: 1
   selected: 0
+  interestPoint: 0

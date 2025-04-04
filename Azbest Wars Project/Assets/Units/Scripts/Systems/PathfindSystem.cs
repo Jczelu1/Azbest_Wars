@@ -17,8 +17,8 @@ using UnityEngine;
 [UpdateBefore(typeof(MoveSystem))]
 public partial struct PathfindSystem : ISystem
 {
-    public static bool PathfindClicked = false;
-    public static int2 PathfindClickDestination = new int2(-1,-1);
+    public static NativeArray<bool> shouldMove = new NativeArray<bool>(4, Allocator.Persistent);
+    public static NativeArray<int2> destinations  = new NativeArray<int2>(4, Allocator.Persistent);
     private ComponentLookup<TeamData> _teamLookup;
 
     public void OnCreate(ref SystemState state)
@@ -27,9 +27,10 @@ public partial struct PathfindSystem : ISystem
         state.RequireForUpdate<LocalTransform>();
         _teamLookup = state.GetComponentLookup<TeamData>(true);
     }
-    public void OnStartRunning(ref SystemState state)
+    public void OnDestroy(ref SystemState state)
     {
-
+        shouldMove.Dispose();
+        destinations.Dispose();
     }
     public void OnUpdate(ref SystemState state)
     {
@@ -47,20 +48,23 @@ public partial struct PathfindSystem : ISystem
 
         PathfindJob pathfindJob = new PathfindJob()
         {
-            rightClickPos = PathfindClickDestination,
             gridSize = new int2(MainGridScript.Instance.Width, MainGridScript.Instance.Height),
             occupied = MainGridScript.Instance.Occupied,
             isWalkable = MainGridScript.Instance.IsWalkable,
             ecb = ecb,
-            rightClick = PathfindClicked,
-            teamLookup = _teamLookup
+            teamLookup = _teamLookup,
+            shouldMove = shouldMove,
+            destinations = destinations
         };
-        PathfindClicked = false;
 
         JobHandle pathJobHandle = pathfindJob.ScheduleParallel(state.Dependency);
 
         state.Dependency = pathJobHandle;
         pathJobHandle.Complete();
+        for (int i = 0; i < 4; i++)
+        {
+            shouldMove[i] = false;
+        }
         //Ensure ECB commands are played back safely
         ecbSystem.Update(state.WorldUnmanaged);
         stopwatch.Stop();
@@ -71,8 +75,10 @@ public partial struct PathfindSystem : ISystem
 [BurstCompile]
 public partial struct PathfindJob : IJobEntity
 {
-    public bool rightClick;
-    public int2 rightClickPos;
+    [ReadOnly]
+    public NativeArray<bool> shouldMove;
+    [ReadOnly]
+    public NativeArray<int2> destinations;
     public int2 gridSize;
     [ReadOnly]
     public FlatGrid<Entity> occupied;
@@ -91,14 +97,13 @@ public partial struct PathfindJob : IJobEntity
         int team = teamLookup[entity].Team;
 
         //pathfind to selected location
-        if (rightClick && selected.Selected)
+        if (selected.Selected && shouldMove[team])
         {
-
             //maybe do this???
             unitState.MovementState = 0;
 
             NativeList<int2> path = new NativeList<int2>(Allocator.Temp);
-            Pathfinder.FindPath(gridPosition.Position, rightClickPos, gridSize, isWalkable.GridArray, occupied.GridArray, true, ref path);
+            Pathfinder.FindPath(gridPosition.Position, destinations[team], gridSize, isWalkable.GridArray, occupied.GridArray, true, ref path);
 
             //there is no other way to do this for some reason
             ecb.RemoveComponent<PathNode>(sortKey, entity);
@@ -114,7 +119,7 @@ public partial struct PathfindJob : IJobEntity
             var newPathData = unitState;
             newPathData.PathIndex = 0;
             newPathData.Stuck = 0;
-            newPathData.Destination = rightClickPos;
+            newPathData.Destination = destinations[team];
             ecb.SetComponent(sortKey, entity, newPathData);
 
             path.Dispose();

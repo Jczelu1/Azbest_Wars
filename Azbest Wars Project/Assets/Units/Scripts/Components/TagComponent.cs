@@ -9,6 +9,8 @@ public class HealthbarTagAuthoring : MonoBehaviour
     bool healthbar;
     [SerializeField]
     bool selected;
+    [SerializeField]
+    bool interestPoint;
     private class Baker : Baker<HealthbarTagAuthoring>
     {
         public override void Bake(HealthbarTagAuthoring authoring)
@@ -22,8 +24,13 @@ public class HealthbarTagAuthoring : MonoBehaviour
             {
                 AddComponent(entity, new SelectedTag());
             }
+            if (authoring.interestPoint)
+            {
+                AddComponent(entity, new InterestPointTag());
+            }
         }
     }
 }
 public struct HealthbarTag : IComponentData { }
 public struct SelectedTag : IComponentData { }
+public struct InterestPointTag : IComponentData { }

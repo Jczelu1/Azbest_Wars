@@ -98,8 +98,8 @@ public class MainGridScript : MonoBehaviour
                 Destroy(MoveToObject, 0.5f);
                 return;
             }
-            PathfindSystem.PathfindClicked = true;
-            PathfindSystem.PathfindClickDestination = endPos;
+            PathfindSystem.shouldMove[PlayerTeam] = true;
+            PathfindSystem.destinations[PlayerTeam] = endPos;
             MoveToObject = MainGrid.CreateSprite(MoveToPrefab, endPos);
             Destroy(MoveToObject, 0.5f);
         }
