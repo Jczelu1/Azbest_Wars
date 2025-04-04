@@ -87,6 +87,7 @@ public partial struct PathfindJob : IJobEntity
 
     public void Execute(Entity entity, [EntityIndexInQuery] int sortKey, ref UnitStateData unitState, ref GridPosition gridPosition, ref SelectedData selected)
     {
+        unitState.MoveProcessed = false;
         int team = teamLookup[entity].Team;
 
         //pathfind to selected location
@@ -369,11 +370,7 @@ public partial struct PathfindJob : IJobEntity
         {
             NativeList<int2> path = new NativeList<int2>(Allocator.Temp);
             Pathfinder.FindPath(gridPosition.Position, unitState.Destination, gridSize, isWalkable.GridArray, occupied.GridArray, false, ref path);
-
-            //there is no other way to do this for some reason
-            ecb.RemoveComponent<PathNode>(sortKey, entity);
-            ecb.AddBuffer<PathNode>(sortKey, entity);
-
+            
             //no other path exists
             if (path.Length == 0)
             {
@@ -381,6 +378,10 @@ public partial struct PathfindJob : IJobEntity
                 path.Dispose();
                 return;
             }
+
+            ecb.RemoveComponent<PathNode>(sortKey, entity);
+            ecb.AddBuffer<PathNode>(sortKey, entity);
+
             //Append the new path nodes in reverse order.
             for (int i = path.Length - 2; i >= 0; i--)
             {

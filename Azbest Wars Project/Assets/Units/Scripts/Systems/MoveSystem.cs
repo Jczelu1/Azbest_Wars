@@ -16,25 +16,39 @@ using UnityEngine;
 [UpdateInGroup(typeof(TickSystemGroup))]
 public partial struct MoveSystem : ISystem
 {
-    private BufferLookup<PathNode> _bufferLookup;
+    private BufferLookup<PathNode> _pathLookup;
+    private ComponentLookup<UnitStateData> _unitStateLookup;
+    private ComponentLookup<LocalTransform> _transformLookup;
+    private ComponentLookup<GridPosition> _gridPositionLookup;
 
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<UnitStateData>();
         state.RequireForUpdate<LocalTransform>();
-        _bufferLookup = state.GetBufferLookup<PathNode>(true);
+
+        _pathLookup = state.GetBufferLookup<PathNode>(true);
+        _unitStateLookup = state.GetComponentLookup<UnitStateData>(false);
+        _transformLookup = state.GetComponentLookup<LocalTransform>(false);
+        _gridPositionLookup = state.GetComponentLookup<GridPosition>(false);
     }
+
     public void OnStartRunning(ref SystemState state)
     {
-        
     }
+
     public void OnUpdate(ref SystemState state)
     {
-        _bufferLookup.Update(ref state);
-        //move job
+        _pathLookup.Update(ref state);
+        _unitStateLookup.Update(ref state);
+        _transformLookup.Update(ref state);
+        _gridPositionLookup.Update(ref state);
+
         MoveJob moveJob = new MoveJob()
         {
-            pathLookup = _bufferLookup,
+            pathLookup = _pathLookup,
+            unitStateLookup = _unitStateLookup,
+            transformLookup = _transformLookup,
+            gridPositionLookup = _gridPositionLookup,
             gridOrigin = MainGridScript.Instance.GridOrigin,
             cellSize = MainGridScript.Instance.CellSize,
             occupied = MainGridScript.Instance.Occupied,
@@ -43,77 +57,106 @@ public partial struct MoveSystem : ISystem
         //not parallel because race conditions when moving to a tile
         state.Dependency = moveJob.Schedule(state.Dependency);
     }
-}
-
-
-[BurstCompile]
-public partial struct MoveJob : IJobEntity
-{
-    [ReadOnly]
-    public BufferLookup<PathNode> pathLookup;
-    public float2 gridOrigin;
-    public float cellSize;
-    public bool moveTransform;
-    //this will cause bugs
-    [NativeDisableParallelForRestriction]
-    public FlatGrid<Entity> occupied;
-    public void Execute(Entity entity, ref UnitStateData unitState, ref LocalTransform transform, ref GridPosition gridPosition)
+    [BurstCompile]
+    public partial struct MoveJob : IJobEntity
     {
-        if (!pathLookup.HasBuffer(entity))
-            return;
-        unitState.Moved = false;
-        DynamicBuffer<PathNode> pathBuffer = pathLookup[entity];
-        if (unitState.PathIndex >= 0 && unitState.PathIndex < pathBuffer.Length)
-        {
-            
-            int2 targetCell = pathBuffer[unitState.PathIndex].PathPos;
-            //UnityEngine.Debug.Log(cellRef);
+        [ReadOnly]
+        public BufferLookup<PathNode> pathLookup;
 
-            if (occupied[targetCell] == Entity.Null)
+        public ComponentLookup<UnitStateData> unitStateLookup;
+        public ComponentLookup<LocalTransform> transformLookup;
+        public ComponentLookup<GridPosition> gridPositionLookup;
+
+        public float2 gridOrigin;
+        public float cellSize;
+        public bool moveTransform;
+
+        [NativeDisableParallelForRestriction]
+        public FlatGrid<Entity> occupied;
+
+        public void Execute(Entity entity)
+        {
+            if (!pathLookup.HasBuffer(entity))
+                return;
+
+            Move(entity);
+        }
+
+        private bool Move(Entity entity)
+        {
+            var unitState = unitStateLookup[entity];
+            if (unitState.MoveProcessed) return false;
+            unitState.MoveProcessed = true;
+            unitStateLookup[entity] = unitState;
+            var transform = transformLookup[entity];
+            var gridPosition = gridPositionLookup[entity];
+            var pathBuffer = pathLookup[entity];
+
+            unitState.Moved = false;
+
+            if (unitState.PathIndex >= 0 && unitState.PathIndex < pathBuffer.Length)
             {
-                //rotation
-                if (targetCell.x - gridPosition.Position.x < 0)
+                int2 targetCell = pathBuffer[unitState.PathIndex].PathPos;
+
+                bool canMove = true;
+                if (occupied[targetCell] != Entity.Null)
                 {
-                    transform.Rotation = Quaternion.Euler(0,0,0);
+                    canMove = Move(occupied[targetCell]);
                 }
-                else if (targetCell.x - gridPosition.Position.x > 0)
-                {
-                    transform.Rotation = Quaternion.Euler(0, 180, 0);
-                }
-                else if (targetCell.y - gridPosition.Position.y < 0)
-                {
-                    transform.Rotation = Quaternion.Euler(0, 180, 0);
+
+                if(canMove){
+                    // Handle rotation
+                    if (targetCell.x - gridPosition.Position.x < 0)
+                        transform.Rotation = Quaternion.Euler(0, 0, 0);
+                    else if (targetCell.x - gridPosition.Position.x > 0)
+                        transform.Rotation = Quaternion.Euler(0, 180, 0);
+                    else if (targetCell.y - gridPosition.Position.y < 0)
+                        transform.Rotation = Quaternion.Euler(0, 180, 0);
+                    else
+                        transform.Rotation = Quaternion.Euler(0, 0, 0);
+
+                    // Handle movement
+                    if (moveTransform)
+                    {
+                        float2 targetPosition = new float2(
+                            gridOrigin.x + cellSize * targetCell.x,
+                            gridOrigin.y + cellSize * targetCell.y
+                        );
+                        transform.Position = new float3(targetPosition.x, targetPosition.y, transform.Position.z);
+                    }
+
+                    // Update occupied grid and position
+                    occupied[gridPosition.Position] = Entity.Null;
+                    gridPosition.Position = targetCell;
+                    occupied.SetValue(gridPosition.Position, entity);
+
+                    unitState.PathIndex++;
+                    unitState.Stuck = 0;
+                    unitState.Moved = true;
+                    unitStateLookup[entity] = unitState;
+                    transformLookup[entity] = transform;
+                    gridPositionLookup[entity] = gridPosition;
+                    return true;
                 }
                 else
                 {
-                    transform.Rotation = Quaternion.Euler(0, 0, 0);
+                    if (unitState.Stuck != 2)
+                        unitState.Stuck = 1;
+                    unitStateLookup[entity] = unitState;
+                    transformLookup[entity] = transform;
+                    gridPositionLookup[entity] = gridPosition;
+                    return false;
                 }
-                if (moveTransform)
-                {
-                    float2 targetPosition = new float2(
-                    gridOrigin.x + cellSize * targetCell.x,
-                    gridOrigin.y + cellSize * targetCell.y
-                    );
-                    transform.Position = new float3(targetPosition.x, targetPosition.y, transform.Position.z);
-                }
-                occupied[gridPosition.Position] = Entity.Null;
-                gridPosition.Position = targetCell;
-                occupied.SetValue(gridPosition.Position, entity);
-                //Debug.Log(pathData.PathIndex);
-                unitState.PathIndex++;
-                unitState.Stuck = 0;
-                unitState.Moved = true;
             }
             else
             {
-                if (unitState.Stuck != 2)
-                    unitState.Stuck = 1;
+                occupied.SetValue(gridPosition.Position, entity);
+                unitStateLookup[entity] = unitState;
+                transformLookup[entity] = transform;
+                gridPositionLookup[entity] = gridPosition;
+                return false;
             }
-        }
-        else
-        {
-            unitState.Moved = false;
-            occupied.SetValue(gridPosition.Position, entity);
         }
     }
 }
+
