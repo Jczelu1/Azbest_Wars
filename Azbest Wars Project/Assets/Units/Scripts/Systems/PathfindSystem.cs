@@ -18,7 +18,8 @@ using UnityEngine;
 public partial struct PathfindSystem : ISystem
 {
     public static NativeArray<bool> shouldMove = new NativeArray<bool>(4, Allocator.Persistent);
-    public static NativeArray<int2> destinations  = new NativeArray<int2>(4, Allocator.Persistent);
+    public static NativeArray<int2> destinations = new NativeArray<int2>(4, Allocator.Persistent);
+    public static NativeArray<byte> setMoveState = new NativeArray<byte>(4, Allocator.Persistent);
     private ComponentLookup<TeamData> _teamLookup;
 
     public void OnCreate(ref SystemState state)
@@ -54,7 +55,8 @@ public partial struct PathfindSystem : ISystem
             ecb = ecb,
             teamLookup = _teamLookup,
             shouldMove = shouldMove,
-            destinations = destinations
+            destinations = destinations,
+            setMoveState = setMoveState,
         };
 
         JobHandle pathJobHandle = pathfindJob.ScheduleParallel(state.Dependency);
@@ -64,6 +66,7 @@ public partial struct PathfindSystem : ISystem
         for (int i = 0; i < 4; i++)
         {
             shouldMove[i] = false;
+            setMoveState[i] = 255;
         }
         //Ensure ECB commands are played back safely
         ecbSystem.Update(state.WorldUnmanaged);
@@ -79,6 +82,8 @@ public partial struct PathfindJob : IJobEntity
     public NativeArray<bool> shouldMove;
     [ReadOnly]
     public NativeArray<int2> destinations;
+    [ReadOnly]
+    public NativeArray<byte> setMoveState;
     public int2 gridSize;
     [ReadOnly]
     public FlatGrid<Entity> occupied;
@@ -95,13 +100,14 @@ public partial struct PathfindJob : IJobEntity
     {
         unitState.MoveProcessed = false;
         int team = teamLookup[entity].Team;
+        if (selected.Selected && setMoveState[team]!=255)
+        {
+            unitState.MovementState = setMoveState[team];
+        }
 
         //pathfind to selected location
         if (selected.Selected && shouldMove[team])
         {
-            //maybe do this???
-            unitState.MovementState = 0;
-
             NativeList<int2> path = new NativeList<int2>(Allocator.Temp);
             Pathfinder.FindPath(gridPosition.Position, destinations[team], gridSize, isWalkable.GridArray, occupied.GridArray, true, ref path);
 

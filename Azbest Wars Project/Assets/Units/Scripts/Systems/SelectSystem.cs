@@ -6,7 +6,7 @@ using Unity.Transforms;
 using UnityEngine;
 
 [UpdateInGroup(typeof(TickSystemGroup))]
-[UpdateBefore(typeof(MovementStateSystem))]
+[UpdateBefore(typeof(PathfindSystem))]
 [BurstCompile]
 public partial class SelectSystem : SystemBase
 {
@@ -37,7 +37,7 @@ public partial class SelectSystem : SystemBase
 
         int2 selectStart = MainGridScript.Instance.SelectStartPosition;
         int2 selectEnd = MainGridScript.Instance.SelectEndPosition;
-        int playerTeam = TeamManager.Instance.playerTeam;
+        int playerTeam = TeamManager.Instance.PlayerTeam;
         var occupied = MainGridScript.Instance.Occupied;
 
         int minX = math.min(selectStart.x, selectEnd.x);

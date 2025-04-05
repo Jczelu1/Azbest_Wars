@@ -10,7 +10,6 @@ using UnityEngine;
 [UpdateBefore(typeof(PathfindSystem))]
 public partial class ArtificialIdiot : SystemBase
 {
-    byte AITeam = 1;
     byte groupSize = 4;
     public static int2 moveToPosition;
     public static bool move;
@@ -23,7 +22,8 @@ public partial class ArtificialIdiot : SystemBase
     }
     protected override void OnUpdate()
     {
-        if(captureAreas.Length == 0)
+        byte AITeam = TeamManager.Instance.AITeam;
+        if (captureAreas.Length == 0)
         {
             Entities.WithoutBurst().ForEach((Entity entity, ref CaptureAreaData captureArea) =>
             {
@@ -34,6 +34,7 @@ public partial class ArtificialIdiot : SystemBase
         if(groupCountdown != 0)
         {
             groupCountdown--;
+            Debug.Log(groupCountdown);
         }
         else
         {

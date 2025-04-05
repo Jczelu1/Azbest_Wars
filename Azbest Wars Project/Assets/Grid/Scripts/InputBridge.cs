@@ -21,15 +21,15 @@ public class InputBridge : MonoBehaviour
         {
             if (DefendAction.WasPressedThisFrame())
             {
-                MovementStateSystem.SetMoveState = 0;
+                PathfindSystem.setMoveState[TeamManager.Instance.PlayerTeam] = 0;
             }
             if (AttackAction.WasPressedThisFrame())
             {
-                MovementStateSystem.SetMoveState = 1;
+                PathfindSystem.setMoveState[TeamManager.Instance.PlayerTeam] = 1;
             }
             if (StopAction.WasPressedThisFrame())
             {
-                MovementStateSystem.SetMoveState = 2;
+                PathfindSystem.setMoveState[TeamManager.Instance.PlayerTeam] = 2;
             }
         }
         

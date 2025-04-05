@@ -4,7 +4,7 @@ using UnityEngine;
 public class TeamManager : MonoBehaviour
 {
     public static TeamManager Instance;
-    public byte playerTeam;
+    public byte PlayerTeam;
     public byte AITeam;
 
     [SerializeField]
