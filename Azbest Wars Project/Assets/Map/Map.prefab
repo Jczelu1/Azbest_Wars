@@ -487,8 +487,8 @@ GameObject:
   - component: {fileID: 6364728907356756007}
   - component: {fileID: 4466743015502578491}
   - component: {fileID: 1738609620024813382}
-  - component: {fileID: 2049728429065212780}
   - component: {fileID: 7677745618622251830}
+  - component: {fileID: 3965957627853055385}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -588,23 +588,6 @@ MonoBehaviour:
   - {fileID: -8984361004240790378, guid: f63a0b5e6edadf842a84addb719fbdab, type: 3}
   selectedSprite: {fileID: 21300000, guid: 7b43926e06569fd4ca406ccd53e41e59, type: 3}
   areaMarkerSprite: {fileID: 21300000, guid: 9ce5a253dab0ec34792924a0da460deb, type: 3}
---- !u!114 &2049728429065212780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4476863787949232057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9ea58879cafe684f993493f2366f923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  teamColors:
-  - {r: 1, g: 1, b: 0, a: 1}
-  - {r: 0, g: 0, b: 1, a: 1}
-  - {r: 1, g: 0, b: 1, a: 1}
-  - {r: 0, g: 1, b: 1, a: 1}
 --- !u!114 &7677745618622251830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -617,6 +600,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd7fd1f429fda24b83a62f97225f69b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3965957627853055385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4476863787949232057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b55860060d943e4f8a4be59952e5a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTeam: 0
+  AITeam: 0
+  teamColors:
+  - {r: 1, g: 1, b: 0, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0, b: 1, a: 1}
+  - {r: 0, g: 1, b: 1, a: 1}
+  teamResources: 00000000000000000000000000000000
+  baseColor: {r: 1, g: 1, b: 1, a: 1}
+  selectedColor: {r: 0, g: 1, b: 0, a: 1}
+  attackedColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &6291466791736991060
 GameObject:
   m_ObjectHideFlags: 0

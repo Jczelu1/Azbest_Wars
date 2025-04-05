@@ -29,10 +29,10 @@ public partial struct MovementStateSystem : ISystem
     {
         if (SetMoveState != 255)
         {
-            Debug.Log(MainGridScript.Instance.SetMoveState);
+            Debug.Log(SetMoveState);
             SetMoveStateJob setJob = new SetMoveStateJob()
             {
-                stateNum = MainGridScript.Instance.SetMoveState
+                stateNum = SetMoveState
             };
             state.Dependency = setJob.ScheduleParallel(state.Dependency);
 

@@ -12,7 +12,7 @@ public partial class HealthbarSystem : SystemBase
         Entities.WithoutBurst().ForEach((Entity entity, ref HealthData healthData, ref TeamData team, in DynamicBuffer<Child> children) =>
         {
             if(healthData.Health > 0)
-                EntityManager.GetComponentObject<SpriteRenderer>(entity).color = TeamColors.GetTeamColor(team.Team);
+                EntityManager.GetComponentObject<SpriteRenderer>(entity).color = TeamManager.Instance.GetTeamColor(team.Team);
             if (!healthData.Attacked)
             {
                 return;

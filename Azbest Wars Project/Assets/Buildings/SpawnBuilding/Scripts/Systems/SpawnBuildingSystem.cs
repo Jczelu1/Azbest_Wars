@@ -120,7 +120,7 @@ public partial struct SpawnerSystem : ISystem
                 );
 
                 //set team color
-                entityManager.GetComponentObject<SpriteRenderer>(newEntity).color = TeamColors.GetTeamColor(team.Team);
+                entityManager.GetComponentObject<SpriteRenderer>(newEntity).color = TeamManager.Instance.GetTeamColor(team.Team);
                 //disable select sprite
 
                 //testing only

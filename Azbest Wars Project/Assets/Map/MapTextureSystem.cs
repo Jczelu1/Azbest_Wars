@@ -55,10 +55,10 @@ public partial class MapTextureSystem : SystemBase
                     {
                         if(selectedLookup.HasComponent(unit) && selectedLookup[unit].Selected)
                         {
-                            mapTexture.SetPixel(x, y, TeamColors.selectedColor);
+                            mapTexture.SetPixel(x, y, TeamManager.Instance.selectedColor);
                             continue;
                         }
-                        mapTexture.SetPixel(x, y, TeamColors.GetTeamColor(teamLookup[unit].Team));
+                        mapTexture.SetPixel(x, y, TeamManager.Instance.GetTeamColor(teamLookup[unit].Team));
                     }
                 }
             }

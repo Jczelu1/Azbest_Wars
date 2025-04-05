@@ -37,7 +37,7 @@ public partial class SelectSystem : SystemBase
 
         int2 selectStart = MainGridScript.Instance.SelectStartPosition;
         int2 selectEnd = MainGridScript.Instance.SelectEndPosition;
-        int playerTeam = MainGridScript.Instance.PlayerTeam;
+        int playerTeam = TeamManager.Instance.playerTeam;
         var occupied = MainGridScript.Instance.Occupied;
 
         int minX = math.min(selectStart.x, selectEnd.x);

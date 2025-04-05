@@ -81,13 +81,13 @@ public partial class CaptureSystem : SystemBase
             {
                 captureArea.Captured = false;
                 team.Team = captureArea.CapturingTeam;
-                EntityManager.GetComponentObject<SpriteRenderer>(entity).color = TeamColors.GetTeamColor(team.Team);
+                EntityManager.GetComponentObject<SpriteRenderer>(entity).color = TeamManager.Instance.GetTeamColor(team.Team);
 
                 foreach (var child in children)
                 {
                     if (EntityManager.HasComponent<SpriteRenderer>(child.Value) && EntityManager.HasComponent<TeamData>(child.Value))
                     {
-                        EntityManager.GetComponentObject<SpriteRenderer>(child.Value).color = TeamColors.GetTeamColor(team.Team);
+                        EntityManager.GetComponentObject<SpriteRenderer>(child.Value).color = TeamManager.Instance.GetTeamColor(team.Team);
                         EntityManager.SetComponentData<TeamData>(child.Value, team);
                     }
                 }
@@ -100,12 +100,12 @@ public partial class CaptureSystem : SystemBase
             {
                 if (captureMarkers > 0)
                 {
-                    g.GetComponent<SpriteRenderer>().color = TeamColors.GetTeamColor(captureArea.CapturingTeam);
+                    g.GetComponent<SpriteRenderer>().color = TeamManager.Instance.GetTeamColor(captureArea.CapturingTeam);
                     captureMarkers--;
                 }
                 else
                 {
-                    g.GetComponent<SpriteRenderer>().color = TeamColors.GetTeamColor(team.Team);
+                    g.GetComponent<SpriteRenderer>().color = TeamManager.Instance.GetTeamColor(team.Team);
                 }
             }
         }).Run();

@@ -18,7 +18,6 @@ public class MainGridScript : MonoBehaviour
     public Vector2 GridOrigin;
     public FlatGrid<Entity> Occupied;
     public FlatGrid<bool> IsWalkable;
-    public int PlayerTeam = 0;
 
     //right click
     //[HideInInspector]
@@ -44,9 +43,6 @@ public class MainGridScript : MonoBehaviour
     [SerializeField]
     private GameObject CantMovePrefab;
     private GameObject MoveToObject;
-
-    [HideInInspector]
-    public byte SetMoveState = 255;
 
     [SerializeField]
     private Tilemap Walls;
@@ -98,8 +94,8 @@ public class MainGridScript : MonoBehaviour
                 Destroy(MoveToObject, 0.5f);
                 return;
             }
-            PathfindSystem.shouldMove[PlayerTeam] = true;
-            PathfindSystem.destinations[PlayerTeam] = endPos;
+            PathfindSystem.shouldMove[TeamManager.Instance.playerTeam] = true;
+            PathfindSystem.destinations[TeamManager.Instance.playerTeam] = endPos;
             MoveToObject = MainGrid.CreateSprite(MoveToPrefab, endPos);
             Destroy(MoveToObject, 0.5f);
         }
@@ -154,23 +150,6 @@ public class MainGridScript : MonoBehaviour
                 if (minX != maxX)
                     SelectSprites.Add(MainGrid.CreateSprite(selectSpritePrefab, new int2(maxX, y)));
             }
-        }
-
-        if (Selected && Input.GetKeyDown(KeyCode.Q))
-        {
-            SetMoveState = 0;
-        }
-        if (Selected && Input.GetKeyDown(KeyCode.E))
-        {
-            SetMoveState = 1;
-        }
-        if (Selected && Input.GetKeyDown(KeyCode.R))
-        {
-            SetMoveState = 2;
-        }
-        if (Selected && Input.GetKeyDown(KeyCode.F))
-        {
-            SetMoveState = 3;
         }
     }
     private void OnDestroy()

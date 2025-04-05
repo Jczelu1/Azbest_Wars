@@ -13,7 +13,8 @@ public class TeamAuthoring : MonoBehaviour
     {
         public override void Bake(TeamAuthoring authoring)
         {
-            authoring.spriteRenderer.color = TeamColors.GetTeamColor(authoring.team);
+            if(TeamManager.Instance!=null)
+                authoring.spriteRenderer.color = TeamManager.Instance.GetTeamColor(authoring.team);
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
             AddComponent(entity, new TeamData { Team = authoring.team });
