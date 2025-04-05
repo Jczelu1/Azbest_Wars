@@ -10,6 +10,8 @@ public class UnitTypeAuthoring : MonoBehaviour
     [SerializeField]
     int cost;
     [SerializeField]
+    int timeToSpawn;
+    [SerializeField]
     GameObject prefab;
 
     private class Baker : Baker<UnitTypeAuthoring>
@@ -21,7 +23,8 @@ public class UnitTypeAuthoring : MonoBehaviour
             AddComponent(entity, new UnitTypeData {
                 UnitName = authoring.unitName,
                 Cost = authoring.cost,
-                Prefab = GetEntity(authoring.prefab, TransformUsageFlags.Dynamic)
+                Prefab = GetEntity(authoring.prefab, TransformUsageFlags.Dynamic),
+                TimeToSpawn = authoring.timeToSpawn
             });
         }
     }
@@ -31,4 +34,5 @@ public struct UnitTypeData : IComponentData
     public FixedString64Bytes UnitName;
     public int Cost;
     public Entity Prefab;
+    public int TimeToSpawn;
 }

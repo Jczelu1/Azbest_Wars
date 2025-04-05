@@ -44,25 +44,30 @@ public partial struct SpawnerSystem : ISystem
                 unitTypes.Add(unitType);
             }
         }
-
         // Iterate over all spawner entities.
         foreach (var (spawner, gridPosition, teamData, entity) in SystemAPI.Query<RefRW<SpawnerData>, GridPosition, TeamData>().WithEntityAccess())
         {
             byte team = teamData.Team;
-            //are queued
-            if (spawner.ValueRO.Queued <= 0) continue;
-            //invalid team
             if (entityManager.GetComponentData<TeamData>(entity).Team > 3) continue;
-            if (spawner.ValueRO.NextSpawnTime == 0)
+            //are queued
+            int unitId = spawner.ValueRO.SpawnedUnit;
+            //type exists
+            if (unitTypes.Length <= unitId) continue;
+            UnitTypeData unitType = unitTypes[unitId];
+            //queue new unit
+            if(spawner.ValueRO.MaxTimeToSpawn == 0)
             {
-                int unitId = spawner.ValueRO.SpawnedUnit;
-                //type exists
-                if (unitTypes.Length <= unitId) continue;
-                UnitTypeData unitType = unitTypes[unitId];
-                
                 //can afford
                 if (TeamManager.Instance.teamResources[team] < unitType.Cost)
                     continue;
+                //cost
+                TeamManager.Instance.teamResources[team] -= unitType.Cost;
+                spawner.ValueRW.MaxTimeToSpawn = unitType.TimeToSpawn;
+                spawner.ValueRW.TimeToSpawn = unitType.TimeToSpawn;
+            }
+            //spawn new unit
+            if (spawner.ValueRO.TimeToSpawn <= 0)
+            {
                 int maxNodes = (Max_Spawn_Range * 2 + 1) * (Max_Spawn_Range * 2 + 1);
                 int2 startPos = gridPosition.Position;
                 startPos.y -= 1;
@@ -119,8 +124,6 @@ public partial struct SpawnerSystem : ISystem
                 {
                     continue;
                 }
-                //cost
-                TeamManager.Instance.teamResources[team]-=unitType.Cost;
                 
                 // Instantiate the prefab directly using the EntityManager.
                 Entity newEntity = entityManager.Instantiate(unitType.Prefab);
@@ -161,13 +164,12 @@ public partial struct SpawnerSystem : ISystem
                 );
 
                 occupied[newPosition] = newEntity;
-
-                // Reset the spawn timer.
-                spawner.ValueRW.NextSpawnTime = spawner.ValueRO.SpawnRate;
+                spawner.ValueRW.MaxTimeToSpawn = 0;
             }
+            //decrement counter
             else
             {
-                spawner.ValueRW.NextSpawnTime -= 1;
+                spawner.ValueRW.TimeToSpawn--;
             }
         }
     }

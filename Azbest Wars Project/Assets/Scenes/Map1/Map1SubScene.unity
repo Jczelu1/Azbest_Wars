@@ -531,6 +531,10 @@ PrefabInstance:
       propertyPath: cost
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 4047875592491531015, guid: bb64960db577dd84584760bef3b99625, type: 3}
+      propertyPath: timeToSpawn
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4165839795804551753, guid: bb64960db577dd84584760bef3b99625, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

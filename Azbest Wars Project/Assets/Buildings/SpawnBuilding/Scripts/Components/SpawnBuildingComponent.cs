@@ -5,7 +5,7 @@ using Unity.Collections;
 
 class SpawnerAuthoring : MonoBehaviour
 {
-    public int SpawnRate;
+    public float SpawnRateMult;
     public int SpawnedUnit;
     public int Queued;
     
@@ -17,9 +17,10 @@ class SpawnerAuthoring : MonoBehaviour
             AddComponent(entity, new SpawnerData
             {
                 SpawnedUnit = authoring.SpawnedUnit,
-                NextSpawnTime = authoring.SpawnRate,
-                SpawnRate = authoring.SpawnRate,
-                Queued = authoring.Queued
+                SpawnRateMult = authoring.SpawnRateMult,
+                Queued = authoring.Queued,
+                TimeToSpawn = 1,
+                MaxTimeToSpawn = 0
             });
         }
     }
@@ -29,6 +30,7 @@ public struct SpawnerData : IComponentData
 {
     public int SpawnedUnit;
     public int Queued;
-    public int NextSpawnTime;
-    public int SpawnRate;
+    public int TimeToSpawn;
+    public int MaxTimeToSpawn;
+    public float SpawnRateMult;
 }
