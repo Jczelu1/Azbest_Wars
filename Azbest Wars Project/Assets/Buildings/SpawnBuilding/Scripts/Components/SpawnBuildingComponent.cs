@@ -1,11 +1,14 @@
 using UnityEngine;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Collections;
 
 class SpawnerAuthoring : MonoBehaviour
 {
-    public GameObject Prefab;
     public int SpawnRate;
+    public int SpawnedUnit;
+    public int Queued;
+    
     class SpawnerBaker : Baker<SpawnerAuthoring>
     {
         public override void Bake(SpawnerAuthoring authoring)
@@ -13,9 +16,10 @@ class SpawnerAuthoring : MonoBehaviour
             var entity = GetEntity(TransformUsageFlags.None);
             AddComponent(entity, new SpawnerData
             {
-                Prefab = GetEntity(authoring.Prefab, TransformUsageFlags.Dynamic),
+                SpawnedUnit = authoring.SpawnedUnit,
                 NextSpawnTime = authoring.SpawnRate,
-                SpawnRate = authoring.SpawnRate
+                SpawnRate = authoring.SpawnRate,
+                Queued = authoring.Queued
             });
         }
     }
@@ -23,7 +27,8 @@ class SpawnerAuthoring : MonoBehaviour
 
 public struct SpawnerData : IComponentData
 {
-    public Entity Prefab;
+    public int SpawnedUnit;
+    public int Queued;
     public int NextSpawnTime;
     public int SpawnRate;
 }

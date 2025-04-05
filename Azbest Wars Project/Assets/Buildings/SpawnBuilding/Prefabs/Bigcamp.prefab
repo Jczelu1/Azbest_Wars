@@ -134,5 +134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72bf379a2043a0a40883478d41df1997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 124054065340737986, guid: 6f327e6d09a86a345b39d53bdbf79d45, type: 3}
   SpawnRate: 1
+  SpawnedUnit: 0
+  Queued: 100000

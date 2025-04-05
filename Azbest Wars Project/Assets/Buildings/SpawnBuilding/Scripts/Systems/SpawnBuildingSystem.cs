@@ -7,6 +7,7 @@ using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
+using System.Linq;
 
 [BurstCompile]
 [UpdateInGroup(typeof(TickSystemGroup))]
@@ -14,12 +15,17 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public partial struct SpawnerSystem : ISystem
 {
     const int Max_Spawn_Range = 3;
+    NativeList<UnitTypeData> unitTypes;
+    bool started;
     public void OnCreate(ref SystemState state) 
     {
-
+        started = false;
     }
 
-    public void OnDestroy(ref SystemState state) { }
+    public void OnDestroy(ref SystemState state)
+    {
+        unitTypes.Dispose();
+    }
 
     public void OnUpdate(ref SystemState state)
     {
@@ -29,13 +35,34 @@ public partial struct SpawnerSystem : ISystem
         FlatGrid<bool> isWalkable = MainGridScript.Instance.IsWalkable;
 
         var entityManager = state.EntityManager;
+        if (!started)
+        {
+            started = true;
+            unitTypes = new NativeList<UnitTypeData>(Allocator.Persistent);
+            foreach (var unitType in SystemAPI.Query<UnitTypeData>())
+            {
+                unitTypes.Add(unitType);
+            }
+        }
 
         // Iterate over all spawner entities.
-        foreach (var (spawner, gridPosition, entity) in SystemAPI.Query<RefRW<SpawnerData>, GridPosition>().WithEntityAccess())
+        foreach (var (spawner, gridPosition, teamData, entity) in SystemAPI.Query<RefRW<SpawnerData>, GridPosition, TeamData>().WithEntityAccess())
         {
-            if (entityManager.GetComponentData<TeamData>(entity).Team > 3) return;
+            byte team = teamData.Team;
+            //are queued
+            if (spawner.ValueRO.Queued <= 0) continue;
+            //invalid team
+            if (entityManager.GetComponentData<TeamData>(entity).Team > 3) continue;
             if (spawner.ValueRO.NextSpawnTime == 0)
             {
+                int unitId = spawner.ValueRO.SpawnedUnit;
+                //type exists
+                if (unitTypes.Length <= unitId) continue;
+                UnitTypeData unitType = unitTypes[unitId];
+                
+                //can afford
+                if (TeamManager.Instance.teamResources[team] < unitType.Cost)
+                    continue;
                 int maxNodes = (Max_Spawn_Range * 2 + 1) * (Max_Spawn_Range * 2 + 1);
                 int2 startPos = gridPosition.Position;
                 startPos.y -= 1;
@@ -92,8 +119,11 @@ public partial struct SpawnerSystem : ISystem
                 {
                     continue;
                 }
+                //cost
+                TeamManager.Instance.teamResources[team]-=unitType.Cost;
+                
                 // Instantiate the prefab directly using the EntityManager.
-                Entity newEntity = entityManager.Instantiate(spawner.ValueRW.Prefab);
+                Entity newEntity = entityManager.Instantiate(unitType.Prefab);
 
                 // Calculate the target world position.
                 float2 targetPosition = new float2(
@@ -113,14 +143,13 @@ public partial struct SpawnerSystem : ISystem
                     newEntity,
                     newGridPosition
                 );
-                TeamData team = entityManager.GetComponentData<TeamData>(entity);
                 entityManager.SetComponentData(
                     newEntity,
-                    team
+                    teamData
                 );
 
                 //set team color
-                entityManager.GetComponentObject<SpriteRenderer>(newEntity).color = TeamManager.Instance.GetTeamColor(team.Team);
+                entityManager.GetComponentObject<SpriteRenderer>(newEntity).color = TeamManager.Instance.GetTeamColor(team);
                 //disable select sprite
 
                 //testing only
