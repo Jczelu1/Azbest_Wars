@@ -10,7 +10,8 @@ using UnityEngine;
 [BurstCompile]
 public partial class SelectSystem : SystemBase
 {
-    public static bool updateSelect = true;
+    public static bool updateSelect = false;
+    public static bool resetSelect = true;
     protected override void OnCreate()
     {
         RequireForUpdate<SelectedData>();
@@ -18,60 +19,65 @@ public partial class SelectSystem : SystemBase
 
     protected override void OnUpdate()
     {
-        if (!updateSelect)
-            return;
-        updateSelect = false;
-
-        Entities.WithoutBurst().ForEach((Entity entity, ref SelectedData selected, in DynamicBuffer<Child> children) =>
+        //reset select
+        if (resetSelect)
         {
-            foreach (var child in children)
+            resetSelect = false;
+            Entities.WithoutBurst().ForEach((Entity entity, ref SelectedData selected, in DynamicBuffer<Child> children) =>
             {
-                selected.Selected = false;
-                if (SystemAPI.HasComponent<SelectedTag>(child.Value))
+                foreach (var child in children)
                 {
-                    var sr = EntityManager.GetComponentObject<SpriteRenderer>(child.Value);
-                    sr.sortingLayerID = SortingLayer.NameToID("Hidden");
-                }
-            }
-        }).Run();
-
-        int2 selectStart = MainGridScript.Instance.SelectStartPosition;
-        int2 selectEnd = MainGridScript.Instance.SelectEndPosition;
-        int playerTeam = TeamManager.Instance.PlayerTeam;
-        var occupied = MainGridScript.Instance.Occupied;
-
-        int minX = math.min(selectStart.x, selectEnd.x);
-        int maxX = math.max(selectStart.x, selectEnd.x);
-        int minY = math.min(selectStart.y, selectEnd.y);
-        int maxY = math.max(selectStart.y, selectEnd.y);
-
-        for (int x = minX; x <= maxX; x++)
-        {
-            for (int y = minY; y <= maxY; y++)
-            {
-                int2 pos = new int2(x, y);
-                Entity entity = occupied[pos];
-                if (entity != Entity.Null &&
-                    SystemAPI.HasComponent<SelectedData>(entity) &&
-                    SystemAPI.GetComponent<TeamData>(entity).Team == playerTeam)
-                {
-                    SystemAPI.SetComponent(entity, new SelectedData { Selected = true });
-
-                    if (SystemAPI.HasBuffer<Child>(entity))
+                    selected.Selected = false;
+                    if (SystemAPI.HasComponent<SelectedTag>(child.Value))
                     {
-                        var children = SystemAPI.GetBuffer<Child>(entity);
-                        foreach (var child in children)
+                        var sr = EntityManager.GetComponentObject<SpriteRenderer>(child.Value);
+                        sr.sortingLayerID = SortingLayer.NameToID("Hidden");
+                    }
+                }
+            }).Run();
+        }
+
+        //select
+        if (updateSelect)
+        {
+            updateSelect = false;
+            int2 selectStart = MainGridScript.Instance.SelectStartPosition;
+            int2 selectEnd = MainGridScript.Instance.SelectEndPosition;
+            int playerTeam = TeamManager.Instance.PlayerTeam;
+            var occupied = MainGridScript.Instance.Occupied;
+
+            int minX = math.min(selectStart.x, selectEnd.x);
+            int maxX = math.max(selectStart.x, selectEnd.x);
+            int minY = math.min(selectStart.y, selectEnd.y);
+            int maxY = math.max(selectStart.y, selectEnd.y);
+
+            for (int x = minX; x <= maxX; x++)
+            {
+                for (int y = minY; y <= maxY; y++)
+                {
+                    int2 pos = new int2(x, y);
+                    Entity entity = occupied[pos];
+                    if (entity != Entity.Null &&
+                        SystemAPI.HasComponent<SelectedData>(entity) &&
+                        SystemAPI.GetComponent<TeamData>(entity).Team == playerTeam)
+                    {
+                        SystemAPI.SetComponent(entity, new SelectedData { Selected = true });
+
+                        if (SystemAPI.HasBuffer<Child>(entity))
                         {
-                            if (SystemAPI.HasComponent<SelectedTag>(child.Value))
+                            var children = SystemAPI.GetBuffer<Child>(entity);
+                            foreach (var child in children)
                             {
-                                var sr = EntityManager.GetComponentObject<SpriteRenderer>(child.Value);
-                                sr.sortingLayerID = SortingLayer.NameToID("Unit");
+                                if (SystemAPI.HasComponent<SelectedTag>(child.Value))
+                                {
+                                    var sr = EntityManager.GetComponentObject<SpriteRenderer>(child.Value);
+                                    sr.sortingLayerID = SortingLayer.NameToID("Unit");
+                                }
                             }
                         }
                     }
                 }
             }
         }
-        
     }
 }

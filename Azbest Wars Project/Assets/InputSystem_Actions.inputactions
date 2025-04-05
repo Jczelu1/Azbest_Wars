@@ -69,6 +69,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Multiselect",
+                    "type": "Button",
+                    "id": "68014e80-5e0b-4006-a7cf-5131e6becd3e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Crouch",
                     "type": "Button",
                     "id": "27c5f898-bc57-4ee1-8800-db469aca5fe3",
@@ -404,7 +413,7 @@
                 {
                     "name": "",
                     "id": "3f5714e9-7c10-47ff-8542-f062e71854d1",
-                    "path": "<Keyboard>/ctrl",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -552,6 +561,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Stop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "37b59c7f-f529-4da6-8a57-99db33afce91",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Multiselect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -49,6 +49,7 @@ public class MainGridScript : MonoBehaviour
 
     public InputAction leftClickAction;
     public InputAction rightClickAction;
+    public InputAction multiselectAction;
 
     private void Awake()
     {
@@ -76,6 +77,7 @@ public class MainGridScript : MonoBehaviour
         //MainGrid.ShowDebugLines();
         leftClickAction = InputSystem.actions.FindAction("LeftClick");
         rightClickAction = InputSystem.actions.FindAction("RightClick");
+        multiselectAction = InputSystem.actions.FindAction("Multiselect");
     }
 
     private void Update()
@@ -121,6 +123,10 @@ public class MainGridScript : MonoBehaviour
             SelectSprites.Clear();
             Selected = true;
             SelectSystem.updateSelect = true;
+            if (!multiselectAction.IsPressed())
+            {
+                SelectSystem.resetSelect = true;
+            }
         }
         if (leftClickAction.IsPressed())
         {
