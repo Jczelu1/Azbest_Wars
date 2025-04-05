@@ -489,6 +489,7 @@ GameObject:
   - component: {fileID: 1738609620024813382}
   - component: {fileID: 7677745618622251830}
   - component: {fileID: 3965957627853055385}
+  - component: {fileID: 2847442162197258167}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -533,7 +534,6 @@ MonoBehaviour:
   Height: 128
   CellSize: 1
   GridOrigin: {x: 0.5, y: 0.5}
-  PlayerTeam: 0
   Selected: 0
   SelectStartPosition:
     x: 0
@@ -544,7 +544,6 @@ MonoBehaviour:
   selectSpritePrefab: {fileID: 8437689277624345938, guid: 540cdb66f803c3c44aac5acfc3e38295, type: 3}
   MoveToPrefab: {fileID: 4204288484921061643, guid: 796795bac7caf2a49ae317db37eec752, type: 3}
   CantMovePrefab: {fileID: 155821840398954883, guid: 6e2042ee7928f7c4b9e2b32b9fa73d7e, type: 3}
-  SetMoveState: 255
   Walls: {fileID: 7804743496338213760}
   leftClickAction:
     m_Name: Left Click
@@ -612,7 +611,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b55860060d943e4f8a4be59952e5a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTeam: 0
+  PlayerTeam: 0
   AITeam: 0
   teamColors:
   - {r: 1, g: 1, b: 0, a: 1}
@@ -623,6 +622,23 @@ MonoBehaviour:
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   selectedColor: {r: 0, g: 1, b: 0, a: 1}
   attackedColor: {r: 1, g: 0, b: 0, a: 1}
+--- !u!114 &2847442162197258167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4476863787949232057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bb076409cc6f1c40b1e6c331b8a0158, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  names:
+  - sword guy
+  prefabs:
+  - {fileID: 124054065340737986, guid: 6f327e6d09a86a345b39d53bdbf79d45, type: 3}
+  costs: 0a000000
 --- !u!1 &6291466791736991060
 GameObject:
   m_ObjectHideFlags: 0
