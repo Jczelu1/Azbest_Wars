@@ -16,6 +16,7 @@ public partial class ArtificialIdiot : SystemBase
     int groupDelay = 20;
     int groupCountdown = 20;
     NativeList<Entity> captureAreas = new NativeList<Entity>(Allocator.Persistent);
+    NativeList<Entity> spawnBuildings = new NativeList<Entity>(Allocator.Persistent);
     protected override void OnCreate()
     {
 
@@ -29,6 +30,14 @@ public partial class ArtificialIdiot : SystemBase
             {
                 captureAreas.Add(entity);
                 Debug.Log("adding area");
+            }).Run();
+        }
+        if(spawnBuildings.Length == 0)
+        {
+            Entities.WithoutBurst().ForEach((Entity entity, ref SpawnerData spawner) =>
+            {
+                captureAreas.Add(entity);
+                Debug.Log("adding spawner");
             }).Run();
         }
         if(groupCountdown != 0)

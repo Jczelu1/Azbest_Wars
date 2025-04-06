@@ -49,14 +49,17 @@ public partial struct SpawnerSystem : ISystem
         {
             byte team = teamData.Team;
             if (entityManager.GetComponentData<TeamData>(entity).Team > 3) continue;
-            //are queued
             int unitId = spawner.ValueRO.SpawnedUnit;
             //type exists
             if (unitTypes.Length <= unitId) continue;
             UnitTypeData unitType = unitTypes[unitId];
-            //queue new unit
+            //start producing new unit
             if(spawner.ValueRO.MaxTimeToSpawn == 0)
             {
+                if(spawner.ValueRO.Queued == 0)
+                {
+                    continue;
+                }
                 //can afford
                 if (TeamManager.Instance.teamResources[team] < unitType.Cost)
                     continue;
@@ -165,6 +168,7 @@ public partial struct SpawnerSystem : ISystem
 
                 occupied[newPosition] = newEntity;
                 spawner.ValueRW.MaxTimeToSpawn = 0;
+                spawner.ValueRW.Queued--;
             }
             //decrement counter
             else
