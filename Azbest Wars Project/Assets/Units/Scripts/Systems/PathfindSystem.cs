@@ -386,6 +386,8 @@ public partial struct PathfindJob : IJobEntity
             if (path.Length == 0)
             {
                 unitState.Stuck = 2;
+                //maybe do
+                unitState.MovementState = 2;
                 path.Dispose();
                 return;
             }
