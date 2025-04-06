@@ -25,7 +25,7 @@ public struct Formation
 {
     public int2 Position;
     public int2 Destination;
-    public CaptureAreaData Objective;
+    public Entity Objective;
     public bool IsDefending;
     public int numberOfUnits;
     public bool MoveUnits;

@@ -72,15 +72,31 @@ public partial class ArtificialIdiot : SystemBase
                 Destination = new int2(-1, -1),
                 numberOfUnits = unitsToQueue,
                 IsDefending = false,
+                Objective = Entity.Null
             });
         }).Run();
         for (int i = 0; i < formations.Length; i++)
         {
+            Formation formation = formations[i];
+            if (!formation.IsDefending && formation.Objective != Entity.Null && SystemAPI.GetComponent<TeamData>(formation.Objective).Team == AITeam)
+            {
+                //defend
+                if (UnityEngine.Random.Range(0, 2) > 0)
+                {
+                    formation.IsDefending = true;
+                }
+                //attack
+                else
+                {
+                    formation.Destination = new int2(-1, -1);
+                }
+            }
+            //set destination
             if (formations[i].Destination.x == -1 && formations[i].Completed)
             {
-                Formation formation = formations[i];
                 float minDistance = float.MaxValue;
                 int2 moveToPos = new int2(-1, -1);
+                Entity objective= Entity.Null;
 
                 foreach (Entity e in captureAreas)
                 {
@@ -94,13 +110,23 @@ public partial class ArtificialIdiot : SystemBase
                     {
                         minDistance = distance;
                         moveToPos = pos;
+                        objective = e;
                     }
                 }
 
                 formation.Destination = moveToPos;
                 formation.MoveUnits = true;
-                formations[i] = formation;
+                formation.Objective = objective;
             }
+            //readjust position sometimes
+            if(formations[i].Destination.x != -1)
+            {
+                if(UnityEngine.Random.Range(0, 101) == 0)
+                {
+                    formation.MoveUnits = true;
+                }
+            }
+            formations[i] = formation;
         }
         bool MovedThisTick = false;
         int MovedFormation = -1;
