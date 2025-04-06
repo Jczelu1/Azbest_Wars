@@ -23,8 +23,11 @@ public struct FormationData : IComponentData
 }
 public struct Formation
 {
+    public int2 Position;
     public int2 Destination;
     public CaptureAreaData Objective;
     public bool IsDefending;
     public int numberOfUnits;
+    public bool MoveUnits;
+    public bool Completed;
 }

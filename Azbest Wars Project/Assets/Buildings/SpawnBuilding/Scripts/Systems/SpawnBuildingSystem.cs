@@ -153,18 +153,22 @@ public partial struct SpawnerSystem : ISystem
                     newEntity,
                     teamData
                 );
+                entityManager.SetComponentData(
+                    newEntity,
+                    new FormationData { Formation = spawner.ValueRO.SetFormation}
+                );
 
                 //set team color
                 entityManager.GetComponentObject<SpriteRenderer>(newEntity).color = TeamManager.Instance.GetTeamColor(team);
                 //disable select sprite
 
                 //testing only
-                UnitStateData unitState = entityManager.GetComponentData<UnitStateData>(newEntity);
-                unitState.MovementState = 1;
-                entityManager.SetComponentData(
-                    newEntity,
-                    unitState
-                );
+                //UnitStateData unitState = entityManager.GetComponentData<UnitStateData>(newEntity);
+                //unitState.MovementState = 1;
+                //entityManager.SetComponentData(
+                //    newEntity,
+                //    unitState
+                //);
 
                 occupied[newPosition] = newEntity;
                 spawner.ValueRW.MaxTimeToSpawn = 0;
