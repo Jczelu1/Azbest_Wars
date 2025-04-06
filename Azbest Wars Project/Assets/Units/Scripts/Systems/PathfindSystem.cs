@@ -10,7 +10,9 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
+using UnityEditor.Searcher;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 [BurstCompile]
 [UpdateInGroup(typeof(TickSystemGroup))]
@@ -19,6 +21,7 @@ public partial struct PathfindSystem : ISystem
 {
     public static NativeArray<bool> shouldMove = new NativeArray<bool>(4, Allocator.Persistent);
     public static NativeArray<int2> destinations = new NativeArray<int2>(4, Allocator.Persistent);
+    private NativeArray<int> selectedUnits;
     public static NativeArray<byte> setMoveState = new NativeArray<byte>(4, Allocator.Persistent);
     private ComponentLookup<TeamData> _teamLookup;
 
@@ -27,14 +30,19 @@ public partial struct PathfindSystem : ISystem
         state.RequireForUpdate<UnitStateData>();
         state.RequireForUpdate<LocalTransform>();
         _teamLookup = state.GetComponentLookup<TeamData>(true);
+        selectedUnits = new NativeArray<int>(4, Allocator.Persistent);
     }
     public void OnDestroy(ref SystemState state)
     {
         shouldMove.Dispose();
         destinations.Dispose();
+        selectedUnits.Dispose();
+        setMoveState.Dispose();
     }
     public void OnUpdate(ref SystemState state)
     {
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
         _teamLookup.Update(ref state);
 
         var ecbSingleton = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
@@ -42,10 +50,81 @@ public partial struct PathfindSystem : ISystem
         var ecbSystem = World.DefaultGameObjectInjectionWorld
             .GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
 
+        foreach (var (unitState, selected, team) in SystemAPI.Query<UnitStateData, SelectedData, TeamData>()){
+            if (team.Team > 3) continue;
+            if (!selected.Selected) continue;
+            selectedUnits[team.Team]++;
+        }
+        var occupied = MainGridScript.Instance.Occupied;
+        var isWalkable = MainGridScript.Instance.IsWalkable;
+        for (int team = 0;team < 4; team++)
+        {
+            int requiredTiles = selectedUnits[team];
+            if (!shouldMove[team]) continue;
+            if (destinations[team].x == -1) continue;
+            if (!occupied.IsInGrid(destinations[team]) || !isWalkable[destinations[team]])
+            {
+                shouldMove[team] = false;
+                continue;
+            }
+            int2 startPos = destinations[team];
+            NativeList<int2> queue = new NativeList<int2>(Allocator.Temp);
+            NativeList<int2> positions = new NativeList<int2>(Allocator.Temp);
+            NativeHashSet<int2> visited = new NativeHashSet<int2>(requiredTiles, Allocator.Temp);
+
+            // Initialize the search with the starting position.
+            queue.Add(startPos);
+            positions.Add(startPos);
+            int head = 0; // Use a head pointer for FIFO behavior
+
+            // Breadth-first search loop.
+            while (head < queue.Length && requiredTiles > 0)
+            {
+                int2 current = queue[head];
+                head++;
+
+                for (int i = 0; i < Pathfinder.directions.Length; i++)
+                {
+                    int2 offset = Pathfinder.directions[i];
+                    int2 neighbor = current + offset;
+
+                    // Skip if outside grid bounds.
+                    if (!occupied.IsInGrid(neighbor))
+                        continue;
+                    //unwalkable
+                    if (!isWalkable[neighbor])
+                        continue;
+                    if (visited.Contains(neighbor))
+                        continue;
+                    // Enqueue valid neighbor.
+                    queue.Add(neighbor);
+                    positions.Add(neighbor);
+                    visited.Add(neighbor);
+                    requiredTiles--;
+                }
+            }
+            int j = 0;
+            foreach (var (unitState, selected, teamData) in SystemAPI.Query<RefRW<UnitStateData>, SelectedData, TeamData>())
+            {
+                if (teamData.Team != team) continue;
+                if (!selected.Selected) continue;
+                UnityEngine.Debug.Log(positions[j]);
+                if (j >= positions.Length)
+                {
+                    unitState.ValueRW.Destination = positions[0];
+                }
+                unitState.ValueRW.Destination = positions[j];
+                j++;
+            }
+            selectedUnits[team] = 0;
+            queue.Dispose();
+            positions.Dispose();
+            visited.Dispose();
+        }
+
 
         //pathfind job
-        var stopwatch = new Stopwatch();
-        stopwatch.Start();
+
 
         PathfindJob pathfindJob = new PathfindJob()
         {
@@ -109,7 +188,7 @@ public partial struct PathfindJob : IJobEntity
         if (selected.Selected && shouldMove[team])
         {
             NativeList<int2> path = new NativeList<int2>(Allocator.Temp);
-            Pathfinder.FindPath(gridPosition.Position, destinations[team], gridSize, isWalkable.GridArray, occupied.GridArray, true, ref path);
+            Pathfinder.FindPath(gridPosition.Position, unitState.Destination, gridSize, isWalkable.GridArray, occupied.GridArray, true, ref path);
 
             //there is no other way to do this for some reason
             ecb.RemoveComponent<PathNode>(sortKey, entity);
@@ -125,7 +204,6 @@ public partial struct PathfindJob : IJobEntity
             var newPathData = unitState;
             newPathData.PathIndex = 0;
             newPathData.Stuck = 0;
-            newPathData.Destination = destinations[team];
             ecb.SetComponent(sortKey, entity, newPathData);
 
             path.Dispose();
@@ -387,7 +465,7 @@ public partial struct PathfindJob : IJobEntity
             {
                 unitState.Stuck = 2;
                 //maybe do
-                unitState.MovementState = 2;
+                //unitState.MovementState = 2;
                 path.Dispose();
                 return;
             }
