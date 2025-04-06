@@ -489,7 +489,6 @@ GameObject:
   - component: {fileID: 1738609620024813382}
   - component: {fileID: 7677745618622251830}
   - component: {fileID: 3965957627853055385}
-  - component: {fileID: 2847442162197258167}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -563,6 +562,15 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  multiselectAction:
+    m_Name: Multiselect
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: dfa3399d-6f4e-480c-824a-615dfb41672b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!114 &1738609620024813382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -618,27 +626,11 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 1, a: 1}
   - {r: 1, g: 0, b: 1, a: 1}
   - {r: 0, g: 1, b: 1, a: 1}
-  teamResources: 00000000000000000000000000000000
+  startingResources: 00000000000000000000000000000000
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   selectedColor: {r: 0, g: 1, b: 0, a: 1}
   attackedColor: {r: 1, g: 0, b: 0, a: 1}
---- !u!114 &2847442162197258167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4476863787949232057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bb076409cc6f1c40b1e6c331b8a0158, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  names:
-  - sword guy
-  prefabs:
-  - {fileID: 124054065340737986, guid: 6f327e6d09a86a345b39d53bdbf79d45, type: 3}
-  costs: 0a000000
+  resourceText: {fileID: 0}
 --- !u!1 &6291466791736991060
 GameObject:
   m_ObjectHideFlags: 0

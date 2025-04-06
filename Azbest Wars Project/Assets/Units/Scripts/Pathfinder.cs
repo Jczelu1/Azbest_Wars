@@ -26,6 +26,7 @@ public struct Pathfinder
     [BurstCompile]
     public static void FindPath(in int2 start, in int2 end, in int2 gridSize, in NativeArray<bool> isWalkable, in NativeArray<Entity> occupied, bool ignoreUnits,  ref NativeList<int2> path)
     {
+        if(!IsInGrid(end, gridSize)) return;
         NativeArray<PathNode> pathNodeArray = new NativeArray<PathNode>(gridSize.x * gridSize.y, Allocator.Temp);
 
         for (int x = 0; x < gridSize.x; x++)

@@ -46,17 +46,25 @@ public partial struct SmoothMoveJob : IJobEntity
     public int subTickNumber;
     public void Execute(Entity entity, ref UnitStateData unitState, ref LocalTransform transform, ref GridPosition gridPosition)
     {
+        
         if (subTickNumber > 3) return;
         // Calculate the target position based on grid position
         float2 targetPosition = new float2(
             gridOrigin.x + cellSize * gridPosition.Position.x,
             gridOrigin.y + cellSize * gridPosition.Position.y
         );
-
+        if (subTickNumber == 3)
+        {
+            transform.Position.x = targetPosition.x;
+            transform.Position.y = targetPosition.y;
+            return;
+        }
         float2 currentPosition = transform.Position.xy;
 
         float2 toTarget = targetPosition - currentPosition;
         transform.Position.x += math.sign(toTarget.x) * cellSize / 4;
         transform.Position.y += math.sign(toTarget.y) * cellSize / 4;
+        
+        
     }
 }

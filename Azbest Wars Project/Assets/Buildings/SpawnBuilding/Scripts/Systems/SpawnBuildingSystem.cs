@@ -114,7 +114,8 @@ public partial struct SpawnerSystem : ISystem
                             continue;
                         // Ensure neighbor is within the auto-find search radius.
                         if (math.abs(neighbor.x - startPos.x) > Max_Spawn_Range ||
-                            math.abs(neighbor.y - startPos.y) > Max_Spawn_Range)
+                            math.abs(neighbor.y - startPos.y) > Max_Spawn_Range ||
+                            neighbor.y > startPos.y)
                             continue;
                         // Enqueue valid neighbor.
                         queue.Add(neighbor);
