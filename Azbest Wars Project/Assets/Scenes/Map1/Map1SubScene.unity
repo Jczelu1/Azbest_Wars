@@ -131,6 +131,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bigcamp
       objectReference: {fileID: 0}
+    - target: {fileID: 4970617333525120408, guid: 92bfd89fb31e252468adb06ca0f52c70, type: 3}
+      propertyPath: Queued
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6531874853317864133, guid: 92bfd89fb31e252468adb06ca0f52c70, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2
