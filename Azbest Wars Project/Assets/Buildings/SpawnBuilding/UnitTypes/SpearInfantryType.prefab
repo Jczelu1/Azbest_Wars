@@ -47,4 +47,5 @@ MonoBehaviour:
   unitName: Spear Infantry
   cost: 100
   timeToSpawn: 10
+  id: 5
   prefab: {fileID: 2137924443287163154, guid: 4e70c29d5afa18640ab971beddb9b8b3, type: 3}

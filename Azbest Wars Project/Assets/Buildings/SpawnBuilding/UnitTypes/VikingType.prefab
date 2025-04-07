@@ -47,4 +47,5 @@ MonoBehaviour:
   unitName: Viking
   cost: 200
   timeToSpawn: 20
+  id: 7
   prefab: {fileID: 735107889770710729, guid: 8e050e7efc1ed0f4785fd9bf362c693f, type: 3}

@@ -47,4 +47,5 @@ MonoBehaviour:
   unitName: Scythe Guy
   cost: 50
   timeToSpawn: 5
+  id: 2
   prefab: {fileID: 1953898295928860151, guid: be0875892047e314ba681c84919cf505, type: 3}

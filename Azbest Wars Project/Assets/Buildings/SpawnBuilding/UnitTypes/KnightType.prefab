@@ -47,4 +47,5 @@ MonoBehaviour:
   unitName: Knight
   cost: 200
   timeToSpawn: 20
+  id: 6
   prefab: {fileID: 4408635524532863550, guid: 028fd202bb1ed8d418672b56e15ee332, type: 3}

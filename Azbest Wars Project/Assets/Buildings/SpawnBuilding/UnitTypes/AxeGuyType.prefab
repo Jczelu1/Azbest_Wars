@@ -47,4 +47,5 @@ MonoBehaviour:
   unitName: Axe Guy
   cost: 50
   timeToSpawn: 5
+  id: 1
   prefab: {fileID: 7098674971200756332, guid: 7c9d4cb9be6980f4c97e9e1828a22c2f, type: 3}

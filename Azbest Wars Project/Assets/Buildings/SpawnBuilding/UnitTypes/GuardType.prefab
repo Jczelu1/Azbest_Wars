@@ -47,4 +47,5 @@ MonoBehaviour:
   unitName: Guard
   cost: 200
   timeToSpawn: 20
+  id: 8
   prefab: {fileID: 7062958865578585826, guid: 0318ec31da96b2f4bbb4cfef324eda5b, type: 3}
