@@ -87,7 +87,17 @@ public partial struct MeleAttackSystem : ISystem
             unitState.Attacked = false;
             
             int team = teamLookup[entity].Team;
-            if (unitState.Moved) return;
+            if (unitState.Moved)
+            {
+                meleAttack.CurrentCooldown = meleAttack.MoveCooldown;
+                return;
+            }
+            if(meleAttack.CurrentCooldown != 0)
+            {
+                meleAttack.CurrentCooldown--;
+                return;
+            }
+                
             int2 startPos = gridPosition.Position;
 
             if (meleAttack.AttackType == 0)
@@ -130,6 +140,7 @@ public partial struct MeleAttackSystem : ISystem
                     transform.Rotation = Quaternion.Euler(0, 0, 0);
                 }
                 unitState.Attacked = true;
+                meleAttack.CurrentCooldown = meleAttack.AttackCooldown;
                 float damage = meleAttack.Damage;
                 //block
                 //if (1f - random.value < block_Chance) return;
@@ -196,6 +207,7 @@ public partial struct MeleAttackSystem : ISystem
                     transform.Rotation = Quaternion.Euler(0, 0, 0);
                 }
                 unitState.Attacked = true;
+                meleAttack.CurrentCooldown = meleAttack.AttackCooldown;
                 float damage = meleAttack.Damage;
                 //block
                 //if (1f - random.value < block_Chance) return;
@@ -284,6 +296,7 @@ public partial struct MeleAttackSystem : ISystem
                     transform.Rotation = Quaternion.Euler(0, 0, 0);
                 }
                 unitState.Attacked = true;
+                meleAttack.CurrentCooldown = meleAttack.AttackCooldown;
                 float damage = meleAttack.Damage;
                 //block
                 //if (1f - random.value < block_Chance) return;

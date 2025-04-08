@@ -24,12 +24,14 @@ public partial struct PathfindSystem : ISystem
     private NativeArray<int> selectedUnits;
     public static NativeArray<byte> setMoveState = new NativeArray<byte>(4, Allocator.Persistent);
     private ComponentLookup<TeamData> _teamLookup;
+    private ComponentLookup<MeleAttackData> _meleAttackLookup;
 
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<UnitStateData>();
         state.RequireForUpdate<LocalTransform>();
         _teamLookup = state.GetComponentLookup<TeamData>(true);
+        _meleAttackLookup = state.GetComponentLookup<MeleAttackData>(true);
         selectedUnits = new NativeArray<int>(4, Allocator.Persistent);
     }
     public void OnDestroy(ref SystemState state)
@@ -173,6 +175,8 @@ public partial struct PathfindJob : IJobEntity
 
     [ReadOnly]
     public ComponentLookup<TeamData> teamLookup;
+    [ReadOnly]
+    public ComponentLookup<MeleAttackData> meleAttackLookup;
     const int autoFindEnemyDistance = 8;
 
     public void Execute(Entity entity, [EntityIndexInQuery] int sortKey, ref UnitStateData unitState, ref GridPosition gridPosition, ref SelectedData selected)
