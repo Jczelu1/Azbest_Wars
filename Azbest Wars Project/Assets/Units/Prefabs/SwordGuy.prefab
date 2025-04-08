@@ -196,6 +196,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   attackType: 0
+  attackCooldown: 0
+  moveCooldown: 0
 --- !u!114 &1584941004357432666
 MonoBehaviour:
   m_ObjectHideFlags: 0
