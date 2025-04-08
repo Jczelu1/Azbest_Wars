@@ -4,13 +4,15 @@ using Unity.Mathematics;
 
 public class UnitStateAuthoring : MonoBehaviour
 {
+    [SerializeField]
+    byte MovementState = 0;
     private class Baker : Baker<UnitStateAuthoring>
     {
         public override void Bake(UnitStateAuthoring authoring)
         {
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
-            AddComponent(entity, new UnitStateData { PathIndex = 0, Moved = false,  Attacked = false, Stuck = 0, Destination = new int2(-1, -1), MovementState = 0, MoveProcessed = false });
+            AddComponent(entity, new UnitStateData { PathIndex = 0, Moved = false,  Attacked = false, Stuck = 0, Destination = new int2(-1, -1), MovementState = authoring.MovementState, MoveProcessed = false });
             AddComponent(entity, new VisibleData { Visible = false, SetVisible = false });
         }
     }
