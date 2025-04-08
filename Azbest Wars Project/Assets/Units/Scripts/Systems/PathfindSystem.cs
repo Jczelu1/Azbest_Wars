@@ -46,6 +46,7 @@ public partial struct PathfindSystem : ISystem
         var stopwatch = new Stopwatch();
         stopwatch.Start();
         _teamLookup.Update(ref state);
+        _meleAttackLookup.Update(ref state);
 
         var ecbSingleton = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
         var ecb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter();
@@ -138,6 +139,7 @@ public partial struct PathfindSystem : ISystem
             shouldMove = shouldMove,
             destinations = destinations,
             setMoveState = setMoveState,
+            meleAttackLookup = _meleAttackLookup
         };
 
         JobHandle pathJobHandle = pathfindJob.ScheduleParallel(state.Dependency);
