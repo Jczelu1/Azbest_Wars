@@ -13,11 +13,17 @@ using UnityEngine;
 [UpdateAfter(typeof(SpawnerSystem))]
 public partial class ArtificialIdiot : SystemBase
 {
-    byte groupSize = 4;
+    //AI parameters
+    const float AGGRESSIVE_PERCENT = 0.33f;
+    const float DEFEND_CHANCE = 0.5f;
+    const float DEST_RANDOMNESS = 0.25f;
+    const float READJUST_CHANCE = 0.01f;
+    const float CHANGE_DEST_CHANCE = 0.0005f;
+    const float FORMATION_GROW_CHANCE = 0.5f;
+    const int FORMATION_MIN_SIZE = 3;
+    const int FORMATION_MAX_SIZE = 6;
     public static int2 moveToPosition;
     public static bool move;
-    int groupDelay = 20;
-    int groupCountdown = 20;
     NativeList<Entity> captureAreas = new NativeList<Entity>(Allocator.Persistent);
     NativeList<Formation> formations = new NativeList<Formation>(Allocator.Persistent);
     protected override void OnCreate()
@@ -90,7 +96,7 @@ public partial class ArtificialIdiot : SystemBase
             }
             do
             {
-                unitsToQueue = UnityEngine.Random.Range(3, 7);
+                unitsToQueue = UnityEngine.Random.Range(FORMATION_MIN_SIZE, FORMATION_MAX_SIZE+1);
                 unitTypeId = UnityEngine.Random.Range(-1, SpawnerSystem.unitTypes.Length);
 
             } while (unitTypeId != -1 && resourceLeft < SpawnerSystem.unitTypes[unitTypeId].Cost * unitsToQueue);
@@ -107,7 +113,7 @@ public partial class ArtificialIdiot : SystemBase
             spawner.Queued = unitsToQueue;
             spawner.SpawnedUnit = unitTypeId;
             resourceLeft -= SpawnerSystem.unitTypes[unitTypeId].Cost * unitsToQueue;
-            if (UnityEngine.Random.Range(0, 2) > 0)
+            if (UnityEngine.Random.value > FORMATION_GROW_CHANCE)
             {
                 if (spawner.SetFormation != -1)
                 {
@@ -132,22 +138,16 @@ public partial class ArtificialIdiot : SystemBase
         {
             if (!formations[i].Completed) continue;
             Formation formation = formations[i];
-            if (UnityEngine.Random.Range(0, 2001) == 0 || (!formation.IsDefending && formation.Objective != Entity.Null && SystemAPI.GetComponent<TeamData>(formation.Objective).Team == AITeam))
+            if (UnityEngine.Random.value < CHANGE_DEST_CHANCE || (!formation.IsDefending && formation.Objective != Entity.Null && SystemAPI.GetComponent<TeamData>(formation.Objective).Team == AITeam))
             {
-                int whatDo = UnityEngine.Random.Range(0, 3);
-                if (whatDo == 0)
+                if(AGGRESSIVE_PERCENT > UnityEngine.Random.value)
                 {
-                    formation.IsDefending = true;
-                    formation.MovementState = 0;
-                }
-                if(whatDo == 1)
-                {
-                    formation.IsDefending = true;
-                    formation.MovementState = 1;
+                    formation.Destination = new int2(-1, -1);
                 }
                 else
                 {
-                    formation.Destination = new int2(-1, -1);
+                    formation.IsDefending = true;
+                    formation.MovementState = (byte)UnityEngine.Random.Range(0, 2);
                 }
             }
             //set destination
@@ -162,13 +162,13 @@ public partial class ArtificialIdiot : SystemBase
                     bool defend = false;
                     if (EntityManager.GetComponentData<TeamData>(e).Team == AITeam)
                     {
-                        if(UnityEngine.Random.Range(0, 2) == 0)
+                        if(UnityEngine.Random.value < DEFEND_CHANCE)
                         {
                             continue;
                         }
                         defend = true;
                     }
-                    else if (UnityEngine.Random.Range(0, 4) == 0) continue;
+                    else if (UnityEngine.Random.value < DEST_RANDOMNESS) continue;
 
                     int2 pos = EntityManager.GetComponentData<GridPosition>(e).Position;
                     pos.y -= 1;
@@ -199,7 +199,7 @@ public partial class ArtificialIdiot : SystemBase
             //readjust position sometimes
             if(formations[i].Destination.x != -1)
             {
-                if(UnityEngine.Random.Range(0, 101) == 0)
+                if(UnityEngine.Random.value < READJUST_CHANCE)
                 {
                     formation.MoveUnits = true;
                 }
