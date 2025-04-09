@@ -14,8 +14,8 @@ using UnityEngine;
 public partial class ArtificialIdiot : SystemBase
 {
     //AI parameters
-    const float AGGRESSIVE_PERCENT = 0.33f;
-    const float DEFEND_CHANCE = 0.5f;
+    const float AGGRESSIVE_CHANCE = 0.33f;
+    const float DEST_DEFEND_CHANCE = 0.5f;
     const float DEST_RANDOMNESS = 0.25f;
     const float READJUST_CHANCE = 0.01f;
     const float CHANGE_DEST_CHANCE = 0.0005f;
@@ -140,7 +140,7 @@ public partial class ArtificialIdiot : SystemBase
             Formation formation = formations[i];
             if (UnityEngine.Random.value < CHANGE_DEST_CHANCE || (!formation.IsDefending && formation.Objective != Entity.Null && SystemAPI.GetComponent<TeamData>(formation.Objective).Team == AITeam))
             {
-                if(AGGRESSIVE_PERCENT > UnityEngine.Random.value)
+                if(AGGRESSIVE_CHANCE > UnityEngine.Random.value)
                 {
                     formation.Destination = new int2(-1, -1);
                 }
@@ -162,7 +162,7 @@ public partial class ArtificialIdiot : SystemBase
                     bool defend = false;
                     if (EntityManager.GetComponentData<TeamData>(e).Team == AITeam)
                     {
-                        if(UnityEngine.Random.value < DEFEND_CHANCE)
+                        if(UnityEngine.Random.value < DEST_DEFEND_CHANCE)
                         {
                             continue;
                         }
