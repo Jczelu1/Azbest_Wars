@@ -15,7 +15,7 @@ using System.Linq;
 public partial struct SpawnerSystem : ISystem
 {
     const int Max_Spawn_Range = 3;
-    NativeList<UnitTypeData> unitTypes;
+    public static NativeList<UnitTypeData> unitTypes;
     bool started;
     public void OnCreate(ref SystemState state) 
     {
@@ -41,7 +41,11 @@ public partial struct SpawnerSystem : ISystem
             unitTypes = new NativeList<UnitTypeData>(Allocator.Persistent);
             foreach (var unitType in SystemAPI.Query<UnitTypeData>())
             {
-                unitTypes.Add(unitType);
+                while(unitTypes.Length <= unitType.Id)
+                {
+                    unitTypes.Add(unitType);
+                }
+                unitTypes[unitType.Id] = unitType;
             }
         }
         // Iterate over all spawner entities.

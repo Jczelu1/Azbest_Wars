@@ -111,7 +111,6 @@ public partial struct PathfindSystem : ISystem
             {
                 if (teamData.Team != team) continue;
                 if (!selected.Selected) continue;
-                UnityEngine.Debug.Log(positions[j]);
                 if (j >= positions.Length)
                 {
                     unitState.ValueRW.Destination = positions[0];

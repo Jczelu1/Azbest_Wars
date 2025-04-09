@@ -339,11 +339,11 @@ PrefabInstance:
       objectReference: {fileID: 1210484682}
     - target: {fileID: 3965957627853055385, guid: 611b6e47408033f459bb901504c2cebf, type: 3}
       propertyPath: 'startingResources.Array.data[0]'
-      value: 1000
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 3965957627853055385, guid: 611b6e47408033f459bb901504c2cebf, type: 3}
       propertyPath: 'startingResources.Array.data[1]'
-      value: 1000
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 4466743015502578491, guid: 611b6e47408033f459bb901504c2cebf, type: 3}
       propertyPath: multiselectAction.m_Name

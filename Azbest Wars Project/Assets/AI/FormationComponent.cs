@@ -27,6 +27,7 @@ public struct Formation
     public int2 Destination;
     public Entity Objective;
     public bool IsDefending;
+    public byte MovementState;
     public int numberOfUnits;
     public bool MoveUnits;
     public bool Completed;
