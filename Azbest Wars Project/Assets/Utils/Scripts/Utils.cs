@@ -22,4 +22,18 @@ public static class Utils
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y));
         return worldPosition;
     }
+    public static Vector2 GetMouseLocalPosition(RectTransform rectTransform)
+    {
+        Vector2 localPoint;
+        Vector2 mousePosition = Input.mousePosition;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            rectTransform,
+            mousePosition,
+            null,
+            out localPoint
+        );
+        //Debug.Log( localPoint );
+        return localPoint;
+    }
 }

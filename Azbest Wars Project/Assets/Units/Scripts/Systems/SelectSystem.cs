@@ -55,7 +55,9 @@ public partial class SelectSystem : SystemBase
             {
                 for (int y = minY; y <= maxY; y++)
                 {
+                    
                     int2 pos = new int2(x, y);
+                    if (!occupied.IsInGrid(pos)) continue;
                     Entity entity = occupied[pos];
                     if (entity != Entity.Null &&
                         SystemAPI.HasComponent<SelectedData>(entity) &&

@@ -5,7 +5,7 @@ using UnityEngine;
 public partial class TickSystemGroup : ComponentSystemGroup
 {
     //time between updates in miliseconds
-    public static uint Tickrate = 100;
+    public static uint Tickrate = 500;
 
     protected override void OnCreate()
     {

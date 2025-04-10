@@ -26,7 +26,6 @@ public class DummyGrid
         int2 res = new int2();
         res.x = Mathf.FloorToInt((worldPosition.x - GridPosition.x + CellSize * .5f) / CellSize);
         res.y = Mathf.FloorToInt((worldPosition.y - GridPosition.y + CellSize * .5f) / CellSize);
-        if (res.x < 0 || res.y < 0 || res.x > Width || res.y > Height) return new int2(-1, -1);
         return res;
     }
     public Vector3 GetWorldPosition(int x, int y)

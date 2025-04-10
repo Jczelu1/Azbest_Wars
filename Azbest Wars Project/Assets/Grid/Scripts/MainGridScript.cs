@@ -8,8 +8,11 @@ using Unity.Entities;
 using UnityEngine.InputSystem;
 public class MainGridScript : MonoBehaviour
 {
+    
     public static MainGridScript Instance { get; private set; }
 
+    [SerializeField]
+    CameraMover cameraMover;
     //grid
     public DummyGrid MainGrid;
     public int Width;
@@ -19,12 +22,12 @@ public class MainGridScript : MonoBehaviour
     public FlatGrid<Entity> Occupied;
     public FlatGrid<bool> IsWalkable;
 
-    //right click
-    //[HideInInspector]
-    //public int2 RightClickPosition;
-    //[HideInInspector]
-    //public bool RightClick = false;
-
+    //UI
+    [SerializeField]
+    RectTransform MinimapTransform;
+    UIGrid Minimap;
+    [SerializeField]
+    RectTransform MinimapCameraMarker;
     
     //selecting
     [HideInInspector]
@@ -53,12 +56,14 @@ public class MainGridScript : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
-        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
         MainGrid = new DummyGrid(Width, Height, CellSize, GridOrigin);
         Occupied = new FlatGrid<Entity>(Width, Height, Allocator.Persistent);
         BoundsInt gridBounds = new BoundsInt();
@@ -68,7 +73,6 @@ public class MainGridScript : MonoBehaviour
         gridBounds.yMax = gridBounds.yMin + Height;
         IsWalkable = new FlatGrid<bool>(Width, Height, Allocator.Persistent);
         GetTilesOnTilemap(gridBounds, ref IsWalkable);
-        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -78,8 +82,18 @@ public class MainGridScript : MonoBehaviour
         leftClickAction = InputSystem.actions.FindAction("LeftClick");
         rightClickAction = InputSystem.actions.FindAction("RightClick");
         multiselectAction = InputSystem.actions.FindAction("Multiselect");
-    }
 
+        Vector2 minCameraPosition = new Vector2(); 
+        Vector2 maxCameraPosition = new Vector2();
+        minCameraPosition.x = GridOrigin.x + 7.5f - 2f;
+        minCameraPosition.y = GridOrigin.y + 4f - 2f;
+        maxCameraPosition.x = GridOrigin.x + Width - 7.5f + 2f;
+        maxCameraPosition.y = GridOrigin.y + Height - 4f + 2f;
+        cameraMover.minCameraPosition = minCameraPosition;
+        cameraMover.maxCameraPosition = maxCameraPosition;
+
+        Minimap = new UIGrid(32, 32, MinimapTransform);
+    }
     private void Update()
     {
         //pathfind
@@ -87,7 +101,12 @@ public class MainGridScript : MonoBehaviour
         {
             Vector3 mousePos = Utils.GetMouseWorldPosition();
             int2 endPos = MainGrid.GetXY(mousePos);
-            if (endPos.x == -1) return;
+            if (!Occupied.IsInGrid(endPos))
+            {
+                MoveToObject = MainGrid.CreateSprite(CantMovePrefab, endPos);
+                Destroy(MoveToObject, 0.5f);
+                return;
+            }
             //RightClickPosition = endPos;
             Destroy(MoveToObject);
             if (!IsWalkable[endPos])
@@ -108,7 +127,6 @@ public class MainGridScript : MonoBehaviour
         {
             Vector3 mousePos = Utils.GetMouseWorldPosition();
             int2 startPos = MainGrid.GetXY(mousePos);
-            if (startPos.x == -1) return;
             SelectStartPosition = startPos;
             Selected = false;
             SelectSprites.Add(MainGrid.CreateSprite(selectSpritePrefab, startPos));
@@ -132,7 +150,6 @@ public class MainGridScript : MonoBehaviour
         {
             Vector3 mousePos = Utils.GetMouseWorldPosition();
             int2 endPos = MainGrid.GetXY(mousePos);
-            if (endPos.x == -1) return;
             if (endPos.x == SelectEndPosition.x && endPos.y == SelectEndPosition.y)
                 return;
             SelectEndPosition = endPos;
@@ -158,6 +175,12 @@ public class MainGridScript : MonoBehaviour
                     SelectSprites.Add(MainGrid.CreateSprite(selectSpritePrefab, new int2(maxX, y)));
             }
         }
+        //update minimap
+        int2 cameraGridPosition = MainGrid.GetXY(cameraMover.GetPosition());
+        cameraGridPosition.x = (int)(cameraGridPosition.x * ((float)Minimap.Width / Width));
+        cameraGridPosition.y = (int)(cameraGridPosition.y * ((float)Minimap.Height / Height));
+        //Debug.Log(cameraGridPosition);
+        MinimapCameraMarker.localPosition = Minimap.GetLocalPosition(cameraGridPosition);
     }
     private void OnDestroy()
     {
@@ -183,5 +206,26 @@ public class MainGridScript : MonoBehaviour
                 }
             }
         }
+    }
+    public void MinimapPressed()
+    {
+        // Debug.Log(Utils.GetMouseLocalPosition(MinimapTransform));
+        Debug.Log(Utils.GetMouseLocalPosition(MinimapTransform));
+        int2 clickPos = Minimap.GetXY(Utils.GetMouseLocalPosition(MinimapTransform));
+        Debug.Log(clickPos);
+        clickPos.x = (int)(clickPos.x * ((float)Width / Minimap.Width));
+        clickPos.y = (int)(clickPos.y * ((float)Height / Minimap.Height));
+        //Debug.Log(clickPos);
+        MoveCameraTo(clickPos);
+    }
+    private void MoveCameraTo(int2 pos)
+    {
+        Vector3 cameraPosition;
+        cameraPosition.z = -10;
+        cameraPosition.x = GridOrigin.x + pos.x * CellSize - 0.5f;
+        cameraPosition.y = GridOrigin.y + pos.y * CellSize;
+        cameraPosition.x = Mathf.Clamp(cameraPosition.x, cameraMover.minCameraPosition.x, cameraMover.maxCameraPosition.y);
+        cameraPosition.y = Mathf.Clamp(cameraPosition.y, cameraMover.minCameraPosition.y, cameraMover.maxCameraPosition.y);
+        cameraMover.MoveCamera(cameraPosition);
     }
 }
