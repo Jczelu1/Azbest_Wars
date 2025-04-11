@@ -48,6 +48,6 @@ public class CustomButtonScript : MonoBehaviour, IPointerDownHandler, IPointerUp
     {
         isSelected = false;
         image.sprite = NormalSprite;
-        text.color = selectedTextColor;
+        text.color = normalTextColor;
     }
 }

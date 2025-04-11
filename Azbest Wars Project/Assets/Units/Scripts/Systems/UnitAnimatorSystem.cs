@@ -30,3 +30,17 @@ public partial class UnitAnimatorSystem : SystemBase
         }).Run();
     }
 }
+[UpdateInGroup(typeof(TickSystemGroup))]
+public partial class UnitAnimatorResetSystem : SystemBase
+{
+    protected override void OnUpdate()
+    {
+        if (SubTickSystemGroup.subTickEnabled) return;
+        Entities.WithoutBurst().ForEach((Entity entity, ref UnitStateData unitState, ref HealthData healthData, in UnitAnimatorData animator) =>
+        {
+            SpriteRenderer spriteRenderer = EntityManager.GetComponentObject<SpriteRenderer>(entity);
+            spriteRenderer.sprite = animator.BaseSprite;
+            healthData.Attacked = false;
+        }).Run();
+    }
+}

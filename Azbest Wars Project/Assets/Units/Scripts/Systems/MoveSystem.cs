@@ -52,7 +52,7 @@ public partial struct MoveSystem : ISystem
             gridOrigin = MainGridScript.Instance.GridOrigin,
             cellSize = MainGridScript.Instance.CellSize,
             occupied = MainGridScript.Instance.Occupied,
-            moveTransform = !SmoothMoveSystem.enabled
+            moveTransform = !SubTickSystemGroup.subTickEnabled
         };
         //not parallel because race conditions when moving to a tile
         state.Dependency = moveJob.Schedule(state.Dependency);

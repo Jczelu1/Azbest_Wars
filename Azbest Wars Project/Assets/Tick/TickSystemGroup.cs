@@ -5,18 +5,54 @@ using UnityEngine;
 public partial class TickSystemGroup : ComponentSystemGroup
 {
     //time between updates in miliseconds
-    public static uint Tickrate = 500;
+    public static uint Tickrate { get; private set; } = 500;
+    const uint BaseTickrate = 500;
+    private static bool Pause = false;
+    private static bool ChangeTickrate = false;
 
+    public static void SetTickrate(byte level)
+    {
+        if(level > 8) return;
+        if(level == 0)
+        {
+            Pause = true;
+            SubTickSystemGroup.subTickEnabled = false;
+            return;
+        }
+        Tickrate = (uint)(BaseTickrate / level);
+        Pause = false;
+        ChangeTickrate = true;
+        if(level < 4)
+        {
+            SubTickSystemGroup.subTickEnabled = true;
+            SubTickSystemGroup.ChangeTickrate = true;
+        }
+        else
+        {
+            SubTickSystemGroup.subTickEnabled = false;
+        }
+    }
     protected override void OnCreate()
     {
         base.OnCreate();
-        RateManager = new RateUtils.VariableRateManager(Tickrate, false);
+        RateManager = new RateUtils.VariableRateManager(BaseTickrate, false);
+    }
+    protected override void OnUpdate()
+    {
+        if (Pause) return;
+        if (ChangeTickrate)
+        {
+            ChangeTickrate = false;
+            RateManager = new RateUtils.VariableRateManager(Tickrate, false);
+        }
+        base.OnUpdate();
     }
 }
 public partial class SubTickSystemGroup : ComponentSystemGroup
 {
     public static int subTickNumber = 0;
     public static bool subTickEnabled = true;
+    public static bool ChangeTickrate = false;
     protected override void OnCreate()
     {
         base.OnCreate();
@@ -24,10 +60,13 @@ public partial class SubTickSystemGroup : ComponentSystemGroup
     }
     protected override void OnUpdate()
     {
-        if (subTickEnabled)
+        if (!subTickEnabled) return;
+        if (ChangeTickrate)
         {
-            base.OnUpdate();
+            ChangeTickrate = false;
+            RateManager = new RateUtils.VariableRateManager(TickSystemGroup.Tickrate / 4, false);
         }
+        base.OnUpdate();
     }
 }
 [UpdateInGroup(typeof(TickSystemGroup))]
