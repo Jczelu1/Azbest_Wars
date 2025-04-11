@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Camera))]
 public class CameraMover : MonoBehaviour
 {
+    private Camera m_Camera;
     public float moveInterval = 0.25f;
     private float timer = 0f;
     private Vector2 movementInput = Vector2.zero;
@@ -11,17 +13,39 @@ public class CameraMover : MonoBehaviour
     public Vector2 minCameraPosition;
     [HideInInspector]
     public Vector2 maxCameraPosition;
+    public float maxCamSize = 18f;
+    public float minCamSize = 4.5f;
 
     private InputAction moveAction;
+    private InputAction scrollWheelAction;
+    private InputAction zoomPlusAction;
+    private InputAction zoomMinusAction;
 
     void Awake()
     {
+        scrollWheelAction = InputSystem.actions.FindAction("ScrollWheel");
         moveAction = InputSystem.actions.FindAction("Move");
+        zoomPlusAction = InputSystem.actions.FindAction("ZoomPlus");
+        zoomMinusAction = InputSystem.actions.FindAction("ZoomMinus");
         moveAction.Enable();
+    }
+    private void Start()
+    {
+        m_Camera = GetComponent<Camera>();
     }
 
     void Update()
     {
+        Vector2 scrollValue = scrollWheelAction.ReadValue<Vector2>();
+
+        if ((scrollValue.y > 0 || zoomPlusAction.WasPressedThisFrame()) && m_Camera.orthographicSize > (minCamSize+.5f))
+        {
+            m_Camera.orthographicSize -= 4.5f;
+        }
+        else if ((scrollValue.y < 0 || zoomMinusAction.WasPressedThisFrame()) && m_Camera.orthographicSize < maxCamSize)
+        {
+            m_Camera.orthographicSize += 4.5f;
+        }
         timer += Time.deltaTime;
 
         Vector2 newInput = moveAction.ReadValue<Vector2>();
