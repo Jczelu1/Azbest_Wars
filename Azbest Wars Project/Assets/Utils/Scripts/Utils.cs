@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
 public static class Utils
 {
     public static TextMeshPro CreateWorldText(string text = "", Transform parent = null, Vector3? localPosition = null, int fontSize = 2, Color? color = null, TextAlignmentOptions textAlignment = TextAlignmentOptions.Center)
@@ -35,5 +36,22 @@ public static class Utils
         );
         //Debug.Log( localPoint );
         return localPoint;
+    }
+    public static GameObject GetUIObjectUnderPointer()
+    {
+        PointerEventData pointerData = new PointerEventData(EventSystem.current)
+        {
+            position = Input.mousePosition
+        };
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerData, results);
+
+        if (results.Count > 0)
+        {
+            return results[0].gameObject;
+        }
+
+        return null;
     }
 }

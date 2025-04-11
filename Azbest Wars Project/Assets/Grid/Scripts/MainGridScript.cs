@@ -1,11 +1,11 @@
-using System.IO;
 using System.Collections.Generic;
 using Unity.Collections;
+using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using Unity.Entities;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
 public class MainGridScript : MonoBehaviour
 {
     
@@ -22,16 +22,30 @@ public class MainGridScript : MonoBehaviour
     public FlatGrid<Entity> Occupied;
     public FlatGrid<bool> IsWalkable;
 
-    //UI
+    //minimap
     [SerializeField]
     RectTransform MinimapTransform;
     UIGrid Minimap;
     [SerializeField]
     RectTransform MinimapCameraMarker;
-    
+
+    //bigmap
+    [SerializeField]
+    GameObject BigmapObject;
+    [SerializeField]
+    RectTransform BigmapTransform;
+    [SerializeField]
+    GameObject GreenPixel;
+    [SerializeField]
+    GameObject RedPixel;
+    UIGrid Bigmap;
+    bool IsBigmapEnabled = false;
+
     //selecting
     [HideInInspector]
     public bool Selected = false;
+    [HideInInspector]
+    public bool Selecting = false;
     [HideInInspector]
     public int2 SelectStartPosition;
     [HideInInspector]
@@ -52,6 +66,7 @@ public class MainGridScript : MonoBehaviour
 
     public InputAction leftClickAction;
     public InputAction rightClickAction;
+    public InputAction middleClickAction;
     public InputAction multiselectAction;
 
     private void Awake()
@@ -62,7 +77,6 @@ public class MainGridScript : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        DontDestroyOnLoad(gameObject);
 
         MainGrid = new DummyGrid(Width, Height, CellSize, GridOrigin);
         Occupied = new FlatGrid<Entity>(Width, Height, Allocator.Persistent);
@@ -81,6 +95,7 @@ public class MainGridScript : MonoBehaviour
         //MainGrid.ShowDebugLines();
         leftClickAction = InputSystem.actions.FindAction("LeftClick");
         rightClickAction = InputSystem.actions.FindAction("RightClick");
+        middleClickAction = InputSystem.actions.FindAction("MiddleClick");
         multiselectAction = InputSystem.actions.FindAction("Multiselect");
 
         Vector2 minCameraPosition = new Vector2(); 
@@ -93,11 +108,69 @@ public class MainGridScript : MonoBehaviour
         cameraMover.maxCameraPosition = maxCameraPosition;
 
         Minimap = new UIGrid(32, 32, MinimapTransform);
+        Bigmap = new UIGrid(Width, Height, BigmapTransform);
+        BigmapObject.SetActive(false);
     }
     private void Update()
     {
+        if (middleClickAction.WasPressedThisFrame())
+        {
+            if (IsBigmapEnabled)
+            {
+                cameraMover.enabled = true;
+                if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+                {
+                    GameObject ui = Utils.GetUIObjectUnderPointer();
+                    if (ui != null && (ui == BigmapTransform.gameObject || ui == BigmapObject))
+                    {
+                        Vector3 mousePos = Utils.GetMouseLocalPosition(BigmapTransform);
+                        int2 endPos = Bigmap.GetXY(mousePos);
+                        MoveCameraTo(endPos);
+                    }
+                }
+                
+                IsBigmapEnabled = false;
+                BigmapObject.SetActive(false);
+            }
+            else
+            {
+                cameraMover.enabled = false;
+                IsBigmapEnabled = true;
+                BigmapObject.SetActive(true);
+            }
+        }
+        //input
+        if (IsBigmapEnabled)
+        {
+            BigmapGridInput();
+        }
+        else
+        {
+            GridInput();
+        }
+        //update minimap
+        int2 cameraGridPosition = MainGrid.GetXY(cameraMover.GetPosition());
+        cameraGridPosition.x = (int)(cameraGridPosition.x * ((float)Minimap.Width / Width));
+        cameraGridPosition.y = (int)(cameraGridPosition.y * ((float)Minimap.Height / Height));
+        //Debug.Log(cameraGridPosition);
+        MinimapCameraMarker.localPosition = Minimap.GetLocalPosition(cameraGridPosition);
+    }
+    private void OnDestroy()
+    {
+        Occupied.GridArray.Dispose();
+        IsWalkable.GridArray.Dispose();
+    }
+
+    
+    private void GridInput()
+    {
+        bool MouseOverUI = false;
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            MouseOverUI = true;
+        }
         //pathfind
-        if (Selected && rightClickAction.WasPressedThisFrame())
+        if (Selected && rightClickAction.WasPressedThisFrame() && !MouseOverUI)
         {
             Vector3 mousePos = Utils.GetMouseWorldPosition();
             int2 endPos = MainGrid.GetXY(mousePos);
@@ -107,7 +180,6 @@ public class MainGridScript : MonoBehaviour
                 Destroy(MoveToObject, 0.5f);
                 return;
             }
-            //RightClickPosition = endPos;
             Destroy(MoveToObject);
             if (!IsWalkable[endPos])
             {
@@ -121,17 +193,18 @@ public class MainGridScript : MonoBehaviour
             MoveToObject = MainGrid.CreateSprite(MoveToPrefab, endPos);
             Destroy(MoveToObject, 0.5f);
         }
-        
+
         //select
-        if (leftClickAction.WasPressedThisFrame())
+        if (leftClickAction.WasPressedThisFrame() && !MouseOverUI)
         {
             Vector3 mousePos = Utils.GetMouseWorldPosition();
             int2 startPos = MainGrid.GetXY(mousePos);
             SelectStartPosition = startPos;
+            Selecting = true;
             Selected = false;
             SelectSprites.Add(MainGrid.CreateSprite(selectSpritePrefab, startPos));
         }
-        if (leftClickAction.WasReleasedThisFrame())
+        if (leftClickAction.WasReleasedThisFrame() && Selecting)
         {
             Debug.Log(SelectStartPosition + " " + SelectEndPosition);
             foreach (var sprite in SelectSprites)
@@ -139,6 +212,7 @@ public class MainGridScript : MonoBehaviour
                 Destroy(sprite);
             }
             SelectSprites.Clear();
+            Selecting = false;
             Selected = true;
             SelectSystem.updateSelect = true;
             if (!multiselectAction.IsPressed())
@@ -146,7 +220,7 @@ public class MainGridScript : MonoBehaviour
                 SelectSystem.resetSelect = true;
             }
         }
-        if (leftClickAction.IsPressed())
+        if (leftClickAction.IsPressed() && Selecting)
         {
             Vector3 mousePos = Utils.GetMouseWorldPosition();
             int2 endPos = MainGrid.GetXY(mousePos);
@@ -175,19 +249,103 @@ public class MainGridScript : MonoBehaviour
                     SelectSprites.Add(MainGrid.CreateSprite(selectSpritePrefab, new int2(maxX, y)));
             }
         }
-        //update minimap
-        int2 cameraGridPosition = MainGrid.GetXY(cameraMover.GetPosition());
-        cameraGridPosition.x = (int)(cameraGridPosition.x * ((float)Minimap.Width / Width));
-        cameraGridPosition.y = (int)(cameraGridPosition.y * ((float)Minimap.Height / Height));
-        //Debug.Log(cameraGridPosition);
-        MinimapCameraMarker.localPosition = Minimap.GetLocalPosition(cameraGridPosition);
     }
-    private void OnDestroy()
+    private void BigmapGridInput()
     {
-        Occupied.GridArray.Dispose();
-        IsWalkable.GridArray.Dispose();
-    }
+        bool MouseOverUI = false;
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            GameObject ui = Utils.GetUIObjectUnderPointer();
+            if (ui != null && (ui == BigmapTransform.gameObject || ui == BigmapObject))
+            {
+                MouseOverUI = false;
+            }
+            else
+            {
+                MouseOverUI = true;
+            }
+        }
+        //pathfind
+        if (Selected && rightClickAction.WasPressedThisFrame() && !MouseOverUI)
+        {
+            Vector3 mousePos = Utils.GetMouseLocalPosition(BigmapTransform);
+            int2 endPos = Bigmap.GetXY(mousePos);
+            if (!Occupied.IsInGrid(endPos))
+            {
+                MoveToObject = Bigmap.CreateSprite(RedPixel, endPos);
+                Destroy(MoveToObject, 0.5f);
+                return;
+            }
+            Destroy(MoveToObject);
+            if (!IsWalkable[endPos])
+            {
+                MoveToObject = Bigmap.CreateSprite(RedPixel, endPos);
+                Destroy(MoveToObject, 0.5f);
+                return;
+            }
+            PathfindSystem.shouldMove[TeamManager.Instance.PlayerTeam] = true;
+            PathfindSystem.destinations[TeamManager.Instance.PlayerTeam] = endPos;
+            PathfindSystem.setMoveState[TeamManager.Instance.PlayerTeam] = 0;
+            MoveToObject = Bigmap.CreateSprite(GreenPixel, endPos);
+            Destroy(MoveToObject, 0.5f);
+        }
 
+        //select
+        if (leftClickAction.WasPressedThisFrame() && !MouseOverUI)
+        {
+            Vector3 mousePos = Utils.GetMouseLocalPosition(BigmapTransform);
+            int2 startPos = Bigmap.GetXY(mousePos);
+            SelectStartPosition = startPos;
+            Selecting = true;
+            Selected = false;
+            SelectSprites.Add(Bigmap.CreateSprite(GreenPixel, startPos));
+        }
+        if (leftClickAction.WasReleasedThisFrame() && Selecting)
+        {
+            //Debug.Log(SelectStartPosition + " " + SelectEndPosition);
+            foreach (var sprite in SelectSprites)
+            {
+                Destroy(sprite);
+            }
+            SelectSprites.Clear();
+            Selecting = false;
+            Selected = true;
+            SelectSystem.updateSelect = true;
+            if (!multiselectAction.IsPressed())
+            {
+                SelectSystem.resetSelect = true;
+            }
+        }
+        if (leftClickAction.IsPressed() && Selecting)
+        {
+            Vector3 mousePos = Utils.GetMouseLocalPosition(BigmapTransform);
+            int2 endPos = Bigmap.GetXY(mousePos);
+            if (endPos.x == SelectEndPosition.x && endPos.y == SelectEndPosition.y)
+                return;
+            SelectEndPosition = endPos;
+            foreach (var sprite in SelectSprites)
+            {
+                Destroy(sprite);
+            }
+            SelectSprites.Clear();
+            int minX = Mathf.Min(SelectStartPosition.x, SelectEndPosition.x);
+            int maxX = Mathf.Max(SelectStartPosition.x, SelectEndPosition.x);
+            int minY = Mathf.Min(SelectStartPosition.y, SelectEndPosition.y);
+            int maxY = Mathf.Max(SelectStartPosition.y, SelectEndPosition.y);
+            for (int x = minX; x <= maxX; x++)
+            {
+                SelectSprites.Add(Bigmap.CreateSprite(GreenPixel, new int2(x, minY)));
+                if (minY != maxY)
+                    SelectSprites.Add(Bigmap.CreateSprite(GreenPixel, new int2(x, maxY)));
+            }
+            for (int y = minY + 1; y < maxY; y++)
+            {
+                SelectSprites.Add(Bigmap.CreateSprite(GreenPixel, new int2(minX, y)));
+                if (minX != maxX)
+                    SelectSprites.Add(Bigmap.CreateSprite(GreenPixel, new int2(maxX, y)));
+            }
+        }
+    }
     private void GetTilesOnTilemap(BoundsInt bounds, ref FlatGrid<bool> isWalkable)
     {
         for (int x = 0; x < bounds.size.x; x++)
@@ -210,9 +368,7 @@ public class MainGridScript : MonoBehaviour
     public void MinimapPressed()
     {
         // Debug.Log(Utils.GetMouseLocalPosition(MinimapTransform));
-        Debug.Log(Utils.GetMouseLocalPosition(MinimapTransform));
         int2 clickPos = Minimap.GetXY(Utils.GetMouseLocalPosition(MinimapTransform));
-        Debug.Log(clickPos);
         clickPos.x = (int)(clickPos.x * ((float)Width / Minimap.Width));
         clickPos.y = (int)(clickPos.y * ((float)Height / Minimap.Height));
         //Debug.Log(clickPos);

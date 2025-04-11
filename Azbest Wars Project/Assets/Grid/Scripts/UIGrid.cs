@@ -51,12 +51,13 @@ public class UIGrid
     //        Debug.DrawLine(GetWorldPosition(0, y) - new Vector3(CellSize, CellSize) * .5f, GetWorldPosition(Width, y) - new Vector3(CellSize, CellSize) * .5f, Color.red, 100f);
     //    }
     //}
-    //public GameObject CreateSprite(GameObject selectPrefab, int2 position)
-    //{
-    //    GameObject obj = GameObject.Instantiate(selectPrefab);
-    //    obj.transform.position = GetWorldPosition(position);
-    //    return obj;
-    //}
+    public GameObject CreateSprite(GameObject selectPrefab, int2 position)
+    {
+        GameObject obj = GameObject.Instantiate(selectPrefab);
+        obj.transform.SetParent(UITransform.transform);
+        obj.GetComponent<RectTransform>().localPosition = GetLocalPosition(position);
+        return obj;
+    }
     //public void ShowDebugtext()
     //{
     //    debugText = true;

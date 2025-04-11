@@ -39,9 +39,25 @@ public partial class MapTextureSystem : SystemBase
             }
             baseTexture.Apply();
         }
+        int playerTeam = TeamManager.Instance.PlayerTeam;
         mapTexture = new Texture2D(width, height);
         mapTexture.filterMode = FilterMode.Point;
         mapTexture.SetPixels(baseTexture.GetPixels());
+        Entities.WithoutBurst().ForEach((Entity entity, ref CaptureAreaData captureArea, ref GridPosition gridPosition, ref TeamData team) =>
+        {
+            for (int dx = -captureArea.Size.x; dx <= captureArea.Size.x; dx++)
+            {
+                for (int dy = -captureArea.Size.y; dy <= captureArea.Size.y; dy++)
+                {
+                    int2 pos = new int2 { x = dx + gridPosition.Position.x, y = dy + gridPosition.Position.y };
+                    if (MainGridScript.Instance.Occupied.IsInGrid(pos))
+                    {
+                        if (MainGridScript.Instance.IsWalkable[pos])
+                            mapTexture.SetPixel(pos.x, pos.y, TeamManager.Instance.GetTeamColorLow(team.Team));
+                    }
+                }
+            }
+        }).Run();
         var teamLookup = GetComponentLookup<TeamData>(isReadOnly: true);
         var selectedLookup = GetComponentLookup<SelectedData>(isReadOnly: true);
         for (int x = 0; x < width; x++)
@@ -53,7 +69,7 @@ public partial class MapTextureSystem : SystemBase
                     Entity unit = MainGridScript.Instance.Occupied[new int2(x, y)];
                     if (teamLookup.HasComponent(unit))
                     {
-                        if(selectedLookup.HasComponent(unit) && selectedLookup[unit].Selected)
+                        if(selectedLookup.HasComponent(unit) && selectedLookup[unit].Selected && teamLookup[unit].Team == playerTeam)
                         {
                             mapTexture.SetPixel(x, y, TeamManager.Instance.selectedColor);
                             continue;
