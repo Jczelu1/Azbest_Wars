@@ -65,10 +65,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: x8
+  m_text: '||'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 00c68c95abd147c41b2f915eb9b82aa8, type: 2}
-  m_sharedMaterial: {fileID: 9169935379455432947, guid: 00c68c95abd147c41b2f915eb9b82aa8, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f472a3940f3cff247ace4168e5fb81d8, type: 2}
+  m_sharedMaterial: {fileID: -3031642352134172082, guid: f472a3940f3cff247ace4168e5fb81d8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -92,8 +92,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 37
-  m_fontSizeBase: 37
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -6.224262, y: -6.0168457, z: -0.070396416, w: -0.016071329}
+  m_margin: {x: 1.056776, y: -6.0168457, z: -0.070396416, w: -0.016071329}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

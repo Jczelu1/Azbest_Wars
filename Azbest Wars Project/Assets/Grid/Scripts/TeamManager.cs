@@ -63,7 +63,7 @@ public class TeamManager : MonoBehaviour
     }
     private void Update()
     {
-        resourceText.text = $"Resource: {teamResources[PlayerTeam]}";
+        resourceText.text = $"{teamResources[PlayerTeam]}";
     }
     private void OnDestroy()
     {
