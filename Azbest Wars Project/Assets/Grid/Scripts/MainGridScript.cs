@@ -174,13 +174,13 @@ public class MainGridScript : MonoBehaviour
         {
             Vector3 mousePos = Utils.GetMouseWorldPosition();
             int2 endPos = MainGrid.GetXY(mousePos);
+            Destroy(MoveToObject);
             if (!Occupied.IsInGrid(endPos))
             {
                 MoveToObject = MainGrid.CreateSprite(CantMovePrefab, endPos);
                 Destroy(MoveToObject, 0.5f);
                 return;
             }
-            Destroy(MoveToObject);
             if (!IsWalkable[endPos])
             {
                 MoveToObject = MainGrid.CreateSprite(CantMovePrefab, endPos);
@@ -270,13 +270,13 @@ public class MainGridScript : MonoBehaviour
         {
             Vector3 mousePos = Utils.GetMouseLocalPosition(BigmapTransform);
             int2 endPos = Bigmap.GetXY(mousePos);
+            Destroy(MoveToObject);
             if (!Occupied.IsInGrid(endPos))
             {
                 MoveToObject = Bigmap.CreateSprite(RedPixel, endPos);
                 Destroy(MoveToObject, 0.5f);
                 return;
             }
-            Destroy(MoveToObject);
             if (!IsWalkable[endPos])
             {
                 MoveToObject = Bigmap.CreateSprite(RedPixel, endPos);
