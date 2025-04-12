@@ -26,7 +26,7 @@ public class TeamManager : MonoBehaviour
     };
     [SerializeField]
     private int[] startingResources = { 0, 0, 0, 0 };
-    public NativeArray<int> teamResources = new NativeArray<int>(4, Allocator.Persistent);
+    public NativeArray<int> teamResources;
     public Color baseColor = Color.white;
     public Color baseColorLow = new Color(184f / 255, 184f / 255, 184f / 255);
     public Color selectedColor = Color.green;
@@ -56,7 +56,8 @@ public class TeamManager : MonoBehaviour
     }
     private void Start()
     {
-        for(int i = 0; i < 4; i++)
+        teamResources = new NativeArray<int>(4, Allocator.Persistent);
+        for (int i = 0; i < 4; i++)
         {
             teamResources[i] = startingResources[i];
         }

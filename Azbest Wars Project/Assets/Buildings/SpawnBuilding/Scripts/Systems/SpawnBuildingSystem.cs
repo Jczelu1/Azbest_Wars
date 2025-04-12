@@ -20,6 +20,7 @@ public partial struct SpawnerSystem : ISystem
     public void OnCreate(ref SystemState state) 
     {
         started = false;
+        unitTypes = new NativeList<UnitTypeData>(Allocator.Persistent);
     }
 
     public void OnDestroy(ref SystemState state)
@@ -38,7 +39,6 @@ public partial struct SpawnerSystem : ISystem
         if (!started)
         {
             started = true;
-            unitTypes = new NativeList<UnitTypeData>(Allocator.Persistent);
             foreach (var unitType in SystemAPI.Query<UnitTypeData>())
             {
                 while(unitTypes.Length <= unitType.Id)

@@ -21,7 +21,7 @@ public partial struct PathfindSystem : ISystem
 {
     public static NativeArray<bool> shouldMove = new NativeArray<bool>(4, Allocator.Persistent);
     public static NativeArray<int2> destinations = new NativeArray<int2>(4, Allocator.Persistent);
-    private NativeArray<int> selectedUnits;
+    public static NativeArray<int> selectedUnits = new NativeArray<int>(4, Allocator.Persistent);
     public static NativeArray<byte> setMoveState = new NativeArray<byte>(4, Allocator.Persistent);
     private ComponentLookup<TeamData> _teamLookup;
     private ComponentLookup<MeleAttackData> _meleAttackLookup;
@@ -32,7 +32,6 @@ public partial struct PathfindSystem : ISystem
         state.RequireForUpdate<LocalTransform>();
         _teamLookup = state.GetComponentLookup<TeamData>(true);
         _meleAttackLookup = state.GetComponentLookup<MeleAttackData>(true);
-        selectedUnits = new NativeArray<int>(4, Allocator.Persistent);
     }
     public void OnDestroy(ref SystemState state)
     {

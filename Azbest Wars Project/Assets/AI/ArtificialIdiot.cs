@@ -238,8 +238,8 @@ public partial class ArtificialIdiot : SystemBase
     }
     protected override void OnDestroy()
     {
-        base.OnDestroy();
         captureAreas.Dispose();
         formations.Dispose();
+        base.OnDestroy();
     }
 }
