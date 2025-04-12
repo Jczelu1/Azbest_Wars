@@ -4,6 +4,7 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
+using static Unity.VisualScripting.Metadata;
 
 [UpdateInGroup(typeof(TickSystemGroup))]
 [UpdateBefore(typeof(PathfindSystem))]
@@ -12,6 +13,7 @@ public partial class SelectSystem : SystemBase
 {
     public static bool updateSelect = false;
     public static bool resetSelect = true;
+    public static int unitsSelected = 0;
     protected override void OnCreate()
     {
         RequireForUpdate<SelectedData>();
@@ -22,6 +24,7 @@ public partial class SelectSystem : SystemBase
         //reset select
         if (resetSelect)
         {
+            unitsSelected = 0;
             resetSelect = false;
             Entities.WithoutBurst().ForEach((Entity entity, ref SelectedData selected, in DynamicBuffer<Child> children) =>
             {
@@ -55,7 +58,6 @@ public partial class SelectSystem : SystemBase
             {
                 for (int y = minY; y <= maxY; y++)
                 {
-                    
                     int2 pos = new int2(x, y);
                     if (!occupied.IsInGrid(pos)) continue;
                     Entity entity = occupied[pos];
@@ -64,7 +66,7 @@ public partial class SelectSystem : SystemBase
                         SystemAPI.GetComponent<TeamData>(entity).Team == playerTeam)
                     {
                         SystemAPI.SetComponent(entity, new SelectedData { Selected = true });
-
+                        unitsSelected += 1;
                         if (SystemAPI.HasBuffer<Child>(entity))
                         {
                             var children = SystemAPI.GetBuffer<Child>(entity);
