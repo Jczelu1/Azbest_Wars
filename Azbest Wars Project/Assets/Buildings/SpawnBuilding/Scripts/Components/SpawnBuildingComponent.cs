@@ -21,7 +21,8 @@ class SpawnerAuthoring : MonoBehaviour
                 Queued = authoring.Queued,
                 TimeToSpawn = 1,
                 MaxTimeToSpawn = 0,
-                SetFormation = -1
+                SetFormation = -1,
+                NextSpawnedUnit = -1
             });
         }
     }
@@ -30,6 +31,7 @@ class SpawnerAuthoring : MonoBehaviour
 public struct SpawnerData : IComponentData
 {
     public int SpawnedUnit;
+    public int NextSpawnedUnit;
     public int Queued;
     public int TimeToSpawn;
     public int MaxTimeToSpawn;

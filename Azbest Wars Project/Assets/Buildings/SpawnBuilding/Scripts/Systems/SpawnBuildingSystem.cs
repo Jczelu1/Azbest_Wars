@@ -63,7 +63,7 @@ public partial struct SpawnerSystem : ISystem
                 }
                 if(setSelectedUnitType != -1)
                 {
-                    spawner.ValueRW.SpawnedUnit = setSelectedUnitType;
+                    spawner.ValueRW.NextSpawnedUnit = setSelectedUnitType;
                 }
             }
             int unitId = spawner.ValueRO.SpawnedUnit;
@@ -73,7 +73,12 @@ public partial struct SpawnerSystem : ISystem
             //start producing new unit
             if(spawner.ValueRO.MaxTimeToSpawn == 0)
             {
-                if(spawner.ValueRO.Queued == 0)
+                if (spawner.ValueRO.NextSpawnedUnit != -1)
+                {
+                    spawner.ValueRW.SpawnedUnit = spawner.ValueRO.NextSpawnedUnit;
+                    spawner.ValueRW.NextSpawnedUnit = -1;
+                }
+                if (spawner.ValueRO.Queued == 0)
                 {
                     continue;
                 }

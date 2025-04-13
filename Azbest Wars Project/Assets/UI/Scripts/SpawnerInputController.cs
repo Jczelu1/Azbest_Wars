@@ -1,39 +1,89 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpawnerInputController : MonoBehaviour
 {
     public static int Queued;
     public static int UnitType;
-    public static float ProductionProgress;
+    public static float ProductionProgress = 0;
+    public static bool IsSpawnerSelected = false;
+    public static bool UIClosedByPlayer = false;
+    private bool UIOpen = false;
+    [SerializeField]
+    GameObject SpawnerUI;
     [SerializeField]
     TextMeshProUGUI QueueText;
     [SerializeField]
     TextMeshProUGUI UnitTypeText;
     [SerializeField]
     TextMeshProUGUI CostText;
+    [SerializeField]
+    TextMeshProUGUI TimeText;
+    [SerializeField]
+    Image Progressbar;
+
+    [SerializeField]
+    Image UnitImage;
+    [SerializeField]
+    Sprite[] UnitSprites;
     void Start()
     {
-        
+        UnitImage.color = TeamManager.Instance.GetTeamColor(TeamManager.Instance.PlayerTeam);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Queued > 999)
+        if (!IsSpawnerSelected)
         {
-            QueueText.text = "INF";
+            Debug.Log("1");
+            SpawnerUI.SetActive(false);
+            UIOpen = false;
+            UIClosedByPlayer = false;
         }
-        else
+        if (IsSpawnerSelected && !UIOpen && !UIClosedByPlayer)
         {
-            QueueText.text = Queued.ToString();
+            Debug.Log("2");
+            SpawnerUI.SetActive(true);
+            UIOpen = true;
         }
-        if(UnitType < SpawnerSystem.unitTypes.Length)
+        if (UIOpen)
         {
-            UnitTypeText.text = SpawnerSystem.unitTypes[UnitType].UnitName.ToString();
-            CostText.text = SpawnerSystem.unitTypes[UnitType].Cost.ToString();
+            if (Queued > 999)
+            {
+                QueueText.text = "INF";
+            }
+            else
+            {
+                QueueText.text = Queued.ToString();
+            }
+            if (UnitType < SpawnerSystem.unitTypes.Length)
+            {
+                UnitTypeText.text = SpawnerSystem.unitTypes[UnitType].UnitName.ToString();
+                CostText.text = SpawnerSystem.unitTypes[UnitType].Cost.ToString();
+                TimeText.text = SpawnerSystem.unitTypes[UnitType].TimeToSpawn.ToString();
+            }
+            if (UnitType < UnitSprites.Length)
+            {
+                UnitImage.sprite = UnitSprites[UnitType];
+            }
+            if (Queued == 0)
+            {
+                Progressbar.fillAmount = 0;
+            }
+            else
+            {
+                Progressbar.fillAmount = 1 - ProductionProgress;
+            }
         }
+    }
+    public void Close()
+    {
+        SpawnerUI.SetActive(false);
+        UIOpen = false;
+        UIClosedByPlayer = true;
     }
     public void UnitTypeNext()
     {

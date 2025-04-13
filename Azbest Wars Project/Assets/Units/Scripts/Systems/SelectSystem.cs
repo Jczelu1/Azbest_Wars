@@ -31,6 +31,7 @@ public partial class SelectSystem : SystemBase
             buildingsSelected = 0;
             resetSelect = false;
             selectedEntity = Entity.Null;
+            SpawnerInputController.IsSpawnerSelected = false;
             Entities.WithoutBurst().ForEach((Entity entity, ref SelectedData selected, in DynamicBuffer<Child> children) =>
             {
                 foreach (var child in children)
@@ -132,9 +133,17 @@ public partial class SelectSystem : SystemBase
             {
                 if (SystemAPI.HasComponent<SpawnerData>(selectedEntity))
                 {
+                    if(SystemAPI.GetComponent<TeamData>(selectedEntity).Team != TeamManager.Instance.PlayerTeam)
+                    {
+                        SpawnerInputController.IsSpawnerSelected = true;
+                        SelectSystem.selectedEntity = Entity.Null;
+                        return;
+                    }
                     SpawnerData spawner = SystemAPI.GetComponent<SpawnerData>(selectedEntity);
                     SpawnerInputController.Queued = spawner.Queued;
-                    SpawnerInputController.UnitType = spawner.SpawnedUnit;
+                    SpawnerInputController.UnitType = spawner.NextSpawnedUnit == -1 ? spawner.SpawnedUnit : spawner.NextSpawnedUnit;
+                    SpawnerInputController.ProductionProgress = (float)spawner.TimeToSpawn / spawner.MaxTimeToSpawn;
+                    SpawnerInputController.IsSpawnerSelected = true;
                     spawnerSelected = true;
                 }
             }
