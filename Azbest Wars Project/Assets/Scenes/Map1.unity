@@ -356,23 +356,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2059150964}
+      objectReference: {fileID: 779114555}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetTickrate
+      value: AddFiveQueue
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SidebarController, Assembly-CSharp
+      value: SpawnerInputController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
@@ -527,7 +527,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2310769778528826718, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_Name
-      value: x1 (5)
+      value: Inf
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -535,23 +535,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2059150964}
+      objectReference: {fileID: 779114555}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetTickrate
+      value: InfiniteQueued
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SidebarController, Assembly-CSharp
+      value: SpawnerInputController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
@@ -714,23 +714,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2059150964}
+      objectReference: {fileID: 779114555}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetTickrate
+      value: IncrementQueue
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SidebarController, Assembly-CSharp
+      value: SpawnerInputController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
@@ -888,23 +888,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2059150964}
+      objectReference: {fileID: 779114555}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetTickrate
+      value: DecrementQueue
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SidebarController, Assembly-CSharp
+      value: SpawnerInputController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
@@ -1394,17 +1394,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2058338799}
   m_CullTransparentMesh: 1
---- !u!114 &2059150964 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1096659953433813633, guid: 611b6e47408033f459bb901504c2cebf, type: 3}
-  m_PrefabInstance: {fileID: 1912917821}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 963c26e3e342f434b8a3973d25b3b09a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2109396655 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2546478766155459329, guid: 611b6e47408033f459bb901504c2cebf, type: 3}
@@ -1656,23 +1645,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2059150964}
+      objectReference: {fileID: 779114555}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetTickrate
+      value: RemoveFiveQueue
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SidebarController, Assembly-CSharp
+      value: SpawnerInputController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2523635771303469721, guid: d95e4802c9714554e91bb433f7ef0e21, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
