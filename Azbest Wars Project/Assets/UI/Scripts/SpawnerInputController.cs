@@ -6,8 +6,13 @@ public class SpawnerInputController : MonoBehaviour
 {
     public static int Queued;
     public static int UnitType;
+    public static float ProductionProgress;
     [SerializeField]
     TextMeshProUGUI QueueText;
+    [SerializeField]
+    TextMeshProUGUI UnitTypeText;
+    [SerializeField]
+    TextMeshProUGUI CostText;
     void Start()
     {
         
@@ -16,19 +21,6 @@ public class SpawnerInputController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            Queued++;
-            SetQueued();
-        }
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            if(Queued > 0)
-            {
-                Queued--;
-                SetQueued();
-            }
-        }
         if(Queued > 999)
         {
             QueueText.text = "INF";
@@ -36,6 +28,27 @@ public class SpawnerInputController : MonoBehaviour
         else
         {
             QueueText.text = Queued.ToString();
+        }
+        if(UnitType < SpawnerSystem.unitTypes.Length)
+        {
+            UnitTypeText.text = SpawnerSystem.unitTypes[UnitType].UnitName.ToString();
+            CostText.text = SpawnerSystem.unitTypes[UnitType].Cost.ToString();
+        }
+    }
+    public void UnitTypeNext()
+    {
+        if (SpawnerSystem.unitTypes.Length > UnitType+1)
+        {
+            UnitType++;
+            SetUnitType();
+        }
+    }
+    public void UnitTypePrevious()
+    {
+        if (UnitType > 0)
+        {
+            UnitType--;
+            SetUnitType();
         }
     }
     public void IncrementQueue()
@@ -69,12 +82,15 @@ public class SpawnerInputController : MonoBehaviour
     }
     public void InfiniteQueued()
     {
-        if (Queued > int.MaxValue / 2)
-            Queued = 0;
-        else
-            Queued = int.MaxValue;
+        Queued = int.MaxValue;
         SetQueued();
     }
+    public void ZeroQueue()
+    {
+        Queued = 0;
+        SetQueued();
+    }
+
     private void SetQueued()
     {
         if (SelectSystem.spawnerSelected)
