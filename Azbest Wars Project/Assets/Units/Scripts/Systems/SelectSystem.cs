@@ -15,6 +15,8 @@ public partial class SelectSystem : SystemBase
     public static bool resetSelect = true;
     public static int unitsSelected = 0;
     public static int buildingsSelected = 0;
+    public static bool spawnerSelected = false;
+    public static Entity selectedEntity = Entity.Null;
     protected override void OnCreate()
     {
         RequireForUpdate<SelectedData>();
@@ -28,6 +30,7 @@ public partial class SelectSystem : SystemBase
             unitsSelected = 0;
             buildingsSelected = 0;
             resetSelect = false;
+            selectedEntity = Entity.Null;
             Entities.WithoutBurst().ForEach((Entity entity, ref SelectedData selected, in DynamicBuffer<Child> children) =>
             {
                 foreach (var child in children)
@@ -104,6 +107,7 @@ public partial class SelectSystem : SystemBase
                 {
                     buildingsSelected++;
                     selected.Selected = true;
+                    selectedEntity = entity;
                     foreach (var child in children)
                     {
                         if (EntityManager.HasComponent<SelectedTag>(child.Value))
@@ -114,6 +118,26 @@ public partial class SelectSystem : SystemBase
                     }
                 }
             }).Run();
+        }
+    }
+    [UpdateInGroup(typeof(TickSystemGroup))]
+    [UpdateAfter(typeof(SpawnerSystem))]
+    [BurstCompile]
+    public partial class UpdateSpawnerUISystem : SystemBase
+    {
+        protected override void OnUpdate()
+        {
+            spawnerSelected = false;
+            if (SelectSystem.selectedEntity != Entity.Null)
+            {
+                if (SystemAPI.HasComponent<SpawnerData>(selectedEntity))
+                {
+                    SpawnerData spawner = SystemAPI.GetComponent<SpawnerData>(selectedEntity);
+                    SpawnerInputController.Queued = spawner.Queued;
+                    SpawnerInputController.UnitType = spawner.SpawnedUnit;
+                    spawnerSelected = true;
+                }
+            }
         }
     }
 }
