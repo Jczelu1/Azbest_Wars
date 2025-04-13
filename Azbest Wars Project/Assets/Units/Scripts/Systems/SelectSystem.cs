@@ -14,6 +14,7 @@ public partial class SelectSystem : SystemBase
     public static bool updateSelect = false;
     public static bool resetSelect = true;
     public static int unitsSelected = 0;
+    public static int buildingsSelected = 0;
     protected override void OnCreate()
     {
         RequireForUpdate<SelectedData>();
@@ -25,6 +26,7 @@ public partial class SelectSystem : SystemBase
         if (resetSelect)
         {
             unitsSelected = 0;
+            buildingsSelected = 0;
             resetSelect = false;
             Entities.WithoutBurst().ForEach((Entity entity, ref SelectedData selected, in DynamicBuffer<Child> children) =>
             {
@@ -66,7 +68,7 @@ public partial class SelectSystem : SystemBase
                         SystemAPI.GetComponent<TeamData>(entity).Team == playerTeam)
                     {
                         SystemAPI.SetComponent(entity, new SelectedData { Selected = true });
-                        unitsSelected += 1;
+                        unitsSelected++;
                         if (SystemAPI.HasBuffer<Child>(entity))
                         {
                             var children = SystemAPI.GetBuffer<Child>(entity);
@@ -82,6 +84,36 @@ public partial class SelectSystem : SystemBase
                     }
                 }
             }
+            if (unitsSelected != 0) return;
+            Entities.WithoutBurst().ForEach((Entity entity, ref SelectedData selected, in DynamicBuffer<Child> children, in GridPosition gridPosition, in TeamData team) =>
+            {
+                //temporary
+                if (!EntityManager.HasComponent<SpawnerData>(entity))
+                {
+                    return;
+                }
+                if (team.Team != playerTeam) return;
+                int entityMinX = gridPosition.Position.x;
+                int entityMinY = gridPosition.Position.y;
+                int entityMaxX = entityMinX + gridPosition.Size.x - 1;
+                int entityMaxY = entityMinY + gridPosition.Size.y - 1;
+
+                bool isOverlapping = entityMinX <= maxX && entityMaxX >= minX &&
+                                     entityMinY <= maxY && entityMaxY >= minY;
+                if(isOverlapping)
+                {
+                    buildingsSelected++;
+                    selected.Selected = true;
+                    foreach (var child in children)
+                    {
+                        if (EntityManager.HasComponent<SelectedTag>(child.Value))
+                        {
+                            var sr = EntityManager.GetComponentObject<SpriteRenderer>(child.Value);
+                            sr.sortingLayerID = SortingLayer.NameToID("Unit");
+                        }
+                    }
+                }
+            }).Run();
         }
     }
 }

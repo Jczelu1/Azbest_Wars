@@ -170,7 +170,7 @@ public class MainGridScript : MonoBehaviour
             MouseOverUI = true;
         }
         //pathfind
-        if (Selected && rightClickAction.WasPressedThisFrame() && !MouseOverUI)
+        if (SelectSystem.unitsSelected > 0 && Selected && rightClickAction.WasPressedThisFrame() && !MouseOverUI)
         {
             Vector3 mousePos = Utils.GetMouseWorldPosition();
             int2 endPos = MainGrid.GetXY(mousePos);

@@ -16,6 +16,8 @@ public partial struct SpawnerSystem : ISystem
 {
     const int Max_Spawn_Range = 3;
     public static NativeList<UnitTypeData> unitTypes;
+    public static int setSelectedQueue = -1;
+    public static int setSelectedUnitType = -1;
     bool started;
     public void OnCreate(ref SystemState state) 
     {
@@ -49,10 +51,21 @@ public partial struct SpawnerSystem : ISystem
             }
         }
         // Iterate over all spawner entities.
-        foreach (var (spawner, gridPosition, teamData, entity) in SystemAPI.Query<RefRW<SpawnerData>, GridPosition, TeamData>().WithEntityAccess())
+        foreach (var (spawner, gridPosition, teamData, selected, entity) in SystemAPI.Query<RefRW<SpawnerData>, GridPosition, TeamData, SelectedData>().WithEntityAccess())
         {
             byte team = teamData.Team;
             if (entityManager.GetComponentData<TeamData>(entity).Team > 3) continue;
+            if (selected.Selected)
+            {
+                if(setSelectedQueue != -1)
+                {
+                    spawner.ValueRW.Queued = setSelectedQueue;
+                }
+                if(setSelectedUnitType != -1)
+                {
+                    spawner.ValueRW.SpawnedUnit = setSelectedUnitType;
+                }
+            }
             int unitId = spawner.ValueRO.SpawnedUnit;
             //type exists
             if (unitTypes.Length <= unitId) continue;
@@ -185,6 +198,8 @@ public partial struct SpawnerSystem : ISystem
                 spawner.ValueRW.TimeToSpawn--;
             }
         }
+        setSelectedQueue = -1;
+        setSelectedUnitType = -1;
     }
 
 }
