@@ -305,8 +305,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3712b93ff8b551948814e1053833e01f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 1
-  isSpawner: 1
+  id: 2
+  isSpawner: 0
   isArea: 0
 --- !u!114 &3328768816486809962
 MonoBehaviour:
@@ -368,7 +368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3712b93ff8b551948814e1053833e01f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 1
+  id: 3
   isSpawner: 1
   isArea: 0
 --- !u!114 &62351056233936930
@@ -691,7 +691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3712b93ff8b551948814e1053833e01f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 1
+  id: 4
   isSpawner: 1
   isArea: 0
 --- !u!114 &6567318934993505487
@@ -928,8 +928,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 1
-  isSpawner: 1
-  isArea: 0
+  isSpawner: 0
+  isArea: 1
 --- !u!114 &7105418720427636929
 MonoBehaviour:
   m_ObjectHideFlags: 0

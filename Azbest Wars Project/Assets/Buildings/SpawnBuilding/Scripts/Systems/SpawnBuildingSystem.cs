@@ -63,7 +63,14 @@ public partial struct SpawnerSystem : ISystem
             {
                 if(setSelectedQueue != -1)
                 {
-                    spawner.ValueRW.Queued = setSelectedQueue;
+                    if(spawner.ValueRO.MaxTimeToSpawn != 0)
+                    {
+                        spawner.ValueRW.Queued = math.max(setSelectedQueue, 1);
+                    }
+                    else
+                    {
+                        spawner.ValueRW.Queued = math.max(setSelectedQueue, 0);
+                    }
                 }
                 if(setSelectedUnitType != -1)
                 {
@@ -82,8 +89,9 @@ public partial struct SpawnerSystem : ISystem
                     spawner.ValueRW.SpawnedUnit = spawner.ValueRO.NextSpawnedUnit;
                     spawner.ValueRW.NextSpawnedUnit = -1;
                 }
-                if (spawner.ValueRO.Queued == 0)
+                if (spawner.ValueRO.Queued <= 0)
                 {
+                    spawner.ValueRW.Queued = 0;
                     continue;
                 }
                 //can afford

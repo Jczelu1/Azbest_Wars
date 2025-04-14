@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6286383872383973670}
   - component: {fileID: 4970617333525120408}
   - component: {fileID: 5391155887008392461}
+  - component: {fileID: -4710216340778404619}
   m_Layer: 0
   m_Name: Bigcamp
   m_TagString: Untagged
@@ -151,6 +152,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7879e0a9235573942a4b08ff82d1d6e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-4710216340778404619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4532479453173840446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3712b93ff8b551948814e1053833e01f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+  isSpawner: 1
+  isArea: 0
 --- !u!1 &6258272519095670195
 GameObject:
   m_ObjectHideFlags: 0

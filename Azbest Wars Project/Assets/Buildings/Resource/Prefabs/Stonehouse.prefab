@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5867810347182649170}
   - component: {fileID: 1575478260897991400}
   - component: {fileID: 2906362141731669727}
+  - component: {fileID: 2091368550417005331}
   m_Layer: 0
   m_Name: Stonehouse
   m_TagString: Untagged
@@ -122,6 +123,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   team: 255
   spriteRenderer: {fileID: 5867810347182649170}
+--- !u!114 &2091368550417005331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3645818792098223039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3712b93ff8b551948814e1053833e01f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 4
+  isSpawner: 0
+  isArea: 0
 --- !u!1 &6514288765382855984
 GameObject:
   m_ObjectHideFlags: 0

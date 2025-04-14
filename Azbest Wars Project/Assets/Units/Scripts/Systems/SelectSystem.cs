@@ -14,6 +14,8 @@ public partial class SelectSystem : SystemBase
     public static bool updateSelect = false;
     public static bool resetSelect = true;
     public static int unitsSelected = 0;
+    public static int unitTypeSelected = -2;
+    public static int buildingTypeSelected = -2;
     public static int buildingsSelected = 0;
     public static bool spawnerSelected = false;
     public static Entity selectedEntity = Entity.Null;
@@ -54,6 +56,8 @@ public partial class SelectSystem : SystemBase
             int2 selectEnd = MainGridScript.Instance.SelectEndPosition;
             int playerTeam = TeamManager.Instance.PlayerTeam;
             var occupied = MainGridScript.Instance.Occupied;
+            unitTypeSelected = -2;
+            buildingTypeSelected = -2;
 
             int minX = math.min(selectStart.x, selectEnd.x);
             int maxX = math.max(selectStart.x, selectEnd.x);
@@ -72,6 +76,15 @@ public partial class SelectSystem : SystemBase
                         SystemAPI.GetComponent<TeamData>(entity).Team == playerTeam)
                     {
                         SystemAPI.SetComponent(entity, new SelectedData { Selected = true });
+                        int unitTypeId = SystemAPI.GetComponent<UnitTypeId>(entity).Id;
+                        if (unitTypeSelected == -2)
+                        {
+                            unitTypeSelected = unitTypeId;
+                        }
+                        else if(unitTypeSelected != unitTypeId)
+                        {
+                            unitTypeSelected = -1;
+                        }
                         unitsSelected++;
                         if (SystemAPI.HasBuffer<Child>(entity))
                         {
@@ -89,7 +102,7 @@ public partial class SelectSystem : SystemBase
                 }
             }
             if (unitsSelected != 0) return;
-            Entities.WithoutBurst().ForEach((Entity entity, ref SelectedData selected, in DynamicBuffer<Child> children, in GridPosition gridPosition, in TeamData team) =>
+            Entities.WithoutBurst().ForEach((Entity entity, ref SelectedData selected, in DynamicBuffer<Child> children, in GridPosition gridPosition, in TeamData team, in BuildingIdData buildingId) =>
             {
                 //temporary
                 if (!EntityManager.HasComponent<SpawnerData>(entity))
@@ -109,6 +122,14 @@ public partial class SelectSystem : SystemBase
                     buildingsSelected++;
                     selected.Selected = true;
                     selectedEntity = entity;
+                    if(buildingTypeSelected == -2)
+                    {
+                        buildingTypeSelected = buildingId.Id;
+                    }
+                    else if(buildingTypeSelected != buildingId.Id)
+                    {
+                        buildingTypeSelected = -1;
+                    }
                     foreach (var child in children)
                     {
                         if (EntityManager.HasComponent<SelectedTag>(child.Value))
