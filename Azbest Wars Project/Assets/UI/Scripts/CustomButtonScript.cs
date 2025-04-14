@@ -27,7 +27,8 @@ public class CustomButtonScript : MonoBehaviour, IPointerDownHandler, IPointerUp
     public void OnPointerDown(PointerEventData eventData)
     {
         image.sprite = SelectedSprite;
-        text.color = selectedTextColor;
+        if (text != null)
+            text.color = selectedTextColor;
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -35,19 +36,22 @@ public class CustomButtonScript : MonoBehaviour, IPointerDownHandler, IPointerUp
         if (!isSelected)
         {
             image.sprite = NormalSprite;
-            text.color = normalTextColor;
+            if (text != null)
+                text.color = normalTextColor;
         }
     }
     public void Select()
     {
         isSelected = true;
         image.sprite = SelectedSprite;
-        text.color = selectedTextColor;
+        if (text != null)
+            text.color = selectedTextColor;
     }
     public void UnSelect()
     {
         isSelected = false;
         image.sprite = NormalSprite;
-        text.color = normalTextColor;
+        if(text!= null)
+            text.color = normalTextColor;
     }
 }
