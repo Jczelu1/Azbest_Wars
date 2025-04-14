@@ -8,7 +8,6 @@ public class SpawnerInputController : MonoBehaviour
     public static int Queued;
     public static int UnitType;
     public static float ProductionProgress = 0;
-    public static bool IsSpawnerSelected = false;
     public static bool UIClosedByPlayer = false;
     private bool UIOpen = false;
     [SerializeField]
@@ -36,13 +35,13 @@ public class SpawnerInputController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!IsSpawnerSelected)
+        if (!SelectSystem.spawnerSelected)
         {
             SpawnerUI.SetActive(false);
             UIOpen = false;
             UIClosedByPlayer = false;
         }
-        if (IsSpawnerSelected && !UIOpen && !UIClosedByPlayer)
+        if (SelectSystem.spawnerSelected && !UIOpen && !UIClosedByPlayer)
         {
             SpawnerUI.SetActive(true);
             UIOpen = true;
