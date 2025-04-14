@@ -82,6 +82,13 @@ public class SpawnerInputController : MonoBehaviour
         UIOpen = false;
         UIClosedByPlayer = true;
     }
+    public void UnitViewDescription()
+    {
+        DescriptionController.show = true;
+        DescriptionController.showId = UnitType;
+        DescriptionController.updateDesc = true;
+        DescriptionController.showBuilding = false;
+    }
     public void UnitTypeNext()
     {
         if (SpawnerSystem.unitTypes.Length > UnitType+1)

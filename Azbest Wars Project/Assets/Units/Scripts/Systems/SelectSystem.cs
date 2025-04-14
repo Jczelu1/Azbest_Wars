@@ -3,6 +3,7 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
+using Unity.VisualScripting;
 using UnityEngine;
 using static Unity.VisualScripting.Metadata;
 
@@ -29,6 +30,7 @@ public partial class SelectSystem : SystemBase
         //reset select
         if (resetSelect)
         {
+            DescriptionController.closeDescription();
             unitsSelected = 0;
             buildingsSelected = 0;
             resetSelect = false;
@@ -102,14 +104,22 @@ public partial class SelectSystem : SystemBase
                     }
                 }
             }
+            if (unitTypeSelected > -1)
+            {
+                DescriptionController.showDescription(unitTypeSelected, false);
+            }
+            else
+            {
+                DescriptionController.closeDescription();
+            }
             if (unitsSelected != 0) return;
             Entities.WithoutBurst().ForEach((Entity entity, ref SelectedData selected, in DynamicBuffer<Child> children, in GridPosition gridPosition, in TeamData team, in BuildingIdData buildingId) =>
             {
                 //temporary
-                if (!EntityManager.HasComponent<SpawnerData>(entity))
-                {
-                    return;
-                }
+                //if (!EntityManager.HasComponent<SpawnerData>(entity))
+                //{
+                //    return;
+                //}
                 if (team.Team != playerTeam) return;
                 int entityMinX = gridPosition.Position.x;
                 int entityMinY = gridPosition.Position.y;
@@ -150,6 +160,14 @@ public partial class SelectSystem : SystemBase
                     }
                 }
             }).Run();
+            if (buildingTypeSelected > -1)
+            {
+                DescriptionController.showDescription(buildingTypeSelected, true);
+            }
+            else
+            {
+                DescriptionController.closeDescription();
+            }
         }
     }
     [UpdateInGroup(typeof(TickSystemGroup))]
