@@ -21,6 +21,7 @@ public class BuildingDescriptionUI : MonoBehaviour
             DescriptionData desc = BuildingTypeSystem.buildingTypesDescription[showingBuilding];
             descriptionText.text = desc.Name + '\n' + desc.Description;
             image.sprite = desc.BaseSprite;
+            image.preserveAspect = true;
         }
     }
 }
