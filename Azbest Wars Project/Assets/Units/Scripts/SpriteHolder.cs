@@ -18,6 +18,5 @@ public class SpriteHolder : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 }

@@ -52,7 +52,6 @@ public class TeamManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
     private void Start()
     {
