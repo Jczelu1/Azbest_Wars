@@ -2,6 +2,8 @@ using UnityEngine;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Collections;
+using System.Collections.Generic;
+using System;
 
 public class UnitTypeAuthoring : MonoBehaviour
 {
@@ -40,3 +42,4 @@ public struct UnitTypeData : IComponentData
     public int TimeToSpawn;
     public int Id;
 }
+

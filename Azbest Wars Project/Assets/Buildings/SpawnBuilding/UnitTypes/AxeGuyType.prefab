@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7169674039030221629}
   - component: {fileID: 7948570740091489259}
+  - component: {fileID: 2813193516037108586}
   m_Layer: 0
   m_Name: AxeGuyType
   m_TagString: Untagged
@@ -49,3 +50,18 @@ MonoBehaviour:
   timeToSpawn: 5
   id: 1
   prefab: {fileID: 7098674971200756332, guid: 7c9d4cb9be6980f4c97e9e1828a22c2f, type: 3}
+--- !u!114 &2813193516037108586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8794381738348973231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1af4794c09ee7ec4c8f9ae2b4e2d7e02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: 
+  description: 
+  baseSprite: {fileID: 0}

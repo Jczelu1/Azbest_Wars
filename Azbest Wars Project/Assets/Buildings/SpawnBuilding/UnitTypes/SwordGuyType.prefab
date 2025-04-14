@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4165839795804551753}
   - component: {fileID: 4047875592491531015}
+  - component: {fileID: 638947351367184672}
   m_Layer: 0
   m_Name: SwordGuyType
   m_TagString: Untagged
@@ -47,4 +48,20 @@ MonoBehaviour:
   unitName: Sword Guy
   cost: 50
   timeToSpawn: 5
+  id: 0
   prefab: {fileID: 124054065340737986, guid: 6f327e6d09a86a345b39d53bdbf79d45, type: 3}
+--- !u!114 &638947351367184672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7852622898424106547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1af4794c09ee7ec4c8f9ae2b4e2d7e02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: 
+  description: 
+  baseSprite: {fileID: 0}

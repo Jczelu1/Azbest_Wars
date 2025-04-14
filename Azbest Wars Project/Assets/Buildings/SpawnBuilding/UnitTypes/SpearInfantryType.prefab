@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2852984937567602627}
   - component: {fileID: 271873026263958272}
+  - component: {fileID: 6629015532356323397}
   m_Layer: 0
   m_Name: SpearInfantryType
   m_TagString: Untagged
@@ -49,3 +50,18 @@ MonoBehaviour:
   timeToSpawn: 10
   id: 5
   prefab: {fileID: 2137924443287163154, guid: 4e70c29d5afa18640ab971beddb9b8b3, type: 3}
+--- !u!114 &6629015532356323397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5445478160250932566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1af4794c09ee7ec4c8f9ae2b4e2d7e02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: 
+  description: 
+  baseSprite: {fileID: 0}

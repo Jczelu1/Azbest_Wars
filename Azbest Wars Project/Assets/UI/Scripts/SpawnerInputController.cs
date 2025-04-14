@@ -30,7 +30,7 @@ public class SpawnerInputController : MonoBehaviour
     Sprite[] UnitSprites;
     void Start()
     {
-        UnitImage.color = TeamManager.Instance.GetTeamColor(TeamManager.Instance.PlayerTeam);
+        //UnitImage.color = TeamManager.Instance.GetTeamColor(TeamManager.Instance.PlayerTeam);
     }
 
     // Update is called once per frame
@@ -38,14 +38,12 @@ public class SpawnerInputController : MonoBehaviour
     {
         if (!IsSpawnerSelected)
         {
-            Debug.Log("1");
             SpawnerUI.SetActive(false);
             UIOpen = false;
             UIClosedByPlayer = false;
         }
         if (IsSpawnerSelected && !UIOpen && !UIClosedByPlayer)
         {
-            Debug.Log("2");
             SpawnerUI.SetActive(true);
             UIOpen = true;
         }
@@ -61,7 +59,7 @@ public class SpawnerInputController : MonoBehaviour
             }
             if (UnitType < SpawnerSystem.unitTypes.Length)
             {
-                UnitTypeText.text = SpawnerSystem.unitTypes[UnitType].UnitName.ToString();
+                UnitTypeText.text = SpawnerSystem.unitTypesDescription[UnitType].Name;
                 CostText.text = SpawnerSystem.unitTypes[UnitType].Cost.ToString();
                 TimeText.text = SpawnerSystem.unitTypes[UnitType].TimeToSpawn.ToString();
             }

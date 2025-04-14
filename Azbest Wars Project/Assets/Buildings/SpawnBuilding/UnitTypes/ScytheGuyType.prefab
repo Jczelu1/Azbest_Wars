@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 578604449603334083}
   - component: {fileID: 1584543885042725370}
+  - component: {fileID: 2853065469941109034}
   m_Layer: 0
   m_Name: ScytheGuyType
   m_TagString: Untagged
@@ -49,3 +50,18 @@ MonoBehaviour:
   timeToSpawn: 5
   id: 2
   prefab: {fileID: 1953898295928860151, guid: be0875892047e314ba681c84919cf505, type: 3}
+--- !u!114 &2853065469941109034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2331520851683612399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1af4794c09ee7ec4c8f9ae2b4e2d7e02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: 
+  description: 
+  baseSprite: {fileID: 0}

@@ -6,7 +6,7 @@ using Unity.Mathematics;
 using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
+using System.Collections.Generic;
 using System.Linq;
 
 [BurstCompile]
@@ -16,6 +16,7 @@ public partial struct SpawnerSystem : ISystem
 {
     const int Max_Spawn_Range = 3;
     public static NativeList<UnitTypeData> unitTypes;
+    public static List<DescriptionData> unitTypesDescription;
     public static int setSelectedQueue = -1;
     public static int setSelectedUnitType = -1;
     bool started;
@@ -23,6 +24,7 @@ public partial struct SpawnerSystem : ISystem
     {
         started = false;
         unitTypes = new NativeList<UnitTypeData>(Allocator.Persistent);
+        unitTypesDescription = new List<DescriptionData>();
     }
 
     public void OnDestroy(ref SystemState state)
@@ -41,13 +43,15 @@ public partial struct SpawnerSystem : ISystem
         if (!started)
         {
             started = true;
-            foreach (var unitType in SystemAPI.Query<UnitTypeData>())
+            foreach (var (unitType, description) in SystemAPI.Query<UnitTypeData, DescriptionData>())
             {
                 while(unitTypes.Length <= unitType.Id)
                 {
+                    unitTypesDescription.Add(description);
                     unitTypes.Add(unitType);
                 }
                 unitTypes[unitType.Id] = unitType;
+                unitTypesDescription[unitType.Id] = description;
             }
         }
         // Iterate over all spawner entities.

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2619100146100325378}
   - component: {fileID: 2409219030295890594}
+  - component: {fileID: 6704379008083474827}
   m_Layer: 0
   m_Name: GuardType
   m_TagString: Untagged
@@ -49,3 +50,18 @@ MonoBehaviour:
   timeToSpawn: 20
   id: 8
   prefab: {fileID: 7062958865578585826, guid: 0318ec31da96b2f4bbb4cfef324eda5b, type: 3}
+--- !u!114 &6704379008083474827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368570524133965902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1af4794c09ee7ec4c8f9ae2b4e2d7e02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: 
+  description: 
+  baseSprite: {fileID: 0}
