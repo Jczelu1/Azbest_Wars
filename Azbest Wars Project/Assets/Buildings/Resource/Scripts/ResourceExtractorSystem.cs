@@ -17,13 +17,17 @@ public partial struct ResourceExtractorSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
-
+        for(int i = 0; i < 4; i++)
+        {
+            TeamManager.Instance.teamResourceGains[i] = 0;
+        }
         var job = new ExtractJob
         {
-            resources = TeamManager.Instance.teamResources
+            resources = TeamManager.Instance.teamResources,
+            resourceGains = TeamManager.Instance.teamResourceGains
         };
 
-        JobHandle jobHandle = job.ScheduleParallel(state.Dependency);
+        JobHandle jobHandle = job.Schedule(state.Dependency);
         state.Dependency = jobHandle;
     }
     [BurstCompile]
@@ -31,10 +35,12 @@ public partial struct ResourceExtractorSystem : ISystem
     {
         //[NativeDisableParallelForRestriction]
         public NativeArray<int> resources;
+        public NativeArray<int> resourceGains;
         public void Execute(ref TeamData team, ref ResourceSourceData source)
         {
             if (team.Team > 3) return;
             resources[team.Team] += source.ResourcePerTick;
+            resourceGains[team.Team] += source.ResourcePerTick;
         }
     }
 

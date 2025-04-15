@@ -27,6 +27,7 @@ public class TeamManager : MonoBehaviour
     [SerializeField]
     private int[] startingResources = { 0, 0, 0, 0 };
     public NativeArray<int> teamResources;
+    public NativeArray<int> teamResourceGains;
     public Color baseColor = Color.white;
     public Color baseColorLow = new Color(184f / 255, 184f / 255, 184f / 255);
     public Color selectedColor = Color.green;
@@ -43,6 +44,7 @@ public class TeamManager : MonoBehaviour
     }
 
     public TextMeshProUGUI resourceText;
+    public TextMeshProUGUI resourceGainText;
 
     private void Awake()
     {
@@ -56,17 +58,21 @@ public class TeamManager : MonoBehaviour
     private void Start()
     {
         teamResources = new NativeArray<int>(4, Allocator.Persistent);
+        teamResourceGains = new NativeArray<int>(4, Allocator.Persistent);
         for (int i = 0; i < 4; i++)
         {
             teamResources[i] = startingResources[i];
+            teamResourceGains[i] = 0;
         }
     }
     private void Update()
     {
         resourceText.text = $"{teamResources[PlayerTeam]}";
+        resourceGainText.text = $"{teamResourceGains[PlayerTeam]}";
     }
     private void OnDestroy()
     {
         teamResources.Dispose();
+        teamResourceGains.Dispose();
     }
 }

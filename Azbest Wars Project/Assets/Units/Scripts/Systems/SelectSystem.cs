@@ -16,6 +16,7 @@ public partial class SelectSystem : SystemBase
     public static bool resetSelect = true;
     public static int unitsSelected = 0;
     public static int unitTypeSelected = -2;
+    public static byte movementStateSelected = 255;
     public static int buildingTypeSelected = -2;
     public static int buildingsSelected = 0;
     public static bool spawnerSelected = false;
@@ -61,6 +62,7 @@ public partial class SelectSystem : SystemBase
             var occupied = MainGridScript.Instance.Occupied;
             unitTypeSelected = -2;
             buildingTypeSelected = -2;
+            movementStateSelected = 255;
 
             int minX = math.min(selectStart.x, selectEnd.x);
             int maxX = math.max(selectStart.x, selectEnd.x);
@@ -79,6 +81,15 @@ public partial class SelectSystem : SystemBase
                         SystemAPI.GetComponent<TeamData>(entity).Team == playerTeam)
                     {
                         SystemAPI.SetComponent(entity, new SelectedData { Selected = true });
+                        byte movementState = SystemAPI.GetComponent<UnitStateData>(entity).MovementState;
+                        if (movementStateSelected == 255)
+                        {
+                            movementStateSelected = movementState;
+                        }
+                        else if (movementStateSelected != movementState)
+                        {
+                            movementStateSelected = 254;
+                        }
                         int unitTypeId = SystemAPI.GetComponent<UnitTypeId>(entity).Id;
                         if (unitTypeSelected == -2)
                         {
@@ -104,6 +115,7 @@ public partial class SelectSystem : SystemBase
                     }
                 }
             }
+            UnitStateInput.currentMovementState = movementStateSelected;
             if (unitTypeSelected > -1)
             {
                 DescriptionController.showDescription(unitTypeSelected, false);

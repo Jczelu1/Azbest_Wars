@@ -4,6 +4,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using Unity.VisualScripting;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 [UpdateInGroup(typeof(TickSystemGroup))]
@@ -89,6 +90,19 @@ public partial class CaptureSystem : SystemBase
                     {
                         EntityManager.GetComponentObject<SpriteRenderer>(child.Value).color = TeamManager.Instance.GetTeamColor(team.Team);
                         EntityManager.SetComponentData<TeamData>(child.Value, team);
+                    }
+                    if (EntityManager.HasComponent<SpawnerData>(child.Value))
+                    {
+                        EntityManager.SetComponentData(child.Value, new SpawnerData
+                        {
+                            SpawnedUnit = 0,
+                            SpawnRateMult = 2,
+                            Queued = 0,
+                            TimeToSpawn = 1,
+                            MaxTimeToSpawn = 0,
+                            SetFormation = -1,
+                            NextSpawnedUnit = -1
+                        });
                     }
                 }
             }
