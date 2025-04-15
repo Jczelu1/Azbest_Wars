@@ -29,6 +29,7 @@ public partial struct ResourceExtractorSystem : ISystem
 
         JobHandle jobHandle = job.Schedule(state.Dependency);
         state.Dependency = jobHandle;
+        jobHandle.Complete();
     }
     [BurstCompile]
     public partial struct ExtractJob : IJobEntity

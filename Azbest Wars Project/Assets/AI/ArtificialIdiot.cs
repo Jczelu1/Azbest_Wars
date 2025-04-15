@@ -208,9 +208,10 @@ public partial class ArtificialIdiot : SystemBase
         }
         bool MovedThisTick = false;
         int MovedFormation = -2;
-        Entities.WithoutBurst().ForEach((Entity entity, ref UnitStateData unitState, ref GridPosition gridPosition, ref TeamData team, ref SelectedData selected, ref FormationData formationData) =>
+        Entities.WithoutBurst().ForEach((Entity entity, ref UnitStateData unitState, ref GridPosition gridPosition, ref TeamData team, ref SelectedData selected, ref FormationData formationData, ref HealthData health) =>
         {
             if (team.Team != AITeam) return;
+            if (health.Attacked) unitState.MovementState = 1;
             selected.Selected = false;
             if (formationData.Formation == -1 || formationData.Formation >= formations.Length) return;
             Formation formation = formations[formationData.Formation];
