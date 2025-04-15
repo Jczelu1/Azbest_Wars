@@ -89,8 +89,11 @@ public partial struct MeleAttackSystem : ISystem
             int team = teamLookup[entity].Team;
             if (unitState.Moved)
             {
-                meleAttack.CurrentCooldown = meleAttack.MoveCooldown;
-                return;
+                if(meleAttack.MoveCooldown != 255)
+                {
+                    meleAttack.CurrentCooldown = meleAttack.MoveCooldown;
+                    return;
+                }
             }
             if(meleAttack.CurrentCooldown != 0)
             {
