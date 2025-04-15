@@ -13,6 +13,10 @@ public class UnitStateInput : MonoBehaviour
     [SerializeField]
     CustomButtonScript[] movementStateButtons;
 
+    [SerializeField]
+    GameObject movementStateUI;
+    private bool showingUI = true;
+
     public static byte currentMovementState = 255;
     void Start()
     {
@@ -23,15 +27,6 @@ public class UnitStateInput : MonoBehaviour
 
     void Update()
     {
-       for (int i = 0; i < 2; i++)
-        {
-            movementStateButtons[i].UnSelect();
-        }
-        if (currentMovementState < 3)
-        {
-            if (currentMovementState == 2) currentMovementState = 0;
-            movementStateButtons[currentMovementState].Select();
-        }
         if (MainGridScript.Instance.Selected)
         {
             if (DefendAction.WasPressedThisFrame())
@@ -47,7 +42,27 @@ public class UnitStateInput : MonoBehaviour
                 SetMovementState("2");
             }
         }
-        
+
+        if (!showingUI && SelectSystem.unitsSelected > 0)
+        {
+            showingUI = true;
+            movementStateUI.SetActive(true);
+        }
+        else if(showingUI && SelectSystem.unitsSelected < 1)
+        {
+            showingUI = false;
+            movementStateUI.SetActive(false);
+        }
+        if (!showingUI) return;
+        for (int i = 0; i < 2; i++)
+        {
+            movementStateButtons[i].UnSelect();
+        }
+        if (currentMovementState < 3)
+        {
+            if (currentMovementState == 2) currentMovementState = 0;
+            movementStateButtons[currentMovementState].Select();
+        }
     }
     public void SetMovementState(string state)
     {
