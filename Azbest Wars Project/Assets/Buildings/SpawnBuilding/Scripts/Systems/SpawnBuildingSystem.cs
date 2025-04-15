@@ -14,7 +14,7 @@ using System.Linq;
 [UpdateAfter(typeof(MoveSystem))]
 public partial struct SpawnerSystem : ISystem
 {
-    const int Max_Spawn_Range = 3;
+    const int Max_Spawn_Range = 5;
     public static NativeList<UnitTypeData> unitTypes;
     public static List<DescriptionData> unitTypesDescription;
     public static int setSelectedQueue = -1;
