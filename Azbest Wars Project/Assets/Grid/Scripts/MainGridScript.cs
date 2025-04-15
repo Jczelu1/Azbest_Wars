@@ -380,7 +380,7 @@ public class MainGridScript : MonoBehaviour
         cameraPosition.z = -10;
         cameraPosition.x = GridOrigin.x + pos.x * CellSize - 0.5f;
         cameraPosition.y = GridOrigin.y + pos.y * CellSize;
-        cameraPosition.x = Mathf.Clamp(cameraPosition.x, cameraMover.minCameraPosition.x, cameraMover.maxCameraPosition.y);
+        cameraPosition.x = Mathf.Clamp(cameraPosition.x, cameraMover.minCameraPosition.x, cameraMover.maxCameraPosition.x);
         cameraPosition.y = Mathf.Clamp(cameraPosition.y, cameraMover.minCameraPosition.y, cameraMover.maxCameraPosition.y);
         cameraMover.MoveCamera(cameraPosition);
     }
