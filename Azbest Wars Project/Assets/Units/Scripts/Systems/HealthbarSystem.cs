@@ -5,6 +5,7 @@ using UnityEngine;
 
 [UpdateInGroup(typeof(TickSystemGroup))]
 [UpdateAfter(typeof(MeleAttackSystem))]
+[UpdateAfter(typeof(RangedAttackSystem))]
 public partial class HealthbarSystem : SystemBase
 {
     protected override void OnUpdate()

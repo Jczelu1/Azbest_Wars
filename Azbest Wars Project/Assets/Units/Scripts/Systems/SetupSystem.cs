@@ -21,7 +21,6 @@ public partial class SetupSystem : SystemBase
     {
         if (!started)
         {
-            started = true;
             Entities.WithoutBurst().ForEach((Entity entity, ref GridPosition gridPosition, ref LocalToWorld worldTransform) =>
             {
                 Vector3 position = worldTransform.Position;
@@ -40,6 +39,8 @@ public partial class SetupSystem : SystemBase
                     }
                 }
             }).Run();
+
+            started = true;
         }
     }
 }

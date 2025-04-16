@@ -85,6 +85,7 @@ public partial struct MoveSystem : ISystem
 
         private bool Move(Entity entity)
         {
+            if (gridPositionLookup[entity].Position.x == -1) return false;
             var unitState = unitStateLookup[entity];
             if (unitState.MoveProcessed) return false;
             unitState.MoveProcessed = true;

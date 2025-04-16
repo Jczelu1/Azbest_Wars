@@ -113,9 +113,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110dce70be38d8b478a1ee4e84065ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startGridPosition:
-    x: 0
-    y: 0
   width: 1
   height: 1
   isBuilding: 0
@@ -157,7 +154,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 0
-  spriteRenderer: {fileID: 6455433408875426162}
 --- !u!114 &5854223275870690519
 MonoBehaviour:
   m_ObjectHideFlags: 0

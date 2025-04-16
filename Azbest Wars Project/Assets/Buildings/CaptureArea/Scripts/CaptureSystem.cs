@@ -17,7 +17,8 @@ public partial class CaptureSystem : SystemBase
     bool areaMarked = false;
     public static Entity areaMarkerPrefab;
     protected override void OnUpdate()
-     {
+    {
+        if (!SetupSystem.started) return;
         if (!areaMarked)
         {
             areaMarked = true;
