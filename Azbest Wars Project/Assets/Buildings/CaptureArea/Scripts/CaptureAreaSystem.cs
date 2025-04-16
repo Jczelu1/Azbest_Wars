@@ -31,6 +31,7 @@ public partial struct CaptureAreaSystem : ISystem
     }
     public void OnUpdate(ref SystemState state)
     {
+        if (!SetupSystem.started) return;
         _teamLookup.Update(ref state);
         //move job
         CaptureJob captureJob = new CaptureJob()

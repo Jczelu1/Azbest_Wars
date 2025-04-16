@@ -5,6 +5,7 @@ public class MusicPlayer : MonoBehaviour
     [SerializeField]
     AudioSource[] themes;
     AudioSource currentTheme;
+    int currentIndex;
     void Start()
     {
         PlayRandomTheme();
@@ -15,7 +16,8 @@ public class MusicPlayer : MonoBehaviour
         if (currentTheme != null && !currentTheme.isPlaying)
         {
             currentTheme.Stop();
-            Invoke("PlayRandomTheme", 2f);
+            PlayRandomTheme();
+            //Invoke("PlayRandomTheme", 2f);
         }
     }
     void PlayRandomTheme()
@@ -39,8 +41,9 @@ public class MusicPlayer : MonoBehaviour
             do
             {
                 index = Random.Range(0, themes.Length);
-            } while (currentTheme == themes[index]);
+            } while (currentIndex == index);
         }
+        currentIndex = index;
         currentTheme = themes[index];
         currentTheme.Play();
     }

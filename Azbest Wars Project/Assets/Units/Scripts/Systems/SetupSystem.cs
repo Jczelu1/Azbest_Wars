@@ -11,7 +11,7 @@ using UnityEngine;
 [BurstCompile]
 public partial class SetupSystem : SystemBase
 {
-    bool started = false;
+    public static bool started = false;
     protected override void OnCreate()
     {
         RequireForUpdate<GridPosition>();
