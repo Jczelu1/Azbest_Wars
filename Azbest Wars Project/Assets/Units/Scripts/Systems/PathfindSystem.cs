@@ -302,6 +302,17 @@ public partial struct PathfindJob : IJobEntity
                 searched.Dispose();
                 return;
             }
+
+            //maybe do this
+            if (meleAttackLookup.HasComponent(entity))
+            {
+                if (meleAttackLookup[entity].AttackType == 2 && path.Length <= 3)
+                {
+                    queue.Dispose();
+                    searched.Dispose();
+                    return;
+                }
+            }
             // Update the entity's path by removing the old path and appending new nodes in reverse order.
             ecb.RemoveComponent<PathNode>(sortKey, entity);
             ecb.AddBuffer<PathNode>(sortKey, entity);
