@@ -18,6 +18,7 @@ public partial struct BuildingTypeSystem : ISystem
     public void OnCreate(ref SystemState state)
     {
         started = false;
+        state.RequireForUpdate<BuildingIdData>();
         buildingTypesDescription = new List<DescriptionData>();
     }
 

@@ -14,6 +14,7 @@ using UnityEngine;
 
 [BurstCompile]
 [UpdateInGroup(typeof(TickSystemGroup))]
+[UpdateAfter(typeof(PathfindSystem))]
 public partial struct MoveSystem : ISystem
 {
     private BufferLookup<PathNode> _pathLookup;

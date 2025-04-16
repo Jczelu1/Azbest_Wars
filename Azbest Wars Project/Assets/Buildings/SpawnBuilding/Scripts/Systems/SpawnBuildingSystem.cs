@@ -23,6 +23,8 @@ public partial struct SpawnerSystem : ISystem
     public void OnCreate(ref SystemState state) 
     {
         started = false;
+        state.RequireForUpdate<UnitTypeData>();
+        state.RequireForUpdate<SpawnerData>();
         unitTypes = new NativeList<UnitTypeData>(Allocator.Persistent);
         unitTypesDescription = new List<DescriptionData>();
     }

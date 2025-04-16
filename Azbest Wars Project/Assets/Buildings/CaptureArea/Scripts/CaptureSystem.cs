@@ -9,6 +9,11 @@ using UnityEngine;
 [UpdateAfter(typeof(CaptureAreaSystem))]
 public partial class CaptureSystem : SystemBase
 {
+    protected override void OnCreate()
+    {
+        base.OnCreate();
+        RequireForUpdate<CaptureAreaData>();
+    }
     bool areaMarked = false;
     public static Entity areaMarkerPrefab;
     protected override void OnUpdate()

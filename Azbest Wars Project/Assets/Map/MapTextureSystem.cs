@@ -14,6 +14,7 @@ public partial class MapTextureSystem : SystemBase
     protected override void OnCreate()
     {
         base.OnCreate();
+        RequireForUpdate<GridPosition>();
     }
     protected override void OnUpdate()
     {
