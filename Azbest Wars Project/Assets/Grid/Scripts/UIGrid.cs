@@ -2,7 +2,6 @@ using TMPro;
 using System;
 using UnityEngine;
 using Unity.Mathematics;
-using static UnityEditor.PlayerSettings;
 
 public class UIGrid
 {

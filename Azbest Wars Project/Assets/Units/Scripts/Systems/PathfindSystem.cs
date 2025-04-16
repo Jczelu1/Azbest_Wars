@@ -5,14 +5,9 @@ using System.Threading;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
-using Unity.Entities.UniversalDelegates;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
-using UnityEditor.Searcher;
-using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 [BurstCompile]
 [UpdateInGroup(typeof(TickSystemGroup))]
@@ -125,7 +120,7 @@ public partial struct PathfindSystem : ISystem
 
 
         //pathfind job
-
+        //UnityEngine.Debug.Log(MainGridScript.Instance.Occupied[0]);
 
         PathfindJob pathfindJob = new PathfindJob()
         {

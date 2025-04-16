@@ -3,8 +3,6 @@ using TMPro;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 [UpdateInGroup(typeof(TickSystemGroup))]

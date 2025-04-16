@@ -5,7 +5,6 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 [BurstCompile]

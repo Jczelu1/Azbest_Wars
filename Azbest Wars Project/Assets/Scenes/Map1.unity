@@ -6434,8 +6434,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 1492542268}
   text: {fileID: 0}
-  NormalSprite: {fileID: -1810769428998608721, guid: 0abdb97231f70b3439bb27e2a17c0f65, type: 3}
-  SelectedSprite: {fileID: 931132912764805818, guid: 0abdb97231f70b3439bb27e2a17c0f65, type: 3}
+  NormalSprite: {fileID: 400881459632700771, guid: 0269d6e8ddfb8d14aaeb558ee849b008, type: 3}
+  SelectedSprite: {fileID: -7090565353682459889, guid: 0269d6e8ddfb8d14aaeb558ee849b008, type: 3}
   normalTextColor: {r: 1, g: 1, b: 1, a: 1}
   selectedTextColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!114 &1492542267
@@ -6514,7 +6514,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1810769428998608721, guid: 0abdb97231f70b3439bb27e2a17c0f65, type: 3}
+  m_Sprite: {fileID: 400881459632700771, guid: 0269d6e8ddfb8d14aaeb558ee849b008, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7443,7 +7443,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1811102565
 RectTransform:
   m_ObjectHideFlags: 0

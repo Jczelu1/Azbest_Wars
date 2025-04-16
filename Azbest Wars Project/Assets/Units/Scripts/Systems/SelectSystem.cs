@@ -3,9 +3,7 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
-using Unity.VisualScripting;
 using UnityEngine;
-using static Unity.VisualScripting.Metadata;
 
 [UpdateInGroup(typeof(TickSystemGroup))]
 [UpdateBefore(typeof(PathfindSystem))]

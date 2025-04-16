@@ -2,9 +2,7 @@ using TMPro;
 using System;
 using UnityEngine;
 using UnityEngine.Diagnostics;
-using static UnityEngine.Rendering.DebugUI;
 using Unity.Mathematics;
-using static UnityEditor.PlayerSettings;
 
 public class Grid<TGridObject>
 {

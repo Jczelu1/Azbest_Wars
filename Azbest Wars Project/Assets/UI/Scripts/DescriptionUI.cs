@@ -40,10 +40,12 @@ public class DescriptionController : MonoBehaviour
             DescriptionData desc;
             if (showBuilding)
             {
+                if (showingId < 0 || showingId >= BuildingTypeSystem.buildingTypesDescription.Count) return;
                 desc = BuildingTypeSystem.buildingTypesDescription[showingId];
             }
             else
             {
+                if (showingId < 0 || showingId >= SpawnerSystem.unitTypesDescription.Count) return;
                 desc = SpawnerSystem.unitTypesDescription[showingId];
             }
             descriptionText.text = desc.Name + '\n' + desc.Description;
