@@ -1901,7 +1901,7 @@
 			"instruments": [
 				{
 					"type": "chip",
-					"volume": 80,
+					"volume": 60,
 					"eqFilter": [],
 					"effects": [
 						"transition type"
