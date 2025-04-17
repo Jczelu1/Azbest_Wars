@@ -3283,6 +3283,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BowGuy
       objectReference: {fileID: 0}
+    - target: {fileID: 6070636527210873885, guid: 1b13e172788ffe043870f77bc85bac6e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
