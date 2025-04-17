@@ -10,65 +10,76 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
+public struct Arrow
+{
+    public Entity Target;
+    public float Damage;
+    public byte TimeToHit;
+    public bool Miss;
+}
+
 [BurstCompile]
 [UpdateInGroup(typeof(TickSystemGroup))]
 [UpdateAfter(typeof(MoveSystem))]
+[UpdateBefore(typeof(MeleAttackSystem))]
 public partial struct RangedAttackSystem : ISystem
 {
-    const float crit_Chance = .2f;
-    const float block_Chance = .2f;
+    const float HIT_CHANCE_D1 = .8f;
+    const float HIT_CHANCE_D2 = .6f;
+    public NativeList<Arrow> ShotArrows;
     private ComponentLookup<TeamData> _teamLookup;
     private ComponentLookup<HealthData> _healthLookup;
-
-    //efficiency xd
-    public static readonly int2x3[] AreaAttackDirections = new int2x3[8]
-    {
-        new int2x3(new int2(0,-1), new int2(1,-1),new int2(-1,-1)),
-        new int2x3(new int2(0,1), new int2(1,1),new int2(-1,1)),
-        new int2x3(new int2(-1,0), new int2(-1,1),new int2(-1,-1)),
-        new int2x3(new int2(1,0), new int2(1,1),new int2(1,-1)),
-        new int2x3(new int2(-1,1), new int2(0,1),new int2(-1,0)),
-        new int2x3(new int2(1,1), new int2(0,1),new int2(1,0)),
-        new int2x3(new int2(-1,-1), new int2(-1,0),new int2(0,-1)),
-        new int2x3(new int2(1,-1), new int2(1,0),new int2(0,-1)),
-    };
-    //efficiency xddd
-    public static readonly int2[] Range2AttackDirections = new int2[24]
-    {
-        new int2(0, -1),   new int2(0, 1),
-        new int2(-1, 0),  new int2(1, 0),
-        new int2(-1, 1),  new int2(1, 1),
-        new int2(-1, -1), new int2(1, -1),
-        new int2(0,-2), new int2(0, 2),
-        new int2(-2,0), new int2(2,0),
-        new int2(-1,-2), new int2(-1,2),
-        new int2(1,-2), new int2(1,2),
-        new int2(-2,1), new int2(2,1),
-        new int2(-2,-1), new int2(2,-1),
-        new int2(-2,2), new int2(2,2),
-        new int2(-2,-2), new int2(2,-2),
-    };
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<MeleAttackData>();
         state.RequireForUpdate<LocalTransform>();
         _teamLookup = state.GetComponentLookup<TeamData>(true);
         _healthLookup = state.GetComponentLookup<HealthData>(false);
+        ShotArrows = new NativeList<Arrow>(Allocator.Persistent);
     }
     public void OnStartRunning(ref SystemState state)
     {
 
     }
+    public void OnDestroy(ref SystemState state)
+    {
+        ShotArrows.Dispose();
+    }
     public void OnUpdate(ref SystemState state)
     {
         _teamLookup.Update(ref state);
         _healthLookup.Update(ref state);
+        for (int i = ShotArrows.Length - 1; i >= 0; i--)
+        {
+            var arrow = ShotArrows[i];
+
+            arrow.TimeToHit--;
+
+            if (arrow.TimeToHit <= 0)
+            {
+                if (!arrow.Miss
+                    && _healthLookup.TryGetComponent(arrow.Target, out var healthData))
+                {
+                    healthData.Health -= arrow.Damage;
+                    healthData.Attacked = true;
+                    _healthLookup[arrow.Target] = healthData;
+                }
+
+                ShotArrows.RemoveAt(i);
+            }
+            else
+            {
+                ShotArrows[i] = arrow;
+            }
+        }
+
 
         RangedAttackJob Job = new RangedAttackJob()
         {
             occupied = MainGridScript.Instance.Occupied,
             teamLookup = _teamLookup,
             healthLookup = _healthLookup,
+            shotArrows = ShotArrows,
         };
         state.Dependency = Job.Schedule(state.Dependency);
     }
@@ -79,6 +90,9 @@ public partial struct RangedAttackSystem : ISystem
         [ReadOnly]
         public ComponentLookup<TeamData> teamLookup;
         public ComponentLookup<HealthData> healthLookup;
+        [WriteOnly]
+        [NativeDisableParallelForRestriction]
+        public NativeList<Arrow> shotArrows;
         public void Execute(Entity entity, ref UnitStateData unitState, ref GridPosition gridPosition, ref RangedAttackData rangedAttack, ref LocalTransform transform, ref RandomValueData random)
         {
             unitState.Attacked = false;
@@ -186,17 +200,25 @@ public partial struct RangedAttackSystem : ISystem
             unitState.Attacked = true;
             rangedAttack.CurrentCooldown = rangedAttack.AttackCooldown;
             float damage = rangedAttack.Damage;
-            //block
-            //if (1f - random.value < block_Chance) return;
-            //crit
-            if (random.value < crit_Chance)
+
+            bool miss = false;
+            
+            int distance = math.max(math.abs(gridPosition.Position.x - enemyPosition.x), math.abs(gridPosition.Position.y - enemyPosition.y));
+            //distance 1
+            if (distance < rangedAttack.Range / 2)
             {
-                damage *= 2;
+                if (random.value > HIT_CHANCE_D1)
+                    miss = true;
+                shotArrows.Add(new Arrow { Damage = damage, Miss = miss, Target = enemyEntity, TimeToHit = 1 });
             }
-            HealthData newHealthData = healthLookup[enemyEntity];
-            newHealthData.Health -= damage;
-            newHealthData.Attacked = true;
-            healthLookup[enemyEntity] = newHealthData;
+            //distance 2
+            else
+            {
+                if (random.value > HIT_CHANCE_D2)
+                    miss = true;
+                shotArrows.Add(new Arrow { Damage = damage, Miss = miss, Target = enemyEntity, TimeToHit = 1 });
+            }
+
 
             queue.Dispose();
             searched.Dispose();
