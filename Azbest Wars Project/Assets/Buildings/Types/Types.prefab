@@ -48,7 +48,7 @@ MonoBehaviour:
   unitName: Knight
   cost: 200
   timeToSpawn: 20
-  id: 6
+  id: 8
   prefab: {fileID: 4408635524532863550, guid: 028fd202bb1ed8d418672b56e15ee332, type: 3}
 --- !u!114 &1531159648681572622
 MonoBehaviour:
@@ -113,7 +113,7 @@ MonoBehaviour:
   unitName: Spear Infantry
   cost: 100
   timeToSpawn: 10
-  id: 5
+  id: 6
   prefab: {fileID: 2137924443287163154, guid: 4e70c29d5afa18640ab971beddb9b8b3, type: 3}
 --- !u!114 &2590202528244989524
 MonoBehaviour:
@@ -130,6 +130,71 @@ MonoBehaviour:
   Name: "\u017Bo\u0142nie\u017C z w\u0142\xF3czni\u0105"
   description: 
   baseSprite: {fileID: 3834385465485835948, guid: 09f643f4f6631ba4582454c71076b007, type: 3}
+--- !u!1 &289305396442081168
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3638811089929876751}
+  - component: {fileID: 3319474185726239322}
+  - component: {fileID: 1063141967513614566}
+  m_Layer: 0
+  m_Name: Archer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3638811089929876751
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289305396442081168}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3239504507760822941}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3319474185726239322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289305396442081168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d6f6edee6ada148bb7b209db958f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitName: Archer
+  cost: 100
+  timeToSpawn: 10
+  id: 7
+  prefab: {fileID: 3225467431724674756, guid: e537075fefc11d948995c9fbbe8fc010, type: 3}
+--- !u!114 &1063141967513614566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289305396442081168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1af4794c09ee7ec4c8f9ae2b4e2d7e02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: "\u0141ucznik"
+  description: 
+  baseSprite: {fileID: 696563377253852856, guid: b0a5781f4d43b314bba0649a01653946, type: 3}
 --- !u!1 &338391471233152926
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,7 +243,7 @@ MonoBehaviour:
   unitName: Sword Infantry
   cost: 100
   timeToSpawn: 10
-  id: 3
+  id: 4
   prefab: {fileID: 5894179213234506625, guid: 9730d3c4b441c7a42ac79304962cc898, type: 3}
 --- !u!114 &3894837164153407597
 MonoBehaviour:
@@ -434,7 +499,7 @@ MonoBehaviour:
   unitName: Guard
   cost: 200
   timeToSpawn: 20
-  id: 8
+  id: 10
   prefab: {fileID: 7062958865578585826, guid: 0318ec31da96b2f4bbb4cfef324eda5b, type: 3}
 --- !u!114 &8863210658982793328
 MonoBehaviour:
@@ -499,7 +564,7 @@ MonoBehaviour:
   unitName: Axe Infantry
   cost: 100
   timeToSpawn: 10
-  id: 4
+  id: 5
   prefab: {fileID: 7946871310381647438, guid: e1dd27c8e5d0fea489649073a9b64b8d, type: 3}
 --- !u!114 &3229332829074146997
 MonoBehaviour:
@@ -564,7 +629,7 @@ MonoBehaviour:
   unitName: Viking
   cost: 200
   timeToSpawn: 20
-  id: 7
+  id: 9
   prefab: {fileID: 735107889770710729, guid: 8e050e7efc1ed0f4785fd9bf362c693f, type: 3}
 --- !u!114 &1211471050957789175
 MonoBehaviour:
@@ -869,12 +934,15 @@ Transform:
   - {fileID: 7955941213644429715}
   - {fileID: 3077699787095174803}
   - {fileID: 4586423151794085873}
+  - {fileID: 1244971234339130648}
   - {fileID: 3081503242584144230}
   - {fileID: 6884600020145760302}
   - {fileID: 3438004008836859971}
+  - {fileID: 3638811089929876751}
   - {fileID: 5100649428496965106}
   - {fileID: 8048806138923128248}
   - {fileID: 4690507725340482967}
+  - {fileID: 912755830450757970}
   - {fileID: 5961772275627545083}
   - {fileID: 4129076949659379153}
   - {fileID: 7330569467671752593}
@@ -945,3 +1013,133 @@ MonoBehaviour:
   Name: Strefa
   description: 
   baseSprite: {fileID: 4592495722678532077, guid: 863aa2a634b5ca24d8a88a1a06a7d1d3, type: 3}
+--- !u!1 &8996944831889673704
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 912755830450757970}
+  - component: {fileID: 2331094661962400400}
+  - component: {fileID: 5400049596010125762}
+  m_Layer: 0
+  m_Name: CrossbowerType
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &912755830450757970
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996944831889673704}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3239504507760822941}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2331094661962400400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996944831889673704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d6f6edee6ada148bb7b209db958f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitName: Crossbower
+  cost: 200
+  timeToSpawn: 20
+  id: 11
+  prefab: {fileID: 3930956285522985913, guid: 635b929866be4d64c807eede32f3fdde, type: 3}
+--- !u!114 &5400049596010125762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996944831889673704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1af4794c09ee7ec4c8f9ae2b4e2d7e02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Kusznik
+  description: 
+  baseSprite: {fileID: 6172420534387897435, guid: 66b86cc2d02703c4ca5be84101b41545, type: 3}
+--- !u!1 &9002949752020604323
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1244971234339130648}
+  - component: {fileID: 2985587922438304998}
+  - component: {fileID: 250580766813439323}
+  m_Layer: 0
+  m_Name: BowGuy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1244971234339130648
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9002949752020604323}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3239504507760822941}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2985587922438304998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9002949752020604323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d6f6edee6ada148bb7b209db958f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitName: Bow Guy
+  cost: 50
+  timeToSpawn: 5
+  id: 3
+  prefab: {fileID: 6070636527210873885, guid: 1b13e172788ffe043870f77bc85bac6e, type: 3}
+--- !u!114 &250580766813439323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9002949752020604323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1af4794c09ee7ec4c8f9ae2b4e2d7e02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: "Ch\u0142op z \u0141ukiem"
+  description: 
+  baseSprite: {fileID: 709344346830458, guid: afc70b3b944550847ad02152c276ec3e, type: 3}

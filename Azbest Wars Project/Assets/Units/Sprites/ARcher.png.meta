@@ -1,25 +1,25 @@
 fileFormatVersion: 2
-guid: 5863aeffb1d4faf4386f51e3aab5cb56
+guid: b09b79f642c4cf1469d06aa378ca9fb8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6505787367362684922
-    second: BowGuy3_0
+      213: 5948274870275473724
+    second: ARcher_0
   - first:
-      213: -1194957162884079298
-    second: BowGuy3_1
+      213: -6417999558761514159
+    second: ARcher_1
   - first:
-      213: -3034651212008474732
-    second: BowGuy3_2
+      213: 7100152300070896352
+    second: ARcher_2
   - first:
-      213: -7259676845184574398
-    second: BowGuy3_3
+      213: 2240961751076903019
+    second: ARcher_3
   - first:
-      213: -5999471134190504800
-    second: BowGuy3_4
+      213: -4531134890875692517
+    second: ARcher_4
   - first:
-      213: 4982352851784868585
-    second: BowGuy3_5
+      213: 2188189202955578257
+    second: ARcher_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -128,7 +128,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BowGuy3_0
+      name: ARcher_0
       rect:
         serializedVersion: 2
         x: 0
@@ -143,14 +143,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6089f18cbdcc6b5a0800000000000000
-      internalID: -6505787367362684922
+      spriteID: c31072daa748c8250800000000000000
+      internalID: 5948274870275473724
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BowGuy3_1
+      name: ARcher_1
       rect:
         serializedVersion: 2
         x: 16
@@ -165,14 +165,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e316c70aac8aa6fe0800000000000000
-      internalID: -1194957162884079298
+      spriteID: 15bf763c76faee6a0800000000000000
+      internalID: -6417999558761514159
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BowGuy3_2
+      name: ARcher_2
       rect:
         serializedVersion: 2
         x: 32
@@ -187,14 +187,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 497b60b0dc0c2e5d0800000000000000
-      internalID: -3034651212008474732
+      spriteID: 0e206e016eec88260800000000000000
+      internalID: 7100152300070896352
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BowGuy3_3
+      name: ARcher_3
       rect:
         serializedVersion: 2
         x: 48
@@ -209,14 +209,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 24c15aa6f52704b90800000000000000
-      internalID: -7259676845184574398
+      spriteID: b681d28e6de791f10800000000000000
+      internalID: 2240961751076903019
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BowGuy3_4
+      name: ARcher_4
       rect:
         serializedVersion: 2
         x: 64
@@ -231,14 +231,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0a47d5e3ac89dbca0800000000000000
-      internalID: -5999471134190504800
+      spriteID: b1ad9ffd2dc2e11c0800000000000000
+      internalID: -4531134890875692517
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BowGuy3_5
+      name: ARcher_5
       rect:
         serializedVersion: 2
         x: 80
@@ -253,8 +253,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9e2aa44658fd42540800000000000000
-      internalID: 4982352851784868585
+      spriteID: 19b238f8c720e5e10800000000000000
+      internalID: 2188189202955578257
       vertices: []
       indices: 
       edges: []
@@ -263,7 +263,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: c0804ea1368eccf4ba80ab7c03318fe0
+    spriteID: 7326ed4243156f54a8b8c75f0234d697
     internalID: 0
     vertices: []
     indices: 
@@ -273,12 +273,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BowGuy3_0: -6505787367362684922
-      BowGuy3_1: -1194957162884079298
-      BowGuy3_2: -3034651212008474732
-      BowGuy3_3: -7259676845184574398
-      BowGuy3_4: -5999471134190504800
-      BowGuy3_5: 4982352851784868585
+      ARcher_0: 5948274870275473724
+      ARcher_1: -6417999558761514159
+      ARcher_2: 7100152300070896352
+      ARcher_3: 2240961751076903019
+      ARcher_4: -4531134890875692517
+      ARcher_5: 2188189202955578257
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
