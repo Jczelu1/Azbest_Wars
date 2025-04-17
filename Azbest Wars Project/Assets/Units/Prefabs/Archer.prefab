@@ -250,7 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47022e950e68c724c8a8526ed47c0e51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitTypeId: 2
+  unitTypeId: 7
 --- !u!114 &8817951671874931478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
-  range: 10
+  range: 8
   attackCooldown: 1
   moveCooldown: 1
 --- !u!1 &3325331128031058194

@@ -23,7 +23,7 @@ public class SidebarController : MonoBehaviour
         x2Action = InputSystem.actions.FindAction("x2");
         x4Action = InputSystem.actions.FindAction("x4");
         x8Action = InputSystem.actions.FindAction("x8");
-        TickrateButtons[1].GetComponent<CustomButtonScript>().Select();
+        TickrateButtons[2].GetComponent<CustomButtonScript>().Select();
     }
     public void Update()
     {

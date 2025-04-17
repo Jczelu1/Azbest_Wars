@@ -20,6 +20,7 @@ public partial struct PathfindSystem : ISystem
     public static NativeArray<byte> setMoveState = new NativeArray<byte>(4, Allocator.Persistent);
     private ComponentLookup<TeamData> _teamLookup;
     private ComponentLookup<MeleAttackData> _meleAttackLookup;
+    private ComponentLookup<RangedAttackData> _rangedAttackLookup;
 
     public void OnCreate(ref SystemState state)
     {
@@ -27,6 +28,7 @@ public partial struct PathfindSystem : ISystem
         state.RequireForUpdate<LocalTransform>();
         _teamLookup = state.GetComponentLookup<TeamData>(true);
         _meleAttackLookup = state.GetComponentLookup<MeleAttackData>(true);
+        _rangedAttackLookup = state.GetComponentLookup<RangedAttackData>(true);
     }
     public void OnDestroy(ref SystemState state)
     {
@@ -41,6 +43,7 @@ public partial struct PathfindSystem : ISystem
         stopwatch.Start();
         _teamLookup.Update(ref state);
         _meleAttackLookup.Update(ref state);
+        _rangedAttackLookup.Update(ref state);
 
         var ecbSingleton = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
         var ecb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter();
@@ -132,7 +135,8 @@ public partial struct PathfindSystem : ISystem
             shouldMove = shouldMove,
             destinations = destinations,
             setMoveState = setMoveState,
-            meleAttackLookup = _meleAttackLookup
+            meleAttackLookup = _meleAttackLookup,
+            rangedAttackLookup = _rangedAttackLookup,
         };
 
         JobHandle pathJobHandle = pathfindJob.ScheduleParallel(state.Dependency);
@@ -172,6 +176,8 @@ public partial struct PathfindJob : IJobEntity
     public ComponentLookup<TeamData> teamLookup;
     [ReadOnly]
     public ComponentLookup<MeleAttackData> meleAttackLookup;
+    [ReadOnly]
+    public ComponentLookup<RangedAttackData> rangedAttackLookup;
     const int autoFindEnemyDistance = 8;
 
     public void Execute(Entity entity, [EntityIndexInQuery] int sortKey, ref UnitStateData unitState, ref GridPosition gridPosition, ref SelectedData selected)
@@ -281,6 +287,17 @@ public partial struct PathfindJob : IJobEntity
                 queue.Dispose();
                 searched.Dispose();
                 return;
+            }
+            if (rangedAttackLookup.HasComponent(entity))
+            {
+                int maxrange = rangedAttackLookup[entity].Range;
+                int range = math.max(math.abs(gridPosition.Position.x - enemyPosition.x), math.abs(gridPosition.Position.y - enemyPosition.y));
+                if (range <= maxrange)
+                {
+                    queue.Dispose();
+                    searched.Dispose();
+                    return;
+                }
             }
 
             // Backtrack from the enemy position to build the path.

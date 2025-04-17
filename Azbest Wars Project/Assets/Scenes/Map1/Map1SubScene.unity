@@ -3357,6 +3357,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crossbower
       objectReference: {fileID: 0}
+    - target: {fileID: 3930956285522985913, guid: 635b929866be4d64c807eede32f3fdde, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7560443873264218197, guid: 635b929866be4d64c807eede32f3fdde, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.5
@@ -3413,6 +3417,10 @@ PrefabInstance:
     - target: {fileID: 3225467431724674756, guid: e537075fefc11d948995c9fbbe8fc010, type: 3}
       propertyPath: m_Name
       value: Archer
+      objectReference: {fileID: 0}
+    - target: {fileID: 3225467431724674756, guid: e537075fefc11d948995c9fbbe8fc010, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9153553499527495149, guid: e537075fefc11d948995c9fbbe8fc010, type: 3}
       propertyPath: m_LocalPosition.x

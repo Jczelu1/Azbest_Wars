@@ -6,7 +6,8 @@ public partial class TickSystemGroup : ComponentSystemGroup
 {
     //time between updates in miliseconds
     public static uint Tickrate { get; private set; } = 500;
-    const uint BaseTickrate = 500;
+    const uint BaseTickrate = 1000;
+    const byte startLevel = 2;
     private static bool Pause = false;
     private static bool ChangeTickrate = false;
 
@@ -22,7 +23,7 @@ public partial class TickSystemGroup : ComponentSystemGroup
         Tickrate = (uint)(BaseTickrate / level);
         Pause = false;
         ChangeTickrate = true;
-        if(level < 4)
+        if(level < 8)
         {
             SubTickSystemGroup.subTickEnabled = true;
             SubTickSystemGroup.ChangeTickrate = true;
@@ -35,7 +36,7 @@ public partial class TickSystemGroup : ComponentSystemGroup
     protected override void OnCreate()
     {
         base.OnCreate();
-        RateManager = new RateUtils.VariableRateManager(BaseTickrate, false);
+        SetTickrate(startLevel);
     }
     protected override void OnUpdate()
     {

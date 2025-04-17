@@ -24,7 +24,6 @@ public partial class SetupSystem : SystemBase
             Entities.WithoutBurst().ForEach((Entity entity, ref GridPosition gridPosition, ref LocalToWorld worldTransform) =>
             {
                 Vector3 position = worldTransform.Position;
-                Debug.Log(position);
                 position.x -= ((float)gridPosition.Size.x / 2) - .5f;
                 position.y -= ((float)gridPosition.Size.y / 2) - .5f;
                 gridPosition.Position = MainGridScript.Instance.MainGrid.GetXY(position);
