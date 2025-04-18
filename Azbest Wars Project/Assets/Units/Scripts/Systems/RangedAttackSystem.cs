@@ -13,6 +13,7 @@ using UnityEngine;
 public struct Arrow
 {
     public Entity Target;
+    public byte Team;
     public float Damage;
     public byte TimeToHit;
     public bool Miss;
@@ -27,6 +28,7 @@ public partial struct RangedAttackSystem : ISystem
     const float HIT_CHANCE_D1 = .8f;
     const float HIT_CHANCE_D2 = .6f;
     public NativeList<Arrow> ShotArrows;
+    public static NativeList<Arrow> SpawnArrows;
     private ComponentLookup<TeamData> _teamLookup;
     private ComponentLookup<HealthData> _healthLookup;
     public void OnCreate(ref SystemState state)
@@ -36,6 +38,7 @@ public partial struct RangedAttackSystem : ISystem
         _teamLookup = state.GetComponentLookup<TeamData>(true);
         _healthLookup = state.GetComponentLookup<HealthData>(false);
         ShotArrows = new NativeList<Arrow>(Allocator.Persistent);
+        SpawnArrows = new NativeList<Arrow>(Allocator.Persistent);
     }
     public void OnStartRunning(ref SystemState state)
     {
@@ -44,11 +47,13 @@ public partial struct RangedAttackSystem : ISystem
     public void OnDestroy(ref SystemState state)
     {
         ShotArrows.Dispose();
+        SpawnArrows.Dispose();
     }
     public void OnUpdate(ref SystemState state)
     {
         _teamLookup.Update(ref state);
         _healthLookup.Update(ref state);
+        SpawnArrows.Clear();
         for (int i = ShotArrows.Length - 1; i >= 0; i--)
         {
             var arrow = ShotArrows[i];
@@ -66,6 +71,7 @@ public partial struct RangedAttackSystem : ISystem
                 }
 
                 ShotArrows.RemoveAt(i);
+                SpawnArrows.Add(arrow);
             }
             else
             {
@@ -97,7 +103,7 @@ public partial struct RangedAttackSystem : ISystem
         {
             unitState.Attacked = false;
 
-            int team = teamLookup[entity].Team;
+            byte team = teamLookup[entity].Team;
             if (unitState.Moved)
             {
                 if (rangedAttack.MoveCooldown != 255)
@@ -209,14 +215,14 @@ public partial struct RangedAttackSystem : ISystem
             {
                 if (random.value > HIT_CHANCE_D1)
                     miss = true;
-                shotArrows.Add(new Arrow { Damage = damage, Miss = miss, Target = enemyEntity, TimeToHit = 1 });
+                shotArrows.Add(new Arrow { Damage = damage, Miss = miss, Target = enemyEntity, TimeToHit = 1, Team = team });
             }
             //distance 2
             else
             {
                 if (random.value > HIT_CHANCE_D2)
                     miss = true;
-                shotArrows.Add(new Arrow { Damage = damage, Miss = miss, Target = enemyEntity, TimeToHit = 1 });
+                shotArrows.Add(new Arrow { Damage = damage, Miss = miss, Target = enemyEntity, TimeToHit = 1, Team = team });
             }
 
 
