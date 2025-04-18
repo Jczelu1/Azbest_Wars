@@ -1138,8 +1138,6 @@ GameObject:
   - component: {fileID: 211152901}
   - component: {fileID: 211152900}
   - component: {fileID: 211152898}
-  - component: {fileID: 211152903}
-  - component: {fileID: 211152904}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -1295,34 +1293,6 @@ Transform:
   - {fileID: 1791056557}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &211152903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 211152897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37111835028dfb9438b4ac958635104f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HitArrowGameObjects: []
-  MissArrowGameObjects: []
---- !u!114 &211152904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 211152897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37111835028dfb9438b4ac958635104f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HitArrowGameObjects: []
-  MissArrowGameObjects: []
 --- !u!1 &237221761
 GameObject:
   m_ObjectHideFlags: 0

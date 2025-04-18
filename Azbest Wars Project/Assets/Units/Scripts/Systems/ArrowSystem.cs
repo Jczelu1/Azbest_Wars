@@ -4,84 +4,92 @@ using Unity.Transforms;
 using Unity.Collections;
 using Unity.Mathematics;
 
-
-
-
-
-[UpdateInGroup(typeof(TickSystemGroup))]
-[UpdateAfter(typeof(MeleAttackSystem))]
-[UpdateAfter(typeof(RangedAttackSystem))]
+[UpdateInGroup(typeof(SubTickSystemGroup))]
+[UpdateBefore(typeof(SubTickManagerSystem))]
 public partial class ArrowSystem : SystemBase
 {
-    public static NativeList<Entity> HitArrowPrefabs;
-    public static NativeList<Entity> MissArrowPrefabs;
-    public NativeList<Arrow> SpawnedArrows;
+    public static NativeList<Entity> SpawnedArrows;
+    public NativeList<Entity> hitPrefabs;
+    public NativeList<Entity> missPrefabs;
+    private bool started = false;
 
     protected override void OnCreate()
     {
-        if (HitArrowPrefabs.IsCreated == false)
-            HitArrowPrefabs = new NativeList<Entity>(Allocator.Persistent);
-        if (MissArrowPrefabs.IsCreated == false)
-            MissArrowPrefabs = new NativeList<Entity>(Allocator.Persistent);
-
-        SpawnedArrows = new NativeList<Arrow>(Allocator.Persistent);
+        RequireForUpdate<RangedAttackData>();
+        RequireForUpdate<ArrowPrefabBuffer>();
+        SpawnedArrows = new NativeList<Entity>(Allocator.Persistent);
     }
 
     protected override void OnDestroy()
     {
-        if (HitArrowPrefabs.IsCreated) HitArrowPrefabs.Dispose();
-        if (MissArrowPrefabs.IsCreated) MissArrowPrefabs.Dispose();
-        if (SpawnedArrows.IsCreated) SpawnedArrows.Dispose();
+        SpawnedArrows.Dispose();
+        hitPrefabs.Dispose();
+        missPrefabs.Dispose();
     }
 
     protected override void OnUpdate()
     {
-        // Cache prefab counts
-        int hitCount = HitArrowPrefabs.Length;
-        int missCount = MissArrowPrefabs.Length;
-
-        var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-
-        for (int i = SpawnedArrows.Length - 1; i >= 0; i--)
+        if (!started)
         {
-            var arrow = SpawnedArrows[i];
+            Entity queryEntity = SystemAPI.GetSingletonEntity<ArrowPrefabBuffer>();
+            var buffer = base.EntityManager.GetBuffer<ArrowPrefabBuffer>(queryEntity);
+            // Cache prefab counts
 
-            if (arrow.Miss)
+            hitPrefabs = new NativeList<Entity>(Allocator.Temp);
+            missPrefabs = new NativeList<Entity>(Allocator.Temp);
+
+            foreach (var prefab in buffer)
             {
-                // Choose a random miss prefab
-                var prefab = missCount > 0 ?
-                             MissArrowPrefabs[UnityEngine.Random.Range(0, missCount)] : Entity.Null;
-
-                if (prefab != Entity.Null)
+                if (prefab.IsHit) hitPrefabs.Add(prefab.Prefab);
+                else missPrefabs.Add(prefab.Prefab);
+            }
+        }
+        if(SubTickSystemGroup.subTickNumber == 1)
+        {
+            for (int i = RangedAttackSystem.SpawnArrows.Length - 1; i >= 0; i--)
+            {
+                var arrow = RangedAttackSystem.SpawnArrows[i];
+                if (!EntityManager.HasComponent<GridPosition>(arrow.Target)) continue;
+                if (arrow.Miss)
                 {
-                    // Instantiate and position at target
-                    var instance = entityManager.Instantiate(prefab);
-                    if (entityManager.HasComponent<GridPosition>(arrow.Target))
+                    // Choose a random miss prefab
+                    var prefab = missPrefabs.Length > 0 ?
+                                 missPrefabs[UnityEngine.Random.Range(0, missPrefabs.Length)] : Entity.Null;
+
+                    if (prefab != Entity.Null)
                     {
-                        var targetgp = entityManager.GetComponentData<GridPosition>(arrow.Target);
+                        // Instantiate and position at target
+                        var instance = EntityManager.Instantiate(prefab);
+                        var targetgp = EntityManager.GetComponentData<GridPosition>(arrow.Target);
                         int2 position = targetgp.Position;
-                        var transform = entityManager.GetComponentData<LocalTransform>(instance);
+                        var transform = EntityManager.GetComponentData<LocalTransform>(instance);
                         transform.Position = MainGridScript.Instance.MainGrid.GetWorldPosition(position);
-                        entityManager.SetComponentData(instance, transform);
+                        EntityManager.SetComponentData(instance, transform);
+                        EntityManager.GetComponentObject<SpriteRenderer>(instance).color = TeamManager.Instance.GetTeamColor(arrow.Team);
+
+                        SpawnedArrows.Add(instance);
                     }
                 }
-            }
-            else
-            {
-                // Choose a random hit prefab
-                var prefab = hitCount > 0 ?
-                             HitArrowPrefabs[UnityEngine.Random.Range(0, hitCount)] : Entity.Null;
-
-                if (prefab != Entity.Null)
+                else
                 {
-                    // Instantiate and parent to the target entity
-                    var instance = entityManager.Instantiate(prefab);
-                    entityManager.AddComponentData(instance, new Parent { Value = arrow.Target });
-                    entityManager.SetComponentData(instance, new LocalTransform { Position = float3.zero, Rotation = quaternion.identity, Scale = 1f });
+                    // Choose a random hit prefab
+                    var prefab = hitPrefabs.Length > 0 ?
+                                 hitPrefabs[UnityEngine.Random.Range(0, hitPrefabs.Length)] : Entity.Null;
+
+                    if (prefab != Entity.Null)
+                    {
+                        // Instantiate and parent to the target entity
+                        var instance = EntityManager.Instantiate(prefab);
+                        EntityManager.AddComponentData(instance, new Parent { Value = arrow.Target });
+                        EntityManager.SetComponentData(instance, new LocalTransform { Position = float3.zero, Rotation = quaternion.identity, Scale = 1f });
+                        EntityManager.GetComponentObject<SpriteRenderer>(instance).color = TeamManager.Instance.GetTeamColor(arrow.Team);
+                        SpawnedArrows.Add(instance);                    
+                    }
                 }
+                // Remove processed arrow
+                //SpawnedArrows.RemoveAtSwapBack(i);
             }
-            // Remove processed arrow
-            SpawnedArrows.RemoveAtSwapBack(i);
         }
+        
     }
 }

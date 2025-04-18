@@ -451,6 +451,60 @@ MonoBehaviour:
   Name: Kopalnia
   description: 
   baseSprite: {fileID: 21300000, guid: 9212448af316c904a8733ea9936adb46, type: 3}
+--- !u!1 &3688212734503743989
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7287432957376836796}
+  - component: {fileID: 5098493112189945868}
+  m_Layer: 0
+  m_Name: Arrows
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7287432957376836796
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3688212734503743989}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3239504507760822941}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5098493112189945868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3688212734503743989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37111835028dfb9438b4ac958635104f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HitArrowGameObjects:
+  - {fileID: 4456993701330587018, guid: 8c7ab3e1a91732f49ab7904763b460bd, type: 3}
+  - {fileID: 2985426686116986498, guid: 0439a4b22ae268c4587fd93778151973, type: 3}
+  - {fileID: 1911639899508532905, guid: 54b7499e0bceccf49b6970baad19a46e, type: 3}
+  - {fileID: 8353109536871697748, guid: 1cf08b26f7a15974493472161df50e8d, type: 3}
+  - {fileID: 8143786967658604827, guid: 69b257b1a630e18439602a8670c039b1, type: 3}
+  MissArrowGameObjects:
+  - {fileID: 7611434866571555522, guid: daefac2b447f4d9408bc80105f8f7429, type: 3}
+  - {fileID: 5262457125491059638, guid: ba9588cbe3e1c3b4681e369142e9b4e7, type: 3}
+  - {fileID: 6565294683403344100, guid: 2c0720a9db98f09408b866684a26a142, type: 3}
 --- !u!1 &4014804248487054167
 GameObject:
   m_ObjectHideFlags: 0
@@ -948,6 +1002,7 @@ Transform:
   - {fileID: 7330569467671752593}
   - {fileID: 2838322488846252436}
   - {fileID: 8953445265125294085}
+  - {fileID: 7287432957376836796}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8332021962847347807

@@ -30,13 +30,11 @@ public partial struct RangedAttackSystem : ISystem
     public NativeList<Arrow> ShotArrows;
     public static NativeList<Arrow> SpawnArrows;
     private ComponentLookup<TeamData> _teamLookup;
-    private ComponentLookup<HealthData> _healthLookup;
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<MeleAttackData>();
         state.RequireForUpdate<LocalTransform>();
         _teamLookup = state.GetComponentLookup<TeamData>(true);
-        _healthLookup = state.GetComponentLookup<HealthData>(false);
         ShotArrows = new NativeList<Arrow>(Allocator.Persistent);
         SpawnArrows = new NativeList<Arrow>(Allocator.Persistent);
     }
@@ -51,23 +49,25 @@ public partial struct RangedAttackSystem : ISystem
     }
     public void OnUpdate(ref SystemState state)
     {
-        _teamLookup.Update(ref state);
-        _healthLookup.Update(ref state);
         SpawnArrows.Clear();
+        foreach (var entity in ArrowSystem.SpawnedArrows)
+        {
+            state.EntityManager.DestroyEntity(entity);
+        }
+        ArrowSystem.SpawnedArrows.Clear();
         for (int i = ShotArrows.Length - 1; i >= 0; i--)
         {
             var arrow = ShotArrows[i];
-
             arrow.TimeToHit--;
 
             if (arrow.TimeToHit <= 0)
             {
-                if (!arrow.Miss
-                    && _healthLookup.TryGetComponent(arrow.Target, out var healthData))
+                if (!arrow.Miss && state.EntityManager.HasComponent<HealthData>(arrow.Target))
                 {
+                    var healthData = state.EntityManager.GetComponentData<HealthData>(arrow.Target);
                     healthData.Health -= arrow.Damage;
                     healthData.Attacked = true;
-                    _healthLookup[arrow.Target] = healthData;
+                    state.EntityManager.SetComponentData(arrow.Target, healthData);
                 }
 
                 ShotArrows.RemoveAt(i);
@@ -78,13 +78,12 @@ public partial struct RangedAttackSystem : ISystem
                 ShotArrows[i] = arrow;
             }
         }
-
+        _teamLookup.Update(ref state);
 
         RangedAttackJob Job = new RangedAttackJob()
         {
             occupied = MainGridScript.Instance.Occupied,
             teamLookup = _teamLookup,
-            healthLookup = _healthLookup,
             shotArrows = ShotArrows,
         };
         state.Dependency = Job.Schedule(state.Dependency);
@@ -95,7 +94,6 @@ public partial struct RangedAttackSystem : ISystem
         public FlatGrid<Entity> occupied;
         [ReadOnly]
         public ComponentLookup<TeamData> teamLookup;
-        public ComponentLookup<HealthData> healthLookup;
         [WriteOnly]
         [NativeDisableParallelForRestriction]
         public NativeList<Arrow> shotArrows;
