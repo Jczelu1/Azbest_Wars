@@ -18,26 +18,25 @@ public partial class ArrowSystem : SystemBase
         RequireForUpdate<RangedAttackData>();
         RequireForUpdate<ArrowPrefabBuffer>();
         SpawnedArrows = new NativeList<Entity>(Allocator.Persistent);
+        hitPrefabs = new NativeList<Entity>(Allocator.Persistent);
+        missPrefabs = new NativeList<Entity>(Allocator.Persistent);
     }
 
     protected override void OnDestroy()
     {
-        SpawnedArrows.Dispose();
-        hitPrefabs.Dispose();
-        missPrefabs.Dispose();
+        if(SpawnedArrows.IsCreated) SpawnedArrows.Dispose();
+        if(hitPrefabs.IsCreated) hitPrefabs.Dispose();
+        if(missPrefabs.IsCreated) missPrefabs.Dispose();
     }
 
     protected override void OnUpdate()
     {
         if (!started)
         {
+            started = true;
             Entity queryEntity = SystemAPI.GetSingletonEntity<ArrowPrefabBuffer>();
             var buffer = base.EntityManager.GetBuffer<ArrowPrefabBuffer>(queryEntity);
             // Cache prefab counts
-
-            hitPrefabs = new NativeList<Entity>(Allocator.Temp);
-            missPrefabs = new NativeList<Entity>(Allocator.Temp);
-
             foreach (var prefab in buffer)
             {
                 if (prefab.IsHit) hitPrefabs.Add(prefab.Prefab);
