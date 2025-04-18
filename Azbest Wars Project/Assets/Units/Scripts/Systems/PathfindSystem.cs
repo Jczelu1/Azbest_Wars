@@ -294,6 +294,8 @@ public partial struct PathfindJob : IJobEntity
                 int range = math.max(math.abs(gridPosition.Position.x - enemyPosition.x), math.abs(gridPosition.Position.y - enemyPosition.y));
                 if (range <= maxrange)
                 {
+                    ecb.RemoveComponent<PathNode>(sortKey, entity);
+                    ecb.AddBuffer<PathNode>(sortKey, entity);
                     queue.Dispose();
                     searched.Dispose();
                     return;
@@ -320,6 +322,8 @@ public partial struct PathfindJob : IJobEntity
             {
                 if (meleAttackLookup[entity].AttackType == 2 && path.Length <= 3)
                 {
+                    ecb.RemoveComponent<PathNode>(sortKey, entity);
+                    ecb.AddBuffer<PathNode>(sortKey, entity);
                     queue.Dispose();
                     searched.Dispose();
                     return;

@@ -189,7 +189,7 @@ public class MainGridScript : MonoBehaviour
             }
             PathfindSystem.shouldMove[TeamManager.Instance.PlayerTeam] = true;
             PathfindSystem.destinations[TeamManager.Instance.PlayerTeam] = endPos;
-            PathfindSystem.setMoveState[TeamManager.Instance.PlayerTeam] = 0;
+            //PathfindSystem.setMoveState[TeamManager.Instance.PlayerTeam] = 0;
             MoveToObject = MainGrid.CreateSprite(MoveToPrefab, endPos);
             Destroy(MoveToObject, 0.5f);
         }
