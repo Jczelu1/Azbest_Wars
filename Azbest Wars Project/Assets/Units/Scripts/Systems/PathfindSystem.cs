@@ -254,6 +254,7 @@ public partial struct PathfindJob : IJobEntity
                     if (!isWalkable[neighbor])
                         continue;
 
+
                     // Ensure neighbor is within the auto-find search radius.
                     if (math.abs(neighbor.x - startPos.x) > autoFindEnemyDistance ||
                         math.abs(neighbor.y - startPos.y) > autoFindEnemyDistance)
@@ -272,7 +273,7 @@ public partial struct PathfindJob : IJobEntity
                             foundEnemy = true;
                             break;
                         }
-                        else if (unitState.Stuck == 1) continue;
+                        else if (unitState.Stuck != 0) continue;
                     }
 
                     // Enqueue valid neighbor.
@@ -486,7 +487,7 @@ public partial struct PathfindJob : IJobEntity
         }
 
         //unstuck
-        else if (unitState.Stuck == 1)
+        if (unitState.Stuck == 1)
         {
             NativeList<int2> path = new NativeList<int2>(Allocator.Temp);
             Pathfinder.FindPath(gridPosition.Position, unitState.Destination, gridSize, isWalkable.GridArray, occupied.GridArray, false, ref path);
