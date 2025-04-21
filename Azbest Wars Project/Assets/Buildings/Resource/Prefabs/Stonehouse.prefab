@@ -208,9 +208,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110dce70be38d8b478a1ee4e84065ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startGridPosition:
-    x: 0
-    y: 0
   width: 2
   height: 2
   isBuilding: 1
@@ -227,7 +224,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 255
-  spriteRenderer: {fileID: 5867810347182649170}
 --- !u!114 &2091368550417005331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,7 +262,7 @@ GameObject:
   - component: {fileID: 3704106714224828515}
   - component: {fileID: 1025805977647572704}
   m_Layer: 0
-  m_Name: Mine2
+  m_Name: House2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
