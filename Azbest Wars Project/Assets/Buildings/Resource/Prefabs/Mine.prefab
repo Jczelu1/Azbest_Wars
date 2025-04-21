@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5917858218762141910}
   - component: {fileID: 5128923223950656317}
   - component: {fileID: -1598709514369440468}
+  - component: {fileID: 8501151964703912199}
   m_Layer: 0
   m_Name: Mine
   m_TagString: Untagged
@@ -105,9 +106,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110dce70be38d8b478a1ee4e84065ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startGridPosition:
-    x: 0
-    y: 0
   width: 2
   height: 1
   isBuilding: 1
@@ -124,7 +122,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 255
-  spriteRenderer: {fileID: 6700690525924374013}
 --- !u!114 &5128923223950656317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,6 +149,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7879e0a9235573942a4b08ff82d1d6e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8501151964703912199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875538820654490184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d24823916b8aaea43b596d2c91e32547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourcePerTick: 20
 --- !u!1 &5305204929338173593
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,7 +325,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1583137685
   m_SortingLayer: -2
-  m_SortingOrder: 1
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 4b062d9b2b0db7d4582fa6717f2b50b8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
