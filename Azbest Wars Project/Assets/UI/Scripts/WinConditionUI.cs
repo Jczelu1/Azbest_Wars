@@ -18,6 +18,12 @@ public class WinConditionUI : MonoBehaviour
 
     [SerializeField]
     TextMeshProUGUI TimeText;
+
+    [SerializeField]
+    GameObject VictoryUI;
+
+    [SerializeField]
+    GameObject DefeatUI;
     void Start()
     {
         
@@ -35,6 +41,19 @@ public class WinConditionUI : MonoBehaviour
             int minutes = Mathf.FloorToInt(timeLeftSeconds / 60f);
             int seconds = Mathf.FloorToInt(timeLeftSeconds % 60f);
             TimeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        }
+        if (WinConditionSystem.Ended)
+        {
+            TickSystemGroup.SetTickrate(0);
+            MusicPlayer.Instance.StopMusic();
+            if (WinConditionSystem.Win)
+            {
+                VictoryUI.SetActive(true);
+            }
+            else
+            {
+                DefeatUI.SetActive(true);
+            }
         }
     }
 }

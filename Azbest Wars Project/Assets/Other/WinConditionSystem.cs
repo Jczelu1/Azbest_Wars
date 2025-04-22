@@ -39,7 +39,6 @@ public partial class WinConditionSystem : SystemBase
             if (!captureArea.WinCondition) return;
             if (team.Team != TeamManager.Instance.PlayerTeam) return;
             CapturedWinAreas++;
-
         }).Run();
         if(EndIfCompleted && CapturedWinAreas == RequiredWinAreas)
         {

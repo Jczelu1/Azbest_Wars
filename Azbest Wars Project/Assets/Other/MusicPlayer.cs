@@ -2,10 +2,22 @@ using UnityEngine;
 
 public class MusicPlayer : MonoBehaviour
 {
+    public static MusicPlayer Instance;
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+
     [SerializeField]
     AudioSource[] themes;
     AudioSource currentTheme;
     int currentIndex;
+    
     void Start()
     {
         PlayRandomTheme();
@@ -18,6 +30,14 @@ public class MusicPlayer : MonoBehaviour
             currentTheme.Stop();
             PlayRandomTheme();
             //Invoke("PlayRandomTheme", 2f);
+        }
+    }
+    public void StopMusic()
+    {
+        if (currentTheme != null)
+        {
+            currentTheme.Stop();
+            currentTheme = null;
         }
     }
     void PlayRandomTheme()
