@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections;
 public class MusicPlayer : MonoBehaviour
 {
     public static MusicPlayer Instance;
@@ -15,6 +15,8 @@ public class MusicPlayer : MonoBehaviour
 
     [SerializeField]
     AudioSource[] themes;
+    [SerializeField]
+    float fadeDuration = 2f;
     AudioSource currentTheme;
     int currentIndex;
     
@@ -36,9 +38,26 @@ public class MusicPlayer : MonoBehaviour
     {
         if (currentTheme != null)
         {
-            currentTheme.Stop();
+            // Start fade-out coroutine
+            StartCoroutine(FadeOutAndStop(currentTheme, fadeDuration));
             currentTheme = null;
         }
+    }
+    private IEnumerator FadeOutAndStop(AudioSource source, float duration)
+    {
+        float startVolume = source.volume;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            source.volume = Mathf.Lerp(startVolume, 0f, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        source.volume = 0f;
+        source.Stop();
+        source.volume = startVolume;
     }
     void PlayRandomTheme()
     {
