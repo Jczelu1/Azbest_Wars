@@ -158,6 +158,7 @@ public partial struct PathfindSystem : ISystem
 [BurstCompile]
 public partial struct PathfindJob : IJobEntity
 {
+    const int AUTO_FIND_ENEMY_DISTANCE = 12;
     [ReadOnly]
     public NativeArray<bool> shouldMove;
     [ReadOnly]
@@ -178,7 +179,7 @@ public partial struct PathfindJob : IJobEntity
     public ComponentLookup<MeleAttackData> meleAttackLookup;
     [ReadOnly]
     public ComponentLookup<RangedAttackData> rangedAttackLookup;
-    const int autoFindEnemyDistance = 8;
+    
 
     public void Execute(Entity entity, [EntityIndexInQuery] int sortKey, ref UnitStateData unitState, ref GridPosition gridPosition, ref SelectedData selected)
     {
@@ -220,7 +221,7 @@ public partial struct PathfindJob : IJobEntity
         {
             int2 startPos = gridPosition.Position;
             // Maximum possible number of nodes in the search area
-            int maxNodes = (autoFindEnemyDistance * 2 + 1) * (autoFindEnemyDistance * 2 + 1);
+            int maxNodes = (AUTO_FIND_ENEMY_DISTANCE * 2 + 1) * (AUTO_FIND_ENEMY_DISTANCE * 2 + 1);
             NativeList<int2> queue = new NativeList<int2>(maxNodes, Allocator.Temp);
             NativeHashMap<int2, int2> searched = new NativeHashMap<int2, int2>(maxNodes, Allocator.Temp);
 
@@ -256,8 +257,8 @@ public partial struct PathfindJob : IJobEntity
 
 
                     // Ensure neighbor is within the auto-find search radius.
-                    if (math.abs(neighbor.x - startPos.x) > autoFindEnemyDistance ||
-                        math.abs(neighbor.y - startPos.y) > autoFindEnemyDistance)
+                    if (math.abs(neighbor.x - startPos.x) > AUTO_FIND_ENEMY_DISTANCE ||
+                        math.abs(neighbor.y - startPos.y) > AUTO_FIND_ENEMY_DISTANCE)
                         continue;
 
                     //maybe also continue if tile also occupied by other unit

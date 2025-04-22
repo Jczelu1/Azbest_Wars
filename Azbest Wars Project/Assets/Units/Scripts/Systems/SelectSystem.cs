@@ -202,7 +202,10 @@ public partial class SelectSystem : SystemBase
                         SpawnerData spawner = SystemAPI.GetComponent<SpawnerData>(selectedEntity);
                         SpawnerInputController.Queued = spawner.Queued;
                         SpawnerInputController.UnitType = spawner.NextSpawnedUnit == -1 ? spawner.SpawnedUnit : spawner.NextSpawnedUnit;
-                        SpawnerInputController.ProductionProgress = (float)spawner.TimeToSpawn / spawner.MaxTimeToSpawn;
+                        if(spawner.MaxTimeToSpawn == 0)
+                            SpawnerInputController.ProductionProgress = 0;
+                        else
+                            SpawnerInputController.ProductionProgress = (float)spawner.TimeToSpawn / spawner.MaxTimeToSpawn;
                     }
                 }
             }
