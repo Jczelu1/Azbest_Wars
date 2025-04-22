@@ -16,21 +16,20 @@ using UnityEngine;
 public partial class ArtificialIdiot : SystemBase
 {
     //AI parameters
-    const float AGGRESSIVE_CHANCE = 0.33f;
-    const float DEST_DEFEND_CHANCE = 0.5f;
-    const float DEST_RANDOMNESS = 0.25f;
-    const float READJUST_CHANCE = 0.01f;
-    const float CHANGE_DEST_CHANCE = 0.0005f;
-    const float FORMATION_GROW_CHANCE = 0.5f;
-    const int FORMATION_MIN_SIZE = 3;
-    const int FORMATION_MAX_SIZE = 6;
+    private float AGGRESSIVE_CHANCE = 0.33f;
+    private float DEST_DEFEND_CHANCE = 0.5f;
+    private float DEST_RANDOMNESS = 0.25f;
+    private float READJUST_CHANCE = 0.01f;
+    private float CHANGE_DEST_CHANCE = 0.0005f;
+    private float FORMATION_GROW_CHANCE = 0.5f;
+    private int FORMATION_MIN_SIZE = 3;
+    private int FORMATION_MAX_SIZE = 6;
     public static int2 moveToPosition;
     public static bool move;
     NativeList<Entity> captureAreas = new NativeList<Entity>(Allocator.Persistent);
     NativeList<Formation> formations = new NativeList<Formation>(Allocator.Persistent);
     protected override void OnCreate()
     {
-
     }
     protected override void OnUpdate()
     {
@@ -164,6 +163,7 @@ public partial class ArtificialIdiot : SystemBase
                     bool defend = false;
                     if (EntityManager.GetComponentData<TeamData>(e).Team == AITeam)
                     {
+                        if (EntityManager.GetComponentData<CaptureAreaData>(e).HasSpawner == true) continue;
                         if(UnityEngine.Random.value < DEST_DEFEND_CHANCE)
                         {
                             continue;

@@ -13,6 +13,8 @@ public class CaptureAreaAuthoring : MonoBehaviour
     int width;
     [SerializeField]
     int height;
+    [SerializeField]
+    bool hasSpawner;
 
     private class Baker : Baker<CaptureAreaAuthoring>
     {
@@ -24,7 +26,8 @@ public class CaptureAreaAuthoring : MonoBehaviour
                 CaptureProgress = 0,
                 RequiredCapture = authoring.requiredCapture,
                 Size = new int2(authoring.width, authoring.height),
-                Captured = true
+                Captured = true,
+                HasSpawner = authoring.hasSpawner,
                 });
         }
     }
@@ -36,4 +39,5 @@ public struct CaptureAreaData : IComponentData
     public int CaptureProgress;
     public int2 Size;
     public bool Captured;
+    public bool HasSpawner;
 }
