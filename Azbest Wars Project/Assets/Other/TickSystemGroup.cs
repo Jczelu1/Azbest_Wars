@@ -7,6 +7,7 @@ public partial class TickSystemGroup : ComponentSystemGroup
     //time between updates in miliseconds
     public static uint Tickrate { get; private set; } = 500;
     const uint BaseTickrate = 1000;
+    public static readonly float TimePerTick = .5f;
     const byte startLevel = 2;
     private static bool Pause = false;
     private static bool ChangeTickrate = false;
