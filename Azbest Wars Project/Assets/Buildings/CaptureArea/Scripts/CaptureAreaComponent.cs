@@ -24,14 +24,17 @@ public class CaptureAreaAuthoring : MonoBehaviour
         {
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
-            AddComponent(entity, new CaptureAreaData { CapturingTeam = authoring.team,
+            AddComponent(entity, new CaptureAreaData
+            {
+                CapturingTeam = authoring.team,
                 CaptureProgress = 0,
                 RequiredCapture = authoring.requiredCapture,
                 Size = new int2(authoring.width, authoring.height),
                 Captured = true,
                 HasSpawner = authoring.hasSpawner,
                 WinCondition = authoring.winCondition,
-                });
+                WasBeignCaptured = false
+            });
         }
     }
 }
@@ -42,6 +45,7 @@ public struct CaptureAreaData : IComponentData
     public int CaptureProgress;
     public int2 Size;
     public bool Captured;
+    public bool WasBeignCaptured;
     public bool HasSpawner;
     public bool WinCondition;
 }

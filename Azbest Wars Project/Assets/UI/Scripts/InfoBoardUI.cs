@@ -28,7 +28,7 @@ public class InfoBoardUI : MonoBehaviour
         Instance = this;
     }
 
-    public void ShowText(string text)
+    public void ShowInfo(string text)
     {
         messageQueue.Enqueue(text);
         if (!isTyping)

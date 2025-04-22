@@ -20,6 +20,9 @@ public partial struct SpawnerSystem : ISystem
     public static int setSelectedQueue = -1;
     public static int setSelectedUnitType = -1;
     bool started;
+
+    static string QueueEndedMessage = "Obóz zakoñczy³ produkcjê";
+    //static string NoResourceMessage = "Masz za ma³o zasobów by wyprodukowaæ jednostkê";
     public void OnCreate(ref SystemState state) 
     {
         started = false;
@@ -86,27 +89,43 @@ public partial struct SpawnerSystem : ISystem
             //start producing new unit
             if(spawner.ValueRO.MaxTimeToSpawn == 0)
             {
+                if(spawner.ValueRO.Queued < 0)
+                {
+                    spawner.ValueRW.Queued = 0;
+                }
+                if (spawner.ValueRO.Queued == 0)
+                {
+                    if(teamData.Team == TeamManager.Instance.PlayerTeam)
+                    {
+                        if (spawner.ValueRO.SpawnedThisTick)
+                        {
+                            spawner.ValueRW.SpawnedThisTick = false;
+                            InfoBoardUI.Instance.ShowInfo(QueueEndedMessage);
+                        }
+                    }
+                    continue;
+
+                }
                 if (spawner.ValueRO.NextSpawnedUnit != -1)
                 {
                     spawner.ValueRW.SpawnedUnit = spawner.ValueRO.NextSpawnedUnit;
                     spawner.ValueRW.NextSpawnedUnit = -1;
                 }
-                if (spawner.ValueRO.Queued <= 0)
-                {
-                    spawner.ValueRW.Queued = 0;
-                    continue;
-                }
+                
                 //can afford
                 if (TeamManager.Instance.teamResources[team] < unitType.Cost)
+                {
                     continue;
+                }
                 //cost
                 TeamManager.Instance.teamResources[team] -= unitType.Cost;
                 spawner.ValueRW.MaxTimeToSpawn = unitType.TimeToSpawn;
                 spawner.ValueRW.TimeToSpawn = unitType.TimeToSpawn;
             }
             //spawn new unit
-            if (spawner.ValueRO.TimeToSpawn <= 0)
+            else if (spawner.ValueRO.TimeToSpawn <= 0)
             {
+                spawner.ValueRW.SpawnedThisTick = true;
                 int maxNodes = (Max_Spawn_Range * 2 + 1) * (Max_Spawn_Range * 2 + 1);
                 int2 startPos = gridPosition.Position;
                 startPos.y -= 1;
@@ -220,5 +239,4 @@ public partial struct SpawnerSystem : ISystem
         setSelectedQueue = -1;
         setSelectedUnitType = -1;
     }
-
 }

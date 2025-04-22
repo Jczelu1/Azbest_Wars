@@ -9,6 +9,10 @@ using UnityEngine;
 [UpdateAfter(typeof(CaptureAreaSystem))]
 public partial class CaptureSystem : SystemBase
 {
+    string PlayerStartedCapturingMessage = "Przejmujesz strefê";
+    string EnemyStartedCapturingMessage = "Przeciwnik przejmuje strefê";
+    string PlayerCapturedMessage = "Zdoby³eœ strefê";
+    string EnemyCapturedMessage = "Przeciwnik zdoby³ strefê";
     protected override void OnCreate()
     {
         base.OnCreate();
@@ -21,7 +25,7 @@ public partial class CaptureSystem : SystemBase
         if (!SetupSystem.started) return;
         if (!areaMarked)
         {
-            areaMarked = true;
+            
             Entities.WithoutBurst().ForEach((Entity entity, ref GridPosition gridPosition,  ref CaptureAreaData captureArea, ref TeamData team, ref DynamicBuffer<Child> children) =>
             {
                 float2 gridOrigin = MainGridScript.Instance.GridOrigin;
@@ -82,10 +86,39 @@ public partial class CaptureSystem : SystemBase
         }
         Entities.WithoutBurst().ForEach((Entity entity, ref CaptureAreaData captureArea, ref TeamData team, ref DynamicBuffer<Child> children) =>
         {
+            if(captureArea.CaptureProgress == 0)
+            {
+                captureArea.WasBeignCaptured = false;
+            }
+            if(!captureArea.WasBeignCaptured && captureArea.CaptureProgress != 0)
+            {
+                captureArea.WasBeignCaptured = true;
+                if(captureArea.CapturingTeam == TeamManager.Instance.PlayerTeam)
+                {
+                    InfoBoardUI.Instance.ShowInfo(PlayerStartedCapturingMessage);
+                }
+                else
+                {
+                    InfoBoardUI.Instance.ShowInfo(EnemyStartedCapturingMessage);
+                }
+            }
             if (captureArea.Captured)
             {
+                if (areaMarked)
+                {
+                    if (captureArea.CapturingTeam == TeamManager.Instance.PlayerTeam)
+                    {
+                        InfoBoardUI.Instance.ShowInfo(PlayerCapturedMessage);
+                    }
+                    else
+                    {
+                        InfoBoardUI.Instance.ShowInfo(EnemyCapturedMessage);
+                    }
+                }
+                captureArea.WasBeignCaptured = false;
                 captureArea.Captured = false;
                 team.Team = captureArea.CapturingTeam;
+                
                 EntityManager.GetComponentObject<SpriteRenderer>(entity).color = TeamManager.Instance.GetTeamColor(team.Team);
 
                 foreach (var child in children)
@@ -127,6 +160,7 @@ public partial class CaptureSystem : SystemBase
                 }
             }
         }).Run();
+        areaMarked = true;
     }
 }
 

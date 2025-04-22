@@ -19,10 +19,11 @@ class SpawnerAuthoring : MonoBehaviour
                 SpawnedUnit = authoring.SpawnedUnit,
                 SpawnRateMult = authoring.SpawnRateMult,
                 Queued = authoring.Queued,
-                TimeToSpawn = 1,
+                TimeToSpawn = 11,
                 MaxTimeToSpawn = 0,
                 SetFormation = -1,
-                NextSpawnedUnit = -1
+                NextSpawnedUnit = -1,
+                SpawnedThisTick = false
             });
         }
     }
@@ -37,4 +38,5 @@ public struct SpawnerData : IComponentData
     public int MaxTimeToSpawn;
     public float SpawnRateMult;
     public int SetFormation;
+    public bool SpawnedThisTick;
 }
