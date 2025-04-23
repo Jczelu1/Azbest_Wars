@@ -9,8 +9,13 @@ public class SidebarController : MonoBehaviour
     GameObject Sidebar;
 
     [SerializeField]
+    GameObject PauseMenu;
+    private bool PauseMenuActive;
+
+    [SerializeField]
     GameObject[] TickrateButtons;
 
+    private InputAction pauseMenuAction;
     private InputAction pauseAction;
     private InputAction x1Action;
     private InputAction x2Action;
@@ -18,6 +23,7 @@ public class SidebarController : MonoBehaviour
     private InputAction x8Action;
     private void Start()
     {
+        pauseMenuAction = InputSystem.actions.FindAction("PauseMenu");
         pauseAction = InputSystem.actions.FindAction("Pause");
         x1Action = InputSystem.actions.FindAction("x1");
         x2Action = InputSystem.actions.FindAction("x2");
@@ -27,6 +33,18 @@ public class SidebarController : MonoBehaviour
     }
     public void Update()
     {
+        if (pauseMenuAction.WasPressedThisFrame())
+        {
+            if (PauseMenuActive)
+            {
+                HidePauseMenu();
+            }
+            else
+            {
+                ShowPauseMenu();
+                TickrateButtons[0].GetComponent<Button>().onClick.Invoke();
+            }
+        }
         if (pauseAction.WasPressedThisFrame())
         {
             TickrateButtons[0].GetComponent<Button>().onClick.Invoke();
@@ -56,6 +74,16 @@ public class SidebarController : MonoBehaviour
     {
         Sidebar.SetActive(false);
     }
+    public void ShowPauseMenu()
+    {
+        PauseMenu.SetActive(true);
+        PauseMenuActive = true;
+    }
+    public void HidePauseMenu()
+    {
+        PauseMenu.SetActive(false);
+        PauseMenuActive = false;
+    }
     public void UnselectTickrateButtons()
     {
         foreach(var b in TickrateButtons)
@@ -73,6 +101,10 @@ public class SidebarController : MonoBehaviour
             UnselectTickrateButtons();
             if(TickrateButtons.Length > level)
             {
+                if (PauseMenuActive && level != 0)
+                {
+                    HidePauseMenu();
+                }
                 TickrateButtons[level].GetComponent<CustomButtonScript>().Select();
             }
         }

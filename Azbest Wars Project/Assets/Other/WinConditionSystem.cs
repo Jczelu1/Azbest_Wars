@@ -9,13 +9,13 @@ public partial class WinConditionSystem : SystemBase
 {
     public static int TotalWinAreas = -1;
     public static int RequiredWinAreas = 1;
-    public static int CapturedWinAreas = -1;
+    public static int CapturedWinAreas = 0;
     public static float TimeLeftSeconds = -1;
     public static float TimeTotalSeconds = -1;
     public static bool EndIfCompleted = false;
     public static bool Ended = false;
     public static bool Win = false;
-    private int startDelay = 10;
+    private int startDelay = 8;
     protected override void OnCreate()
     {
         RequireForUpdate<CaptureAreaData>();

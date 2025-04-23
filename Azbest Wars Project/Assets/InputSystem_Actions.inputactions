@@ -168,6 +168,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "PauseMenu",
+                    "type": "Button",
+                    "id": "8627a4b0-cb27-45cd-a81c-6ffa19faf39b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "x1",
                     "type": "Button",
                     "id": "662cacda-f9b7-4e54-a63a-d9c840204c0c",
@@ -598,6 +607,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "10e263c6-d502-4edc-9f06-bfbf43b32a5a",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PauseMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
