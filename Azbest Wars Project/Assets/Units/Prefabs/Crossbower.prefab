@@ -263,9 +263,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b87170eda9fb35429a18addc53745a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 4
+  damage: 6
   range: 8
-  attackCooldown: 2
+  attackCooldown: 4
   moveCooldown: 0
 --- !u!1 &7576844542480524197
 GameObject:

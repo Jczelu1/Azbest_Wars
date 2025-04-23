@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d2d9329bb2c2134fab04c5f6d9ef6c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 32
+  health: 48
 --- !u!114 &2045463209739383695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,9 +294,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae66b9bd0af667640ab89e45702a88fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 6
+  damage: 8
   attackType: 0
-  attackCooldown: 0
+  attackCooldown: 1
   moveCooldown: 0
 --- !u!114 &8120502551536665368
 MonoBehaviour:

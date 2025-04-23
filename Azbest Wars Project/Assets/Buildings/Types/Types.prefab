@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Knight
-  cost: 200
-  timeToSpawn: 20
+  cost: 300
+  timeToSpawn: 10
   id: 8
   prefab: {fileID: 4408635524532863550, guid: 028fd202bb1ed8d418672b56e15ee332, type: 3}
 --- !u!114 &1531159648681572622
@@ -111,8 +111,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Spear Infantry
-  cost: 100
-  timeToSpawn: 10
+  cost: 120
+  timeToSpawn: 6
   id: 6
   prefab: {fileID: 2137924443287163154, guid: 4e70c29d5afa18640ab971beddb9b8b3, type: 3}
 --- !u!114 &2590202528244989524
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Archer
   cost: 100
-  timeToSpawn: 10
+  timeToSpawn: 6
   id: 7
   prefab: {fileID: 3225467431724674756, guid: e537075fefc11d948995c9fbbe8fc010, type: 3}
 --- !u!114 &1063141967513614566
@@ -242,7 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Sword Infantry
   cost: 100
-  timeToSpawn: 10
+  timeToSpawn: 6
   id: 4
   prefab: {fileID: 5894179213234506625, guid: 9730d3c4b441c7a42ac79304962cc898, type: 3}
 --- !u!114 &3894837164153407597
@@ -306,8 +306,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Scythe Guy
-  cost: 50
-  timeToSpawn: 5
+  cost: 60
+  timeToSpawn: 4
   id: 2
   prefab: {fileID: 1953898295928860151, guid: be0875892047e314ba681c84919cf505, type: 3}
 --- !u!114 &3098924344062835203
@@ -551,8 +551,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Guard
-  cost: 200
-  timeToSpawn: 20
+  cost: 240
+  timeToSpawn: 10
   id: 10
   prefab: {fileID: 7062958865578585826, guid: 0318ec31da96b2f4bbb4cfef324eda5b, type: 3}
 --- !u!114 &8863210658982793328
@@ -616,8 +616,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Axe Infantry
-  cost: 100
-  timeToSpawn: 10
+  cost: 120
+  timeToSpawn: 6
   id: 5
   prefab: {fileID: 7946871310381647438, guid: e1dd27c8e5d0fea489649073a9b64b8d, type: 3}
 --- !u!114 &3229332829074146997
@@ -681,8 +681,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Viking
-  cost: 200
-  timeToSpawn: 20
+  cost: 240
+  timeToSpawn: 10
   id: 9
   prefab: {fileID: 735107889770710729, guid: 8e050e7efc1ed0f4785fd9bf362c693f, type: 3}
 --- !u!114 &1211471050957789175
@@ -747,7 +747,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Sword Guy
   cost: 50
-  timeToSpawn: 5
+  timeToSpawn: 4
   id: 0
   prefab: {fileID: 124054065340737986, guid: 6f327e6d09a86a345b39d53bdbf79d45, type: 3}
 --- !u!114 &4636572773459662278
@@ -937,8 +937,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Axe Guy
-  cost: 50
-  timeToSpawn: 5
+  cost: 60
+  timeToSpawn: 4
   id: 1
   prefab: {fileID: 7098674971200756332, guid: 7c9d4cb9be6980f4c97e9e1828a22c2f, type: 3}
 --- !u!114 &5450067092046353973
@@ -1114,8 +1114,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Crossbower
-  cost: 200
-  timeToSpawn: 20
+  cost: 300
+  timeToSpawn: 10
   id: 11
   prefab: {fileID: 3930956285522985913, guid: 635b929866be4d64c807eede32f3fdde, type: 3}
 --- !u!114 &5400049596010125762
@@ -1180,7 +1180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Bow Guy
   cost: 50
-  timeToSpawn: 5
+  timeToSpawn: 4
   id: 3
   prefab: {fileID: 6070636527210873885, guid: 1b13e172788ffe043870f77bc85bac6e, type: 3}
 --- !u!114 &250580766813439323

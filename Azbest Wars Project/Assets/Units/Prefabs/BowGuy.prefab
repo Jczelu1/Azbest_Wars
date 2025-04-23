@@ -346,7 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d2d9329bb2c2134fab04c5f6d9ef6c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 8
+  health: 6
 --- !u!114 &504221169786117484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,5 +471,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   range: 6
-  attackCooldown: 1
+  attackCooldown: 2
   moveCooldown: 1
