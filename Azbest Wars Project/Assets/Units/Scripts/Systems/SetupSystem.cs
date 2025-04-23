@@ -9,9 +9,10 @@ using UnityEngine;
 //[UpdateBefore(typeof(PathfindSystem))]
 //[UpdateBefore(typeof(MoveSystem))]
 [BurstCompile]
+[UpdateInGroup(typeof(TickSystemGroup))]
 public partial class SetupSystem : SystemBase
 {
-    public static bool started = false;
+    public static int startDelay = 6;
     protected override void OnCreate()
     {
         RequireForUpdate<GridPosition>();
@@ -19,27 +20,30 @@ public partial class SetupSystem : SystemBase
 
     protected override void OnUpdate()
     {
-        if (!started)
+        if(startDelay >= 0)
         {
-            Entities.WithoutBurst().ForEach((Entity entity, ref GridPosition gridPosition, ref LocalToWorld worldTransform) =>
+            if(startDelay == 1)
             {
-                Vector3 position = worldTransform.Position;
-                position.x -= ((float)gridPosition.Size.x / 2) - .5f;
-                position.y -= ((float)gridPosition.Size.y / 2) - .5f;
-                gridPosition.Position = MainGridScript.Instance.MainGrid.GetXY(position);
-                if (gridPosition.isBuilding)
+                Entities.WithoutBurst().ForEach((Entity entity, ref GridPosition gridPosition, ref LocalToWorld worldTransform) =>
                 {
-                    for (int x = 0; x < gridPosition.Size.x; x++)
+                    Vector3 position = worldTransform.Position;
+                    position.x -= ((float)gridPosition.Size.x / 2) - .5f;
+                    position.y -= ((float)gridPosition.Size.y / 2) - .5f;
+                    gridPosition.Position = MainGridScript.Instance.MainGrid.GetXY(position);
+                    if (gridPosition.isBuilding)
                     {
-                        for (int y = 0; y < gridPosition.Size.y; y++)
+                        for (int x = 0; x < gridPosition.Size.x; x++)
                         {
-                            MainGridScript.Instance.IsWalkable[new int2(x + gridPosition.Position.x, y + gridPosition.Position.y)] = false;
+                            for (int y = 0; y < gridPosition.Size.y; y++)
+                            {
+                                MainGridScript.Instance.IsWalkable[new int2(x + gridPosition.Position.x, y + gridPosition.Position.y)] = false;
+                            }
                         }
                     }
-                }
-            }).Run();
-
-            started = true;
+                }).Run();
+            }
+            startDelay--;
+            Debug.Log(startDelay);
         }
     }
 }

@@ -18,7 +18,7 @@ public partial class MapTextureSystem : SystemBase
     }
     protected override void OnUpdate()
     {
-        if (!SetupSystem.started) return;
+        if (SetupSystem.startDelay != -1) return;
         int width = MainGridScript.Instance.Width;
         int height = MainGridScript.Instance.Height;
         if (baseTexture == null)

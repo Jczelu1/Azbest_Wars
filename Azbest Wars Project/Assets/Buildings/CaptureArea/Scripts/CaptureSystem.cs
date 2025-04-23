@@ -18,11 +18,11 @@ public partial class CaptureSystem : SystemBase
         base.OnCreate();
         RequireForUpdate<CaptureAreaData>();
     }
-    bool areaMarked = false;
+    public static bool areaMarked = false;
     public static Entity areaMarkerPrefab;
     protected override void OnUpdate()
     {
-        if (!SetupSystem.started) return;
+        if (SetupSystem.startDelay != -1) return;
         if (!areaMarked)
         {
             

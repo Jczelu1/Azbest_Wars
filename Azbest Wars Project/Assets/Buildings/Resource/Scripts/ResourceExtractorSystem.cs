@@ -13,6 +13,7 @@ public partial struct ResourceExtractorSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
     {
+        state.RequireForUpdate<ResourceSourceData>();
     }
 
     public void OnUpdate(ref SystemState state)

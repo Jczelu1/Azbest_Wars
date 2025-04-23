@@ -13,7 +13,7 @@ using System.Linq;
 [UpdateInGroup(typeof(TickSystemGroup))]
 public partial struct BuildingTypeSystem : ISystem
 {
-    bool started;
+    public static bool started;
     public static List<DescriptionData> buildingTypesDescription;
     public void OnCreate(ref SystemState state)
     {

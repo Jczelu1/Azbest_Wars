@@ -24,12 +24,12 @@ public partial class ArtificialIdiot : SystemBase
     public static float FORMATION_GROW_CHANCE = 0.5f;
     public static int FORMATION_MIN_SIZE = 3;
     public static int FORMATION_MAX_SIZE = 6;
-    public static int2 moveToPosition;
-    public static bool move;
-    NativeList<Entity> captureAreas = new NativeList<Entity>(Allocator.Persistent);
-    NativeList<Formation> formations = new NativeList<Formation>(Allocator.Persistent);
+    public static NativeList<Entity> captureAreas = new NativeList<Entity>(Allocator.Persistent);
+    public static NativeList<Formation> formations = new NativeList<Formation>(Allocator.Persistent);
     protected override void OnCreate()
     {
+        RequireForUpdate<UnitStateData>();
+        RequireForUpdate<CaptureAreaData>();
     }
     protected override void OnUpdate()
     {

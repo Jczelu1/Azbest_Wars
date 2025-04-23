@@ -12,10 +12,11 @@ public class DescriptionController : MonoBehaviour
     Image image;
     public static bool show = false;
     public static bool close = false;
-    public static bool updateDesc;
+    public static bool updateDesc = false;
     public static int showId = -1;
-    private int showingId = -1;
     public static bool showBuilding = false;
+    private int showingId = -1;
+    
     void Start()
     {
         

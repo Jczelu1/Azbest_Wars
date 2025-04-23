@@ -11,7 +11,7 @@ public partial class ArrowSystem : SystemBase
     public static NativeList<Entity> SpawnedArrows;
     public NativeList<Entity> hitPrefabs;
     public NativeList<Entity> missPrefabs;
-    private bool started = false;
+    public static bool started = false;
 
     protected override void OnCreate()
     {

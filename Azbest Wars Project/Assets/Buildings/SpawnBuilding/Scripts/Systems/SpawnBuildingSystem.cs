@@ -19,7 +19,7 @@ public partial struct SpawnerSystem : ISystem
     public static List<DescriptionData> unitTypesDescription;
     public static int setSelectedQueue = -1;
     public static int setSelectedUnitType = -1;
-    bool started;
+    public static bool started;
 
     static string QueueEndedMessage = "Obóz zakoñczy³ produkcjê";
     //static string NoResourceMessage = "Masz za ma³o zasobów by wyprodukowaæ jednostkê";

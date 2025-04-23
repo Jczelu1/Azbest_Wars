@@ -9,6 +9,7 @@ public class WinConditionAuthoring : MonoBehaviour
     void Start()
     {
         WinConditionSystem.TimeLeftSeconds = TimeSeconds;
+        WinConditionSystem.TimeTotalSeconds = TimeSeconds;
         WinConditionSystem.EndIfCompleted = EndIfCompleted;
         WinConditionSystem.RequiredWinAreas = RequiredWinAreas;
     }

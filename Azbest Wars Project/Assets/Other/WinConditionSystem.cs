@@ -15,15 +15,17 @@ public partial class WinConditionSystem : SystemBase
     public static bool EndIfCompleted = false;
     public static bool Ended = false;
     public static bool Win = false;
-    private int startDelay = 8;
+    public static int startDelay = 2;
     protected override void OnCreate()
     {
         RequireForUpdate<CaptureAreaData>();
     }
     protected override void OnUpdate()
     {
+        if (SetupSystem.startDelay != -1) return;
         if(startDelay > 0)
         {
+            Debug.Log(startDelay);
             startDelay--;
             return;
         }
@@ -74,6 +76,7 @@ public partial class WinConditionSystem : SystemBase
         }).Run();
         if (!EnemyHasUnits && !EnemyHasSpawner)
         {
+            Debug.Log("win1");
             Ended = true;
             Win = true;
             return;
@@ -87,6 +90,7 @@ public partial class WinConditionSystem : SystemBase
 
         if (EndIfCompleted && CapturedWinAreas == RequiredWinAreas)
         {
+            Debug.Log("win2");
             Ended = true;
             Win = true;
             return;
@@ -96,6 +100,7 @@ public partial class WinConditionSystem : SystemBase
             Ended = true;
             if(CapturedWinAreas == RequiredWinAreas)
             {
+                Debug.Log("win3");
                 Win = true;
             }
         }
