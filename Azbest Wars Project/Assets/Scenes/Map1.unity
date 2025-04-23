@@ -18518,6 +18518,7 @@ GameObject:
   - component: {fileID: 211152900}
   - component: {fileID: 211152898}
   - component: {fileID: 211152903}
+  - component: {fileID: 211152904}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -18687,6 +18688,26 @@ MonoBehaviour:
   TimeSeconds: 1800
   EndIfCompleted: 1
   RequiredWinAreas: 7
+--- !u!114 &211152904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211152897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abd923b4232f80d4993915989fcf49fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AggressiveChance: 0.33
+  DestDefendChance: 0.5
+  DestRandomness: 0.25
+  ReadjustChance: 0.01
+  ChangeDestChance: 0.0005
+  FormationGrowChance: 0.5
+  FormationMinSize: 3
+  FormationMaxSize: 6
 --- !u!1 &237221761
 GameObject:
   m_ObjectHideFlags: 0

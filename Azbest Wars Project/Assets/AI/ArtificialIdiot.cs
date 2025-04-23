@@ -16,14 +16,14 @@ using UnityEngine;
 public partial class ArtificialIdiot : SystemBase
 {
     //AI parameters
-    private float AGGRESSIVE_CHANCE = 0.33f;
-    private float DEST_DEFEND_CHANCE = 0.5f;
-    private float DEST_RANDOMNESS = 0.25f;
-    private float READJUST_CHANCE = 0.01f;
-    private float CHANGE_DEST_CHANCE = 0.0005f;
-    private float FORMATION_GROW_CHANCE = 0.5f;
-    private int FORMATION_MIN_SIZE = 3;
-    private int FORMATION_MAX_SIZE = 6;
+    public static float AGGRESSIVE_CHANCE = 0.33f;
+    public static float DEST_DEFEND_CHANCE = 0.5f;
+    public static float DEST_RANDOMNESS = 0.25f;
+    public static float READJUST_CHANCE = 0.01f;
+    public static float CHANGE_DEST_CHANCE = 0.0005f;
+    public static float FORMATION_GROW_CHANCE = 0.5f;
+    public static int FORMATION_MIN_SIZE = 3;
+    public static int FORMATION_MAX_SIZE = 6;
     public static int2 moveToPosition;
     public static bool move;
     NativeList<Entity> captureAreas = new NativeList<Entity>(Allocator.Persistent);
