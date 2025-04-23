@@ -67,6 +67,7 @@ public class MainGridScript : MonoBehaviour
     public InputAction leftClickAction;
     public InputAction rightClickAction;
     public InputAction middleClickAction;
+    public InputAction MapAction;
     public InputAction multiselectAction;
 
     private void Awake()
@@ -97,6 +98,7 @@ public class MainGridScript : MonoBehaviour
         rightClickAction = InputSystem.actions.FindAction("RightClick");
         middleClickAction = InputSystem.actions.FindAction("MiddleClick");
         multiselectAction = InputSystem.actions.FindAction("Multiselect");
+        MapAction = InputSystem.actions.FindAction("Map");
 
         Vector2 minCameraPosition = new Vector2(); 
         Vector2 maxCameraPosition = new Vector2();
@@ -113,7 +115,7 @@ public class MainGridScript : MonoBehaviour
     }
     private void Update()
     {
-        if (middleClickAction.WasPressedThisFrame())
+        if (middleClickAction.WasPressedThisFrame() || MapAction.WasPressedThisFrame())
         {
             if (IsBigmapEnabled)
             {

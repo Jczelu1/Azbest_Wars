@@ -18643,6 +18643,15 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  MapAction:
+    m_Name: Map
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4fc42da8-b406-481a-b35a-a876bd2cf41e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   multiselectAction:
     m_Name: Multiselect
     m_Type: 0
