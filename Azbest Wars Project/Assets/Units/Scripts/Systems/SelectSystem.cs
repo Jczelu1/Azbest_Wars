@@ -130,7 +130,7 @@ public partial class SelectSystem : SystemBase
                 //{
                 //    return;
                 //}
-                if (team.Team != playerTeam) return;
+                //if (team.Team != playerTeam) return;
                 int entityMinX = gridPosition.Position.x;
                 int entityMinY = gridPosition.Position.y;
                 int entityMaxX = entityMinX + gridPosition.Size.x - 1;
@@ -146,7 +146,7 @@ public partial class SelectSystem : SystemBase
                     if(buildingTypeSelected == -2)
                     {
                         buildingTypeSelected = buildingId.Id;
-                        if(buildingsSelected == 1)
+                        if(buildingsSelected == 1 && team.Team == playerTeam)
                         {
                             spawnerSelected = buildingId.IsSpawner;
                         }
