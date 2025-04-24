@@ -13,7 +13,13 @@ public class SidebarController : MonoBehaviour
     private bool PauseMenuActive;
 
     [SerializeField]
+    GameObject YouSureExit;
+    [SerializeField]
+    GameObject YouSureRestart;
+
+    [SerializeField]
     GameObject[] TickrateButtons;
+
 
     private InputAction pauseMenuAction;
     private InputAction pauseAction;
@@ -82,7 +88,25 @@ public class SidebarController : MonoBehaviour
     public void HidePauseMenu()
     {
         PauseMenu.SetActive(false);
+        YouSureRestart.SetActive(false);
+        YouSureExit.SetActive(false);
         PauseMenuActive = false;
+    }
+    public void ShowYouSureExit()
+    {
+        YouSureExit.SetActive(true);
+    }
+    public void HideYouSureExit()
+    {
+        YouSureExit.SetActive(false);
+    }
+    public void ShowYouSureRestart()
+    {
+        YouSureRestart.SetActive(true);
+    }
+    public void HideYouSureRestart()
+    {
+        YouSureRestart.SetActive(false);
     }
     public void UnselectTickrateButtons()
     {
