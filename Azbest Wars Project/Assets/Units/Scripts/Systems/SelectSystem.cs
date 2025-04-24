@@ -203,7 +203,7 @@ public partial class SelectSystem : SystemBase
                         SpawnerInputController.Queued = spawner.Queued;
                         SpawnerInputController.UnitType = spawner.NextSpawnedUnit == -1 ? spawner.SpawnedUnit : spawner.NextSpawnedUnit;
                         if(spawner.MaxTimeToSpawn == 0)
-                            SpawnerInputController.ProductionProgress = 0;
+                            SpawnerInputController.ProductionProgress = 1;
                         else
                             SpawnerInputController.ProductionProgress = (float)spawner.TimeToSpawn / spawner.MaxTimeToSpawn;
                     }

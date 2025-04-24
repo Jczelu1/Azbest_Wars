@@ -38,7 +38,7 @@ public partial struct ResourceExtractorSystem : ISystem
         //[NativeDisableParallelForRestriction]
         public NativeArray<int> resources;
         public NativeArray<int> resourceGains;
-        public void Execute(ref TeamData team, ref ResourceSourceData source)
+        public void Execute(in TeamData team, in ResourceSourceData source)
         {
             if (team.Team > 3) return;
             resources[team.Team] += source.ResourcePerTick;

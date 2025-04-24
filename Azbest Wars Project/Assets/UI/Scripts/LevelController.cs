@@ -52,7 +52,7 @@ public class LevelController : MonoBehaviour
         UnitStateInput.currentMovementState = 255;
         //ArrowSystem
         if(ArrowSystem.SpawnedArrows.IsCreated) ArrowSystem.SpawnedArrows.Dispose();
-        ArrowSystem.SpawnedArrows = new NativeList<Entity>();
+        ArrowSystem.SpawnedArrows = new NativeList<Entity>(Allocator.Persistent);
         ArrowSystem.started = false;
         //PathfindSystem.
         if (PathfindSystem.shouldMove.IsCreated) PathfindSystem.shouldMove.Dispose();

@@ -22,7 +22,8 @@ public partial struct SpawnerSystem : ISystem
     public static bool started;
 
     static string QueueEndedMessage = "Obóz zakoñczy³ produkcjê";
-    //static string NoResourceMessage = "Masz za ma³o zasobów by wyprodukowaæ jednostkê";
+    //static string NoResourceMessage = "Za ma³o zasobów by wyprodukowaæ jednostkê";
+    //static int poorTimer = 1;
     public void OnCreate(ref SystemState state) 
     {
         started = false;
@@ -109,12 +110,21 @@ public partial struct SpawnerSystem : ISystem
                 if (spawner.ValueRO.NextSpawnedUnit != -1)
                 {
                     spawner.ValueRW.SpawnedUnit = spawner.ValueRO.NextSpawnedUnit;
+                    unitId = spawner.ValueRO.NextSpawnedUnit;
+                    if (unitTypes.Length <= unitId) continue;
+                    unitType = unitTypes[unitId];
                     spawner.ValueRW.NextSpawnedUnit = -1;
                 }
-                
+                //if (poorTimer > 0) poorTimer--;
                 //can afford
                 if (TeamManager.Instance.teamResources[team] < unitType.Cost)
                 {
+
+                    //if (poorTimer == 0 && teamData.Team == TeamManager.Instance.PlayerTeam)
+                    //{
+                    //    InfoBoardUI.Instance.ShowInfo(NoResourceMessage);
+                    //    poorTimer = 10;
+                    //}
                     continue;
                 }
                 //cost
