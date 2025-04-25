@@ -28,7 +28,6 @@ public partial class ArtificialIdiot : SystemBase
     public static NativeList<Formation> formations = new NativeList<Formation>(Allocator.Persistent);
     protected override void OnCreate()
     {
-        RequireForUpdate<UnitStateData>();
         RequireForUpdate<CaptureAreaData>();
     }
     protected override void OnUpdate()

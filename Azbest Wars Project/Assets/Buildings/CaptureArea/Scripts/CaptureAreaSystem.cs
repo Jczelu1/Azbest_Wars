@@ -21,7 +21,7 @@ public partial struct CaptureAreaSystem : ISystem
 
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<UnitStateData>();
+        state.RequireForUpdate<CaptureAreaData>();
         state.RequireForUpdate<LocalTransform>();
         _teamLookup = state.GetComponentLookup<TeamData>(true);
     }
