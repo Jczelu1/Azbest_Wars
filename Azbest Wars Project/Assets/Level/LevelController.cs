@@ -88,6 +88,8 @@ public class LevelController : MonoBehaviour
         //WinConditionSystem
         WinConditionSystem.Ended = false;
         WinConditionSystem.Win = false;
+        WinConditionSystem.WinPoints = 0;
+        WinConditionSystem.EnemyWinPoints = 0;
         WinConditionSystem.startDelay = 2;
         //CaptureSystem
         CaptureSystem.areaMarked = false;
