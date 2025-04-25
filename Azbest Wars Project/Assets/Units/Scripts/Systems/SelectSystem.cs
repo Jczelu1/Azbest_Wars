@@ -5,8 +5,8 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
-[UpdateInGroup(typeof(TickSystemGroup))]
-[UpdateBefore(typeof(PathfindSystem))]
+//[UpdateInGroup(typeof(TickSystemGroup))]
+//[UpdateBefore(typeof(PathfindSystem))]
 [BurstCompile]
 public partial class SelectSystem : SystemBase
 {
@@ -180,8 +180,8 @@ public partial class SelectSystem : SystemBase
             }
         }
     }
-    [UpdateInGroup(typeof(TickSystemGroup))]
-    [UpdateAfter(typeof(SpawnerSystem))]
+    //[UpdateInGroup(typeof(TickSystemGroup))]
+    //[UpdateAfter(typeof(SpawnerSystem))]
     [BurstCompile]
     public partial class UpdateSpawnerUISystem : SystemBase
     {

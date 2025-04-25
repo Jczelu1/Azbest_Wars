@@ -9,7 +9,8 @@ using UnityEngine;
 
 [UpdateInGroup(typeof(TickSystemGroup))]
 [UpdateBefore(typeof(MeleAttackSystem))]
-[UpdateBefore(typeof(PathfindSystem))]
+[UpdateBefore(typeof(RangedAttackSystem))]
+[UpdateBefore(typeof(PathfindOnTickSystem))]
 public partial struct HealthSystem : ISystem
 {
     public ComponentLookup<HealthbarTag> healthbarLookup;

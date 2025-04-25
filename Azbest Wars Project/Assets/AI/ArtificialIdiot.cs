@@ -236,7 +236,7 @@ public partial class ArtificialIdiot : SystemBase
             }
             else if(formationData.Formation == MovedFormation)
             {
-                Debug.Log("MoveUnit");
+                //Debug.Log("MoveUnit");
                 selected.Selected = true;
             }  
         }).Run();

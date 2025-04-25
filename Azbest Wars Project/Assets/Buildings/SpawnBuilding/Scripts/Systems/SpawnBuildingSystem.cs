@@ -8,6 +8,7 @@ using Unity.Jobs;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using static SelectSystem;
 
 [BurstCompile]
 [UpdateInGroup(typeof(TickSystemGroup))]
@@ -17,8 +18,6 @@ public partial struct SpawnerSystem : ISystem
     const int Max_Spawn_Range = 5;
     public static NativeList<UnitTypeData> unitTypes;
     public static List<DescriptionData> unitTypesDescription;
-    public static int setSelectedQueue = -1;
-    public static int setSelectedUnitType = -1;
     public static bool started;
 
     static string QueueEndedMessage = "Obóz zakoñczy³ produkcjê";
@@ -61,28 +60,10 @@ public partial struct SpawnerSystem : ISystem
             }
         }
         // Iterate over all spawner entities.
-        foreach (var (spawner, gridPosition, teamData, selected, entity) in SystemAPI.Query<RefRW<SpawnerData>, GridPosition, TeamData, SelectedData>().WithEntityAccess())
+        foreach (var (spawner, gridPosition, teamData, entity) in SystemAPI.Query<RefRW<SpawnerData>, GridPosition, TeamData>().WithEntityAccess())
         {
             byte team = teamData.Team;
             if (entityManager.GetComponentData<TeamData>(entity).Team > 3) continue;
-            if (selected.Selected)
-            {
-                if(setSelectedQueue != -1)
-                {
-                    if(spawner.ValueRO.MaxTimeToSpawn != 0)
-                    {
-                        spawner.ValueRW.Queued = math.max(setSelectedQueue, 1);
-                    }
-                    else
-                    {
-                        spawner.ValueRW.Queued = math.max(setSelectedQueue, 0);
-                    }
-                }
-                if(setSelectedUnitType != -1)
-                {
-                    spawner.ValueRW.NextSpawnedUnit = setSelectedUnitType;
-                }
-            }
             int unitId = spawner.ValueRO.SpawnedUnit;
             //type exists
             if (unitTypes.Length <= unitId) continue;
@@ -246,7 +227,56 @@ public partial struct SpawnerSystem : ISystem
                 spawner.ValueRW.TimeToSpawn--;
             }
         }
+        
+    }
+}
+[BurstCompile]
+public partial struct SpawnerSetter : ISystem
+{
+    public static int setSelectedQueue = -1;
+    public static int setSelectedUnitType = -1;
+    public void OnUpdate(ref SystemState state)
+    {
+        if(setSelectedQueue != -1 || setSelectedUnitType != -1)
+        {
+            var job = new SpawnerSetJob()
+            {
+                setSelectedQueue = setSelectedQueue,
+                setSelectedUnitType = setSelectedUnitType
+            };
+            var handle = job.Schedule(state.Dependency);
+            state.Dependency = handle;
+            handle.Complete();
+        }
         setSelectedQueue = -1;
         setSelectedUnitType = -1;
+    }
+}
+
+[BurstCompile]
+public partial struct SpawnerSetJob : IJobEntity
+{
+    public int setSelectedQueue;
+    public int setSelectedUnitType;
+    public void Execute(ref SpawnerData spawner, ref SelectedData selected)
+    {
+        if (selected.Selected)
+        {
+            if (setSelectedQueue != -1)
+            {
+                if (spawner.MaxTimeToSpawn != 0)
+                {
+                    spawner.Queued = math.max(setSelectedQueue, 1);
+                }
+                else
+                {
+                    spawner.Queued = math.max(setSelectedQueue, 0);
+                }
+            }
+            if (setSelectedUnitType != -1)
+            {
+                spawner.NextSpawnedUnit = setSelectedUnitType;
+            }
+        }
     }
 }

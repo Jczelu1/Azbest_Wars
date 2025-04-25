@@ -6,7 +6,7 @@ using Unity.Transforms;
 using UnityEngine;
 
 [UpdateInGroup(typeof(TickSystemGroup))]
-[UpdateBefore(typeof(PathfindSystem))]
+[UpdateBefore(typeof(PathfindOnTickSystem))]
 [BurstCompile]
 public partial class RandomValueSystem : SystemBase
 {

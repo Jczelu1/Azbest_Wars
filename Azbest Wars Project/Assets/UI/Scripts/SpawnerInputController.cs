@@ -149,14 +149,14 @@ public class SpawnerInputController : MonoBehaviour
     {
         if (SelectSystem.spawnerSelected)
         {
-            SpawnerSystem.setSelectedQueue = Queued;
+            SpawnerSetter.setSelectedQueue = Queued;
         }
     }
     private void SetUnitType()
     {
         if (SelectSystem.spawnerSelected)
         {
-            SpawnerSystem.setSelectedUnitType = UnitType;
+            SpawnerSetter.setSelectedUnitType = UnitType;
         }
     }
 }

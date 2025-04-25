@@ -29,9 +29,9 @@ public class LevelController : MonoBehaviour
             SpawnerSystem.unitTypes.Dispose();
         SpawnerSystem.unitTypes = new NativeList<UnitTypeData>(Allocator.Persistent);
         SpawnerSystem.unitTypesDescription = new List<DescriptionData>();
-        SpawnerSystem.setSelectedQueue = -1;
-        SpawnerSystem.setSelectedUnitType = -1;
         SpawnerSystem.started = false;
+        SpawnerSetter.setSelectedQueue = -1;
+        SpawnerSetter.setSelectedUnitType = -1;
         //BuildingTypeSystem
         BuildingTypeSystem.started = false;
         BuildingTypeSystem.buildingTypesDescription = new List<DescriptionData>();

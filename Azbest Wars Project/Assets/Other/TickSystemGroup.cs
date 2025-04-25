@@ -72,7 +72,7 @@ public partial class SubTickSystemGroup : ComponentSystemGroup
     }
 }
 [UpdateInGroup(typeof(TickSystemGroup))]
-[UpdateBefore(typeof(PathfindSystem))]
+[UpdateBefore(typeof(PathfindOnTickSystem))]
 public partial class TickManagerSystem : SystemBase
 {
     protected override void OnUpdate()
