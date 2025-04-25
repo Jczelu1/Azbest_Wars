@@ -33,7 +33,14 @@ public class WinConditionUI : MonoBehaviour
     {
         DoThisToWinText.text = doWhatToWin;
         ProgressDescText.text = progressDescription;
-        ProgressText.text = $"{WinConditionSystem.CapturedWinAreas}/{WinConditionSystem.RequiredWinAreas}";
+        if(WinConditionSystem.WinConditionType == 0)
+        {
+            ProgressText.text = $"{WinConditionSystem.WinPoints}/{WinConditionSystem.RequiredWinPoints}";
+        }
+        else if(WinConditionSystem.WinConditionType == 1)
+        {
+            ProgressText.text = $"{WinConditionSystem.WinPoints}-{WinConditionSystem.EnemyWinPoints}\n/{WinConditionSystem.RequiredWinPoints}";
+        }
 
         float timeLeftSeconds = WinConditionSystem.TimeLeftSeconds;
         if(timeLeftSeconds >= 0)

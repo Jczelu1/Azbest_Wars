@@ -8,13 +8,15 @@ using UnityEngine;
 public partial class WinConditionSystem : SystemBase
 {
     public static int TotalWinAreas = -1;
-    public static int RequiredWinAreas = 1;
-    public static int CapturedWinAreas = 0;
     public static float TimeLeftSeconds = -1;
     public static float TimeTotalSeconds = -1;
     public static bool EndIfCompleted = false;
     public static bool Ended = false;
     public static bool Win = false;
+    public static int WinConditionType = 0;
+    public static int WinPoints = 0;
+    public static int EnemyWinPoints = 0;
+    public static int RequiredWinPoints = 1;
     public static int startDelay = 2;
     protected override void OnCreate()
     {
@@ -41,7 +43,11 @@ public partial class WinConditionSystem : SystemBase
 
             }).Run();
         }
-        CapturedWinAreas = 0;
+        if(WinConditionType == 0)
+        {
+            WinPoints = 0;
+            EnemyWinPoints = 0;
+        }
         bool PlayerHasSpawner = false;
         bool EnemyHasSpawner = false;
         bool PlayerHasUnits = false;
@@ -60,8 +66,15 @@ public partial class WinConditionSystem : SystemBase
                 }
             }
             if (!captureArea.WinCondition) return;
-            if (team.Team != TeamManager.Instance.PlayerTeam) return;
-            CapturedWinAreas++;
+            if (team.Team == TeamManager.Instance.PlayerTeam)
+            {
+                WinPoints++;
+            }
+            else if(team.Team == TeamManager.Instance.AITeam)
+            {
+                EnemyWinPoints++;
+            }
+            
         }).Run();
         Entities.WithoutBurst().ForEach((in UnitStateData unitState, in TeamData team) =>
         {
@@ -88,21 +101,39 @@ public partial class WinConditionSystem : SystemBase
             return;
         }
 
-        if (EndIfCompleted && CapturedWinAreas == RequiredWinAreas)
+        if (EndIfCompleted && WinPoints >= RequiredWinPoints)
         {
             Debug.Log("win2");
             Ended = true;
             Win = true;
             return;
         }
+        if(WinConditionType == 1 && EndIfCompleted && EnemyWinPoints >= RequiredWinPoints)
+        {
+            Ended = true;
+            Win = false;
+            return;
+        }
         if(TimeLeftSeconds <= 0)
         {
             Ended = true;
-            if(CapturedWinAreas == RequiredWinAreas)
+            if(WinConditionType == 0)
             {
-                Debug.Log("win3");
-                Win = true;
+                if (WinPoints == RequiredWinPoints)
+                {
+                    Debug.Log("win3");
+                    Win = true;
+                }
             }
+            else if(WinConditionType == 1)
+            {
+                if(WinPoints >= EnemyWinPoints)
+                {
+                    Debug.Log("win4");
+                    Win = true;
+                }
+            }
+            
         }
     }
 }

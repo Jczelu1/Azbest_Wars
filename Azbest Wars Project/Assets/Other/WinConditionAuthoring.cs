@@ -5,12 +5,14 @@ public class WinConditionAuthoring : MonoBehaviour
 {
     public float TimeSeconds;
     public bool EndIfCompleted;
-    public int RequiredWinAreas;
+    public int RequiredWinPoints;
+    public int WinConditionType;
     void Start()
     {
         WinConditionSystem.TimeLeftSeconds = TimeSeconds;
         WinConditionSystem.TimeTotalSeconds = TimeSeconds;
         WinConditionSystem.EndIfCompleted = EndIfCompleted;
-        WinConditionSystem.RequiredWinAreas = RequiredWinAreas;
+        WinConditionSystem.RequiredWinPoints = RequiredWinPoints;
+        WinConditionSystem.WinConditionType = WinConditionType;
     }
 }
