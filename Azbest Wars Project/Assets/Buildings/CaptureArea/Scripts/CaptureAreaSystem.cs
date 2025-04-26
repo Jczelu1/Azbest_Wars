@@ -45,6 +45,7 @@ public partial struct CaptureAreaSystem : ISystem
     [BurstCompile]
     public partial struct CaptureJob : IJobEntity
     {
+        const int MAX_CAP_RATE = 10;
         [ReadOnly]
         public FlatGrid<Entity> occupied;
         [ReadOnly]
@@ -88,6 +89,9 @@ public partial struct CaptureAreaSystem : ISystem
             int capture = maxUnits;
             if (team < 4)
                 capture -= unitNumbers[team];
+
+            //cap the cap rate
+            capture = math.min(capture, MAX_CAP_RATE);
 
             if (maxTeam != captureArea.CapturingTeam)
                 captureArea.CaptureProgress = 0;
