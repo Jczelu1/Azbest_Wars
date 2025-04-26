@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,17 +10,22 @@ public class CameraMover : MonoBehaviour
     private float timer = 0f;
     private Vector2 movementInput = Vector2.zero;
     private bool moving = false;
+
     [HideInInspector]
     public Vector2 minCameraPosition;
     [HideInInspector]
     public Vector2 maxCameraPosition;
-    public float maxCamSize = 18f;
-    public float minCamSize = 4.5f;
+    private float maxCamSize = 18f;
+    private float minCamSize = 4.5f;
+
+    public float edgeScrollThreshold = 0.05f;
 
     private InputAction moveAction;
     private InputAction scrollWheelAction;
     private InputAction zoomPlusAction;
     private InputAction zoomMinusAction;
+
+
 
     void Awake()
     {
@@ -41,14 +47,39 @@ public class CameraMover : MonoBehaviour
         if ((scrollValue.y > 0 || zoomPlusAction.WasPressedThisFrame()) && m_Camera.orthographicSize > (minCamSize+.5f))
         {
             m_Camera.orthographicSize -= 4.5f;
+            moveInterval *= 1.5f;
         }
         else if ((scrollValue.y < 0 || zoomMinusAction.WasPressedThisFrame()) && m_Camera.orthographicSize < maxCamSize)
         {
             m_Camera.orthographicSize += 4.5f;
+            moveInterval /= 1.5f;
         }
         timer += Time.deltaTime;
 
-        Vector2 newInput = moveAction.ReadValue<Vector2>();
+        Vector2 keyboardInput = moveAction.ReadValue<Vector2>();
+
+        //mouse edging
+        Vector2 edgeInput = Vector2.zero;
+        //Vector2 mousePos = Input.mousePosition;
+        //if (mousePos.x >= 0 && mousePos.x <= Screen.width && mousePos.y >= 0 && mousePos.y <= Screen.height)
+        //{
+        //    float normalizedX = mousePos.x / Screen.width;
+        //    float normalizedY = mousePos.y / Screen.height;
+
+        //    if (normalizedX <= edgeScrollThreshold)
+        //        edgeInput.x = -1f;
+        //    else if (normalizedX >= 1f - edgeScrollThreshold)
+        //        edgeInput.x = 1f;
+
+        //    if (normalizedY <= edgeScrollThreshold)
+        //        edgeInput.y = -1f;
+        //    else if (normalizedY >= 1f - edgeScrollThreshold)
+        //        edgeInput.y = 1f;
+        //}
+
+        //combine inputs
+        Vector2 newInput = keyboardInput != Vector2.zero ? keyboardInput : edgeInput;
+
         if (!moving && newInput != Vector2.zero)
         {
             movementInput = newInput;

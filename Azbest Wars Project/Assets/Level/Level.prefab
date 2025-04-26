@@ -22976,8 +22976,7 @@ MonoBehaviour:
   moveInterval: 0.0625
   minCameraPosition: {x: 6.1, y: 2.6}
   maxCameraPosition: {x: 122.1, y: 125.6}
-  maxCamSize: 18
-  minCamSize: 4.5
+  edgeScrollThreshold: 0.05
 --- !u!1 &3310054503460043060
 GameObject:
   m_ObjectHideFlags: 0
