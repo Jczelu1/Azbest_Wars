@@ -11,6 +11,7 @@ public partial class WinConditionSystem : SystemBase
     public static float TimeLeftSeconds = -1;
     public static float TimeTotalSeconds = -1;
     public static bool EndIfCompleted = false;
+    public static bool EndIfNoWinPoints = false;
     public static bool Ended = false;
     public static bool Win = false;
     public static int WinConditionType = 0;
@@ -106,6 +107,12 @@ public partial class WinConditionSystem : SystemBase
             Debug.Log("win2");
             Ended = true;
             Win = true;
+            return;
+        }
+        if(EndIfNoWinPoints && WinPoints == 0)
+        {
+            Ended = true;
+            Win = false;
             return;
         }
         if(WinConditionType == 1 && EndIfCompleted && EnemyWinPoints >= RequiredWinPoints)

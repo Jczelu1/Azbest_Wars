@@ -23143,6 +23143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TimeSeconds: 1800
   EndIfCompleted: 1
+  EndIfNoWinPoints: 0
   RequiredWinPoints: 0
   WinConditionType: 0
 --- !u!114 &6484370149853546692
@@ -42781,7 +42782,7 @@ MonoBehaviour:
   - {fileID: 8682995764089588459}
   - {fileID: 2533642423466364571}
   - {fileID: 6722444903411052563}
-  fadeDuration: 2
+  fadeDuration: 3
 --- !u!1 &7138367319237243821
 GameObject:
   m_ObjectHideFlags: 0
