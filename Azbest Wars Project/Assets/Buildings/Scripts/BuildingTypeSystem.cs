@@ -28,6 +28,7 @@ public partial struct BuildingTypeSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
+        if (SetupSystem.startDelay != -1) return;
         if (!started)
         {
             var EntityManager = state.EntityManager;
