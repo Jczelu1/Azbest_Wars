@@ -6,11 +6,14 @@ public class WinConditionUI : MonoBehaviour
 {
     [SerializeField]
     TextMeshProUGUI DoThisToWinText;
+    [TextArea]
     [SerializeField]
     string doWhatToWin;
 
     [SerializeField]
     TextMeshProUGUI ProgressDescText;
+
+    [TextArea]
     [SerializeField]
     string progressDescription;
 
