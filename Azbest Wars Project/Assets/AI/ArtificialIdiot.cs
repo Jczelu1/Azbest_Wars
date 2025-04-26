@@ -32,6 +32,7 @@ public partial class ArtificialIdiot : SystemBase
     }
     protected override void OnUpdate()
     {
+        if (SetupSystem.startDelay != -1) return;
         byte AITeam = TeamManager.Instance.AITeam;
         //not started
         if (captureAreas.Length == 0)
