@@ -163,7 +163,7 @@ public partial class ArtificialIdiot : SystemBase
                     if (EntityManager.GetComponentData<TeamData>(e).Team == AITeam)
                     {
                         if (EntityManager.GetComponentData<CaptureAreaData>(e).HasSpawner == true) continue;
-                        if(UnityEngine.Random.value < DEST_DEFEND_CHANCE)
+                        if(UnityEngine.Random.value > DEST_DEFEND_CHANCE)
                         {
                             continue;
                         }
@@ -175,7 +175,7 @@ public partial class ArtificialIdiot : SystemBase
                     pos.y -= 1;
                     float distance = math.distancesq(pos, formation.Position);
 
-                    if (distance < minDistance && distance > 10)
+                    if (distance < minDistance && distance > 20)
                     {
                         minDistance = distance;
                         moveToPos = pos;
