@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 public class MusicPlayer : MonoBehaviour
 {
     public static MusicPlayer Instance;
@@ -12,17 +13,21 @@ public class MusicPlayer : MonoBehaviour
         }
         Instance = this;
     }
-
+    [SerializeField]
+    Slider VolumeSlider;
     [SerializeField]
     AudioSource[] themes;
     [SerializeField]
     float fadeDuration = 2f;
     AudioSource currentTheme;
     int currentIndex;
+
+    public static int Volume = 50;
     
     void Start()
     {
         PlayRandomTheme();
+        VolumeSlider.value = Volume;
     }
 
     void Update()
@@ -32,6 +37,19 @@ public class MusicPlayer : MonoBehaviour
             currentTheme.Stop();
             PlayRandomTheme();
             //Invoke("PlayRandomTheme", 2f);
+        }
+    }
+    public void SetVolume()
+    {
+        if (VolumeSlider != null)
+        {
+            float volume = VolumeSlider.value;
+            Volume = (int)volume;
+            volume /= VolumeSlider.maxValue;
+            foreach (AudioSource source in themes)
+            {
+                source.volume = volume;
+            }
         }
     }
     public void StopMusic()

@@ -13,6 +13,9 @@ public class SidebarController : MonoBehaviour
     private bool PauseMenuActive;
 
     [SerializeField]
+    GameObject SettingsMenu;
+
+    [SerializeField]
     GameObject YouSureExit;
     [SerializeField]
     GameObject YouSureRestart;
@@ -90,6 +93,7 @@ public class SidebarController : MonoBehaviour
         PauseMenu.SetActive(false);
         YouSureRestart.SetActive(false);
         YouSureExit.SetActive(false);
+        SettingsMenu.SetActive(false);
         PauseMenuActive = false;
     }
     public void ShowYouSureExit()
@@ -107,6 +111,14 @@ public class SidebarController : MonoBehaviour
     public void HideYouSureRestart()
     {
         YouSureRestart.SetActive(false);
+    }
+    public void ShowSettingsMenu()
+    {
+        SettingsMenu.SetActive(true);
+    }
+    public void HideSettingsMenu()
+    {
+        SettingsMenu.SetActive(false);
     }
     public void UnselectTickrateButtons()
     {
