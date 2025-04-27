@@ -27,7 +27,8 @@ public class MusicPlayer : MonoBehaviour
     void Start()
     {
         PlayRandomTheme();
-        VolumeSlider.value = Volume;
+        if(VolumeSlider != null)
+            VolumeSlider.value = Volume;
     }
 
     void Update()
