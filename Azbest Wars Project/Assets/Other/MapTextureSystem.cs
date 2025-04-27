@@ -4,8 +4,8 @@ using Unity.Transforms;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[UpdateInGroup(typeof(TickSystemGroup))]
-[UpdateAfter(typeof(MoveSystem))]
+//[UpdateInGroup(typeof(TickSystemGroup))]
+//[UpdateAfter(typeof(MoveSystem))]
 public partial class MapTextureSystem : SystemBase
 {
     public static Texture2D baseTexture = null;
@@ -81,6 +81,21 @@ public partial class MapTextureSystem : SystemBase
                 }
             }
         }
+        Entities.WithoutBurst().ForEach((Entity entity, ref BuildingIdData buildingId, ref GridPosition gridPosition, ref SelectedData selected) =>
+        {
+            if (!selected.Selected) return;
+            for (int dx = 0; dx < gridPosition.Size.x; dx++)
+            {
+                for (int dy = 0; dy < gridPosition.Size.y; dy++)
+                {
+                    int2 pos = new int2 { x = dx + gridPosition.Position.x, y = dy + gridPosition.Position.y };
+                    if (MainGridScript.Instance.Occupied.IsInGrid(pos))
+                    {
+                        mapTexture.SetPixel(pos.x, pos.y, TeamManager.Instance.selectedColor);
+                    }
+                }
+            }
+        }).Run();
         mapTexture.Apply();
     }
 }

@@ -181,6 +181,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 190793413086460346, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: TimeSeconds
+      value: 900
+      objectReference: {fileID: 0}
+    - target: {fileID: 190793413086460346, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: EndIfCompleted
       value: 0
       objectReference: {fileID: 0}
@@ -57903,6 +57907,14 @@ PrefabInstance:
     - target: {fileID: 7895317627543756593, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_LocalPosition.y
       value: 9.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8960226902698819270, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: doWhatToWin
+      value: "Utrzymaj ob\xF3z do przybycia posi\u0142k\xF3w."
+      objectReference: {fileID: 0}
+    - target: {fileID: 8960226902698819270, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: progressDescription
+      value: "Ob\xF3z:"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
