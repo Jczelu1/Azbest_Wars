@@ -18,6 +18,10 @@ public class AIAuthoring : MonoBehaviour
     int FormationMinSize = 3;
     [SerializeField]
     int FormationMaxSize = 6;
+    [SerializeField]
+    float ConserveChance = .5f;
+    [SerializeField]
+    int ConserveDuration = 10;
     void Start()
     {
         ArtificialIdiot.AGGRESSIVE_CHANCE = AggressiveChance;
@@ -28,5 +32,8 @@ public class AIAuthoring : MonoBehaviour
         ArtificialIdiot.FORMATION_GROW_CHANCE = FormationGrowChance;
         ArtificialIdiot.FORMATION_MIN_SIZE = FormationMinSize;
         ArtificialIdiot.FORMATION_MAX_SIZE = FormationMaxSize;
+        ArtificialIdiot.CONSERVE_DURATION = ConserveDuration;
+        ArtificialIdiot.CONSERVE_CHANCE = ConserveChance;
+        ArtificialIdiot.conserving = 0;
     }
 }

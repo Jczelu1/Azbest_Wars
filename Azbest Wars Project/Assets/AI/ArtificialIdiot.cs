@@ -24,8 +24,12 @@ public partial class ArtificialIdiot : SystemBase
     public static float FORMATION_GROW_CHANCE = 0.5f;
     public static int FORMATION_MIN_SIZE = 3;
     public static int FORMATION_MAX_SIZE = 6;
+    public static float CONSERVE_CHANCE = 0.5f;
+    public static int CONSERVE_DURATION = 10;
     public static NativeList<Entity> captureAreas = new NativeList<Entity>(Allocator.Persistent);
     public static NativeList<Formation> formations = new NativeList<Formation>(Allocator.Persistent);
+
+    public static int conserving = 0;
     protected override void OnCreate()
     {
         RequireForUpdate<CaptureAreaData>();
@@ -56,67 +60,34 @@ public partial class ArtificialIdiot : SystemBase
             //}).Run();
         }
         int resourceLeft = TeamManager.Instance.teamResources[AITeam];
-        Entities.WithoutBurst().ForEach((Entity entity, ref SpawnerData spawner, ref GridPosition gridPosition, ref TeamData team) =>
+        if(conserving != 0)
         {
-            if (team.Team != AITeam) return;
-            if (spawner.Queued > 0) return;
-            //queue finished
-            int unitsToQueue = 1;
-            int unitTypeId = 0;
-            if(spawner.SetFormation == -1)
+            conserving--;
+        }
+        else
+        {
+            Entities.WithoutBurst().ForEach((Entity entity, ref SpawnerData spawner, ref GridPosition gridPosition, ref TeamData team) =>
             {
-                formations.Add(new Formation
+                if (team.Team != AITeam) return;
+                if (spawner.Queued > 0) return;
+                //queue finished
+                int unitsToQueue = 1;
+                int unitTypeId = 0;
+                if (spawner.SetFormation == -1)
                 {
-                    Position = gridPosition.Position,
-                    Destination = new int2(-1, -1),
-                    numberOfUnits = unitsToQueue,
-                    IsDefending = false,
-                    Objective = Entity.Null,
-                    MovementState = 1,
-                    Completed = false
-                });
-                spawner.SetFormation = formations.Length - 1;
-            }
-            if(resourceLeft < 0)
-            {
-                Formation formation = formations[spawner.SetFormation];
-                formation.Completed = true;
-                formations[spawner.SetFormation] = formation;
-                formations.Add(new Formation
-                {
-                    Position = gridPosition.Position,
-                    Destination = new int2(-1, -1),
-                    numberOfUnits = unitsToQueue,
-                    IsDefending = false,
-                    Objective = Entity.Null,
-                    MovementState = 1,
-                    Completed = false
-                });
-                spawner.SetFormation = formations.Length - 1;
-                return;
-            }
-            do
-            {
-                unitsToQueue = UnityEngine.Random.Range(FORMATION_MIN_SIZE, FORMATION_MAX_SIZE+1);
-                unitTypeId = UnityEngine.Random.Range(-1, SpawnerSystem.unitTypes.Length);
-
-            } while (unitTypeId != -1 && resourceLeft < SpawnerSystem.unitTypes[unitTypeId].Cost * unitsToQueue);
-            if (unitTypeId == -1)
-            {
-                if (spawner.SetFormation != -1)
-                {
-                    Formation formation = formations[spawner.SetFormation];
-                    formation.Completed = true;
-                    formations[spawner.SetFormation] = formation;
+                    formations.Add(new Formation
+                    {
+                        Position = gridPosition.Position,
+                        Destination = new int2(-1, -1),
+                        numberOfUnits = unitsToQueue,
+                        IsDefending = false,
+                        Objective = Entity.Null,
+                        MovementState = 1,
+                        Completed = false
+                    });
+                    spawner.SetFormation = formations.Length - 1;
                 }
-                return;
-            }
-            spawner.Queued = unitsToQueue;
-            spawner.SpawnedUnit = unitTypeId;
-            resourceLeft -= SpawnerSystem.unitTypes[unitTypeId].Cost * unitsToQueue;
-            if (UnityEngine.Random.value > FORMATION_GROW_CHANCE)
-            {
-                if (spawner.SetFormation != -1)
+                if (resourceLeft < 50)
                 {
                     Formation formation = formations[spawner.SetFormation];
                     formation.Completed = true;
@@ -132,9 +103,60 @@ public partial class ArtificialIdiot : SystemBase
                         Completed = false
                     });
                     spawner.SetFormation = formations.Length - 1;
+                    if(conserving == 0)
+                    {
+                        conserving = CONSERVE_DURATION;
+                        Debug.Log("conserve");
+                    }
+                    return;
                 }
-            }
-        }).Run();
+                do
+                {
+                    unitsToQueue = UnityEngine.Random.Range(FORMATION_MIN_SIZE, FORMATION_MAX_SIZE + 1);
+                    unitTypeId = UnityEngine.Random.Range(-1, SpawnerSystem.unitTypes.Length);
+
+                } while (unitTypeId != -1 && resourceLeft < SpawnerSystem.unitTypes[unitTypeId].Cost * unitsToQueue);
+                if (unitTypeId == -1)
+                {
+                    if (conserving == 0 && UnityEngine.Random.value < CONSERVE_CHANCE)
+                    {
+                        conserving = CONSERVE_DURATION;
+                        Debug.Log("conserve");
+                    }
+                    if (spawner.SetFormation != -1)
+                    {
+                        Formation formation = formations[spawner.SetFormation];
+                        formation.Completed = true;
+                        formations[spawner.SetFormation] = formation;
+                    }
+                    return;
+                }
+                spawner.Queued = unitsToQueue;
+                spawner.SpawnedUnit = unitTypeId;
+                resourceLeft -= SpawnerSystem.unitTypes[unitTypeId].Cost * unitsToQueue;
+                if (UnityEngine.Random.value < FORMATION_GROW_CHANCE)
+                {
+                    if (spawner.SetFormation != -1)
+                    {
+                        Formation formation = formations[spawner.SetFormation];
+                        formation.Completed = true;
+                        formations[spawner.SetFormation] = formation;
+                        formations.Add(new Formation
+                        {
+                            Position = gridPosition.Position,
+                            Destination = new int2(-1, -1),
+                            numberOfUnits = unitsToQueue,
+                            IsDefending = false,
+                            Objective = Entity.Null,
+                            MovementState = 1,
+                            Completed = false
+                        });
+                        spawner.SetFormation = formations.Length - 1;
+                    }
+                }
+            }).Run();
+        }
+        
         for (int i = 0; i < formations.Length; i++)
         {
             if (!formations[i].Completed) continue;
