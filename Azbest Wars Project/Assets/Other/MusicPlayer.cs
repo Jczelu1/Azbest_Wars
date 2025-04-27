@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 public class MusicPlayer : MonoBehaviour
 {
+    public bool playOnStart = true;
     public static MusicPlayer Instance;
     private void Awake()
     {
@@ -26,7 +27,8 @@ public class MusicPlayer : MonoBehaviour
     
     void Start()
     {
-        PlayRandomTheme();
+        if(playOnStart)
+            PlayRandomTheme();
         if(VolumeSlider != null)
             VolumeSlider.value = Volume;
     }
@@ -78,7 +80,7 @@ public class MusicPlayer : MonoBehaviour
         source.Stop();
         source.volume = startVolume;
     }
-    void PlayRandomTheme()
+    public void PlayRandomTheme()
     {
         if (themes == null || themes.Length == 0)
         {

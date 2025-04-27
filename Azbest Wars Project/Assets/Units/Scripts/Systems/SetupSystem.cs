@@ -13,6 +13,7 @@ using UnityEngine;
 public partial class SetupSystem : SystemBase
 {
     public static int startDelay = 6;
+    public static bool pauseOnSetup = true;
     protected override void OnCreate()
     {
         RequireForUpdate<GridPosition>();
@@ -41,6 +42,10 @@ public partial class SetupSystem : SystemBase
                         }
                     }
                 }).Run();
+            }
+            if(startDelay == 0 && pauseOnSetup)
+            {
+                TickSystemGroup.SetTickrate(0);
             }
             startDelay--;
             Debug.Log(startDelay);

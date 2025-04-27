@@ -78,6 +78,7 @@ public class LevelController : MonoBehaviour
         SelectSystem.selectedEntity = Entity.Null;
         //SetupSystem
         SetupSystem.startDelay = 6;
+        SetupSystem.pauseOnSetup = true;
         //SmoothMoveSystem
         SmoothMoveSystem.enabled = true;
         //ArtificialIdiot
