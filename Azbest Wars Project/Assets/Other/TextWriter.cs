@@ -33,17 +33,13 @@ public class TextWriter : MonoBehaviour
         {
             //textComponent = GetComponent<TMP_Text>();
         }
-
+        fullText = textComponent.text;
         textComponent.text = string.Empty;
     }
 
     void OnEnable()
     {
         StartCoroutine(ShowText());
-    }
-    public void DisableSelf()
-    {
-        gameObject.SetActive(false);
     }
     public void Update()
     {

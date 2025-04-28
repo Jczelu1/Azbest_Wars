@@ -27,6 +27,9 @@ public class WinConditionUI : MonoBehaviour
     GameObject VictoryUI;
 
     [SerializeField]
+    GameObject VictoryYapper;
+
+    [SerializeField]
     GameObject DefeatUI;
 
 
@@ -89,6 +92,10 @@ public class WinConditionUI : MonoBehaviour
         TickSystemGroup.SetTickrate(0);
         if (_won)
         {
+            if(VictoryYapper != null)
+            {
+                VictoryYapper.SetActive(true);
+            }
             VictoryUI.SetActive(true);
         }
         else
