@@ -23421,6 +23421,8 @@ MonoBehaviour:
   RequiredWinPoints: 0
   WinConditionType: 0
   isTutorial: 0
+  StartYapperEnabled: 1
+  startYapper: {fileID: 5192465653582577040}
 --- !u!114 &6484370149853546692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25239,9 +25241,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  fullText: "Dawno dawno temu, w odleg\u0142ej krainie.\nIstnia\u0142y dwa kr\xF3lestwa.\nKt\xF3re
-    walczy\u0142y o azbest.\nDlaczego?\nNie wiem.\nW ka\u017Cdym razie,\nJeste\u015B
-    nowym dow\xF3dc\u0105 armii \u017C\xF3\u0142tych.\nA to jest tw\xF3j trening."
+  fullText: 
 --- !u!1 &4225956890909855776
 GameObject:
   m_ObjectHideFlags: 0
@@ -41237,12 +41237,12 @@ GameObject:
   - component: {fileID: 6883183974523344926}
   - component: {fileID: 2561208842499828644}
   m_Layer: 0
-  m_Name: YapperUI
+  m_Name: StartYapper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5073340673721073434
 RectTransform:
   m_ObjectHideFlags: 0
@@ -41402,9 +41402,7 @@ MonoBehaviour:
           m_StringArgument: 2
           m_BoolArgument: 0
         m_CallState: 2
-  fullText: "Dawno dawno temu, w odleg\u0142ej krainie.\nIstnia\u0142y dwa kr\xF3lestwa.\nKt\xF3re
-    walczy\u0142y o azbest.\nDlaczego?\nNie wiem.\nW ka\u017Cdym razie,\nJeste\u015B
-    nowym dow\xF3dc\u0105 armii \u017C\xF3\u0142tych.\nA to jest tw\xF3j trening."
+  fullText: 
 --- !u!1 &5221970864724299584
 GameObject:
   m_ObjectHideFlags: 0

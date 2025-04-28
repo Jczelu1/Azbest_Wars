@@ -9,6 +9,8 @@ public class WinConditionAuthoring : MonoBehaviour
     public int RequiredWinPoints;
     public int WinConditionType;
     public bool isTutorial;
+    public bool StartYapperEnabled = true;
+    [SerializeField] GameObject startYapper;
     void Start()
     {
         WinConditionSystem.TimeLeftSeconds = TimeSeconds;
@@ -22,5 +24,21 @@ public class WinConditionAuthoring : MonoBehaviour
         TutorialSystem.TutorialState = 0;
         TutorialSystem.delay = 2;
         TutorialSystem.startTutorial = false;
+        if(startYapper != null)
+        {
+            startYapper.SetActive(StartYapperEnabled);
+            if (!StartYapperEnabled)
+            {
+                MusicPlayer.Instance.PlayRandomTheme();
+                TutorialSystem.startTutorial = true;
+                SetupSystem.pauseOnSetup = false;
+            }
+        }
+        else
+        {
+            MusicPlayer.Instance.PlayRandomTheme();
+            TutorialSystem.startTutorial = true;
+            SetupSystem.pauseOnSetup = false;
+        }
     }
 }
