@@ -21,5 +21,6 @@ public class WinConditionAuthoring : MonoBehaviour
         TutorialSystem.TutorialProgress = 0;
         TutorialSystem.TutorialState = 0;
         TutorialSystem.delay = 2;
+        TutorialSystem.startTutorial = false;
     }
 }

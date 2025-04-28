@@ -50,6 +50,10 @@ public class TextWriter : MonoBehaviour
     {
         SetupSystem.pauseOnSetup = false;
     }
+    public void StartTutorial()
+    {
+        TutorialSystem.startTutorial = true; ;
+    }
 
     IEnumerator ShowText()
     {

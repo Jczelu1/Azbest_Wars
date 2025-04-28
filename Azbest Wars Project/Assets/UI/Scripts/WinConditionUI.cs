@@ -70,13 +70,16 @@ public class WinConditionUI : MonoBehaviour
         {
             _endedHandled = true;
             _won = WinConditionSystem.Win;
-            if (_won)
+            if (!TutorialSystem.IsTutorial)
             {
-                InfoBoardUI.Instance.ShowInfo("Wygraliœmy!");
-            }
-            else
-            {
-                InfoBoardUI.Instance.ShowInfo("Przegraliœmy.");
+                if (_won)
+                {
+                    InfoBoardUI.Instance.ShowInfo("Wygraliœmy!");
+                }
+                else
+                {
+                    InfoBoardUI.Instance.ShowInfo("Przegraliœmy.");
+                }
             }
             TickSystemGroup.SetTickrate(0);
             MusicPlayer.Instance.StopMusic();

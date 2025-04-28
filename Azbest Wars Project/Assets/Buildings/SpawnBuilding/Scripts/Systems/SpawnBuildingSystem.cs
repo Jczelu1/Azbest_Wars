@@ -20,7 +20,7 @@ public partial struct SpawnerSystem : ISystem
     public static List<DescriptionData> unitTypesDescription;
     public static bool started;
 
-    static string QueueEndedMessage = "Obóz zakoñczy³ produkcjê";
+    static string QueueEndedMessage = "Obóz zakoñczy³ produkcjê.";
     //static string NoResourceMessage = "Za ma³o zasobów by wyprodukowaæ jednostkê";
     //static int poorTimer = 1;
     public void OnCreate(ref SystemState state) 
