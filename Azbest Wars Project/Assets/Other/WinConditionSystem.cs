@@ -34,6 +34,15 @@ public partial class WinConditionSystem : SystemBase
         }
         if (TimeLeftSeconds == -1) return;
         TimeLeftSeconds -= TickSystemGroup.TimePerTick;
+        if (TutorialSystem.IsTutorial)
+        {
+            if(TimeLeftSeconds < 0)
+            {
+                Ended = true;
+                Win = false;
+            }
+            return;
+        }
         if (TotalWinAreas == -1)
         {
             TotalWinAreas = 0;

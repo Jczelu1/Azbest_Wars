@@ -8,6 +8,7 @@ public class WinConditionAuthoring : MonoBehaviour
     public bool EndIfNoWinPoints = false;
     public int RequiredWinPoints;
     public int WinConditionType;
+    public bool isTutorial;
     void Start()
     {
         WinConditionSystem.TimeLeftSeconds = TimeSeconds;
@@ -16,5 +17,9 @@ public class WinConditionAuthoring : MonoBehaviour
         WinConditionSystem.RequiredWinPoints = RequiredWinPoints;
         WinConditionSystem.WinConditionType = WinConditionType;
         WinConditionSystem.EndIfNoWinPoints = EndIfNoWinPoints;
+        TutorialSystem.IsTutorial = isTutorial;
+        TutorialSystem.TutorialProgress = 0;
+        TutorialSystem.TutorialState = 0;
+        TutorialSystem.delay = 2;
     }
 }

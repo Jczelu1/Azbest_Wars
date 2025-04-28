@@ -45,7 +45,11 @@ public class WinConditionUI : MonoBehaviour
         DoThisToWinText.text = doWhatToWin;
         ProgressDescText.text = progressDescription;
 
-        if (WinConditionSystem.WinConditionType == 0)
+        if (TutorialSystem.IsTutorial)
+        {
+            ProgressText.text = $"{TutorialSystem.TutorialProgress}/{TutorialSystem.TotalTutorialProgress}";
+        }
+        else if (WinConditionSystem.WinConditionType == 0)
         {
             ProgressText.text = $"{WinConditionSystem.WinPoints}/{WinConditionSystem.RequiredWinPoints}";
         }
