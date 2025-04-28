@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 4900983392929880291}
   - component: {fileID: 1130635727777465400}
   - component: {fileID: 7386028075737585365}
-  - component: {fileID: 7081578355262563018}
   - component: {fileID: 8064673411213068971}
   - component: {fileID: 7275957072037517647}
   - component: {fileID: 8312279984001407880}
@@ -140,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d2d9329bb2c2134fab04c5f6d9ef6c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 16
+  health: 12
 --- !u!114 &4900983392929880291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,19 +178,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7879e0a9235573942a4b08ff82d1d6e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7081578355262563018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3930956285522985913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2d8a04ebd5596e4da122661740ccb73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spotRange: 16
 --- !u!114 &8064673411213068971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,7 +250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 6
-  range: 8
+  range: 10
   attackCooldown: 4
   moveCooldown: 0
 --- !u!1 &7576844542480524197

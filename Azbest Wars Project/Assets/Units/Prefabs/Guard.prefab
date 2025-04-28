@@ -120,7 +120,6 @@ GameObject:
   - component: {fileID: 9188057550786659431}
   - component: {fileID: 4407433385745338276}
   - component: {fileID: 8910446480853909491}
-  - component: {fileID: 1036402237269706064}
   - component: {fileID: 5039114267307326035}
   - component: {fileID: 6042195829821924662}
   - component: {fileID: 1297992889746187158}
@@ -298,19 +297,6 @@ MonoBehaviour:
   attackType: 2
   attackCooldown: 1
   moveCooldown: 1
---- !u!114 &1036402237269706064
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7062958865578585826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2d8a04ebd5596e4da122661740ccb73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spotRange: 16
 --- !u!114 &5039114267307326035
 MonoBehaviour:
   m_ObjectHideFlags: 0
