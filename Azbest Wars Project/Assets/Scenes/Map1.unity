@@ -34437,6 +34437,16 @@ PrefabInstance:
       propertyPath: m_Tiles.Array.data[1303].second.m_TileObjectToInstantiateIndex
       value: 65535
       objectReference: {fileID: 0}
+    - target: {fileID: 4158683866283863227, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6334161924090326063, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: m_text
+      value: "Wioska na terenie twojego kr\xF3lestwa zosta\u0142a zaatakowana i przej\u0119ta
+        przez kr\xF3lestwo niebieskich.\nMusisz odbi\u0107 wiosk\u0119 i wypch\u0105\u0107
+        wroga z naszego terytorium."
+      objectReference: {fileID: 0}
     - target: {fileID: 6484370149853546692, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: ConserveChance
       value: 0.4
@@ -34488,6 +34498,12 @@ PrefabInstance:
     - target: {fileID: 6633700133102319887, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7561005744286985474, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: m_text
+      value: "Uda\u0142o ci si\u0119 odbi\u0107 wiosk\u0119 i reszt\u0119 teren\xF3w.\nArmia
+        niebieskich b\u0119dzie musia\u0142a si\u0119 przegrupowa\u0107 i uderzy
+        w innym miejscu."
       objectReference: {fileID: 0}
     - target: {fileID: 7895317627543756593, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_LocalPosition.x

@@ -10,7 +10,7 @@ public partial class TutorialSystem : SystemBase
     public static bool IsTutorial = false;
     public static int TutorialState = 0;
     public static int TutorialProgress = 0;
-    public static int TotalTutorialProgress = 5;
+    public static int TotalTutorialProgress = 7;
     public static float delay = 2;
     public static bool startTutorial = false;
 
