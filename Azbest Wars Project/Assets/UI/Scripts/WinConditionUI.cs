@@ -82,7 +82,7 @@ public class WinConditionUI : MonoBehaviour
                 }
             }
             TickSystemGroup.SetTickrate(0);
-            MusicPlayer.Instance.StopMusic();
+            MusicPlayer.Instance.PlayEndMusic();
             StartCoroutine(ShowEndScreenWithDelay());
         }
         if(WinConditionSystem.Ended && _endedHandled)

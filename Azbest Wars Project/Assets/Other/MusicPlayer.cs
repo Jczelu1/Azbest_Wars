@@ -19,6 +19,10 @@ public class MusicPlayer : MonoBehaviour
     [SerializeField]
     AudioSource[] themes;
     [SerializeField]
+    AudioSource startTheme;
+    [SerializeField]
+    AudioSource endTheme;
+    [SerializeField]
     float fadeDuration = 2f;
     AudioSource currentTheme;
     int currentIndex;
@@ -27,8 +31,11 @@ public class MusicPlayer : MonoBehaviour
     
     void Start()
     {
-        if(playOnStart)
-            PlayRandomTheme();
+        if (playOnStart)
+        {
+            currentTheme = startTheme;
+            currentTheme.Play();
+        }
         if(VolumeSlider != null)
             VolumeSlider.value = Volume;
     }
@@ -53,6 +60,8 @@ public class MusicPlayer : MonoBehaviour
             {
                 source.volume = volume;
             }
+            startTheme.volume = volume;
+            endTheme.volume = volume;
         }
     }
     public void StopMusic()
@@ -60,11 +69,19 @@ public class MusicPlayer : MonoBehaviour
         if (currentTheme != null)
         {
             // Start fade-out coroutine
-            StartCoroutine(FadeOutAndStop(currentTheme, fadeDuration));
+            StartCoroutine(FadeOutAndStop(currentTheme, fadeDuration, null));
             currentTheme = null;
         }
     }
-    private IEnumerator FadeOutAndStop(AudioSource source, float duration)
+    public void PlayEndMusic()
+    {
+        if (currentTheme != null)
+        {
+            // Start fade-out coroutine
+            StartCoroutine(FadeOutAndStop(currentTheme, fadeDuration, endTheme));
+        }
+    }
+    private IEnumerator FadeOutAndStop(AudioSource source, float duration, AudioSource nextSource)
     {
         float startVolume = source.volume;
         float time = 0f;
@@ -79,6 +96,11 @@ public class MusicPlayer : MonoBehaviour
         source.volume = 0f;
         source.Stop();
         source.volume = startVolume;
+        if(nextSource != null)
+        {
+            nextSource.Play();
+        }
+        currentTheme = null;
     }
     public void PlayRandomTheme()
     {
