@@ -9,8 +9,8 @@ using Unity.Mathematics;
 public partial class ArrowSystem : SystemBase
 {
     public static NativeList<Entity> SpawnedArrows;
-    public NativeList<Entity> hitPrefabs;
-    public NativeList<Entity> missPrefabs;
+    public static NativeList<Entity> hitPrefabs;
+    public static NativeList<Entity> missPrefabs;
     public static bool started = false;
 
     protected override void OnCreate()
@@ -18,8 +18,6 @@ public partial class ArrowSystem : SystemBase
         RequireForUpdate<RangedAttackData>();
         RequireForUpdate<ArrowPrefabBuffer>();
         SpawnedArrows = new NativeList<Entity>(Allocator.Persistent);
-        hitPrefabs = new NativeList<Entity>(Allocator.Persistent);
-        missPrefabs = new NativeList<Entity>(Allocator.Persistent);
     }
 
     protected override void OnDestroy()
@@ -31,12 +29,17 @@ public partial class ArrowSystem : SystemBase
 
     protected override void OnUpdate()
     {
+        if (SetupSystem.startDelay != -1) return;
         if (!started)
         {
             started = true;
             Entity queryEntity = SystemAPI.GetSingletonEntity<ArrowPrefabBuffer>();
             var buffer = base.EntityManager.GetBuffer<ArrowPrefabBuffer>(queryEntity);
             // Cache prefab counts
+            if (hitPrefabs.IsCreated) hitPrefabs.Dispose();
+            if (missPrefabs.IsCreated) missPrefabs.Dispose();
+            hitPrefabs = new NativeList<Entity>(Allocator.Persistent);
+            missPrefabs = new NativeList<Entity>(Allocator.Persistent);
             foreach (var prefab in buffer)
             {
                 if (prefab.IsHit) hitPrefabs.Add(prefab.Prefab);
