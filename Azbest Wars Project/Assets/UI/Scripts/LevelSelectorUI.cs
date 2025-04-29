@@ -11,6 +11,7 @@ public class LevelSelectorUI : MonoBehaviour
     LevelController levelController;
     [SerializeField]
     string[] MapNames;
+    [TextArea]
     [SerializeField]
     string[] LevelDescriptions;
     [SerializeField]

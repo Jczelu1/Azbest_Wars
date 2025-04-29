@@ -1915,9 +1915,9 @@ RectTransform:
   - {fileID: 355024627}
   m_Father: {fileID: 1383862956}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 24.9, y: 32.2}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 79, y: -2}
   m_SizeDelta: {x: 14, y: 14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &416400521
@@ -1934,7 +1934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 416400523}
   text: {fileID: 355024628}
-  NormalSprite: {fileID: 21300000, guid: 75d6f17764c50254e90254bb95ffce60, type: 3}
+  NormalSprite: {fileID: 21300000, guid: 38e6b21686d8bac4a862bbf19a13c6c4, type: 3}
   SelectedSprite: {fileID: 21300000, guid: 171752ef379b8d944aa126de7f5be735, type: 3}
   normalTextColor: {r: 1, g: 1, b: 1, a: 1}
   selectedTextColor: {r: 0, g: 0, b: 0, a: 1}
@@ -2014,7 +2014,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 75d6f17764c50254e90254bb95ffce60, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 38e6b21686d8bac4a862bbf19a13c6c4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3853,9 +3853,9 @@ RectTransform:
   - {fileID: 1169981810}
   m_Father: {fileID: 1383862956}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -25, y: 9.6}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 72, y: 29}
   m_SizeDelta: {x: 14, y: 14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &887044811
@@ -3872,7 +3872,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 887044813}
   text: {fileID: 1169981811}
-  NormalSprite: {fileID: 21300000, guid: 75d6f17764c50254e90254bb95ffce60, type: 3}
+  NormalSprite: {fileID: 21300000, guid: 38e6b21686d8bac4a862bbf19a13c6c4, type: 3}
   SelectedSprite: {fileID: 21300000, guid: 171752ef379b8d944aa126de7f5be735, type: 3}
   normalTextColor: {r: 1, g: 1, b: 1, a: 1}
   selectedTextColor: {r: 0, g: 0, b: 0, a: 1}
@@ -3952,7 +3952,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 75d6f17764c50254e90254bb95ffce60, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 38e6b21686d8bac4a862bbf19a13c6c4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4565,9 +4565,9 @@ RectTransform:
   - {fileID: 671181755}
   m_Father: {fileID: 1383862956}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -30.8, y: 30.4}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 91, y: -43}
   m_SizeDelta: {x: 14, y: 14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1046640579
@@ -4584,7 +4584,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 1046640581}
   text: {fileID: 671181756}
-  NormalSprite: {fileID: 21300000, guid: 75d6f17764c50254e90254bb95ffce60, type: 3}
+  NormalSprite: {fileID: 21300000, guid: 38e6b21686d8bac4a862bbf19a13c6c4, type: 3}
   SelectedSprite: {fileID: 21300000, guid: 171752ef379b8d944aa126de7f5be735, type: 3}
   normalTextColor: {r: 1, g: 1, b: 1, a: 1}
   selectedTextColor: {r: 0, g: 0, b: 0, a: 1}
@@ -4664,7 +4664,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 75d6f17764c50254e90254bb95ffce60, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 38e6b21686d8bac4a862bbf19a13c6c4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7295,9 +7295,9 @@ RectTransform:
   - {fileID: 1111260534}
   m_Father: {fileID: 1383862956}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 24.5, y: 9}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 36, y: 57}
   m_SizeDelta: {x: 14, y: 14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1390142943
@@ -7314,7 +7314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 1390142945}
   text: {fileID: 1111260535}
-  NormalSprite: {fileID: 21300000, guid: 75d6f17764c50254e90254bb95ffce60, type: 3}
+  NormalSprite: {fileID: 21300000, guid: 38e6b21686d8bac4a862bbf19a13c6c4, type: 3}
   SelectedSprite: {fileID: 21300000, guid: 171752ef379b8d944aa126de7f5be735, type: 3}
   normalTextColor: {r: 1, g: 1, b: 1, a: 1}
   selectedTextColor: {r: 0, g: 0, b: 0, a: 1}
@@ -7394,7 +7394,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 75d6f17764c50254e90254bb95ffce60, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 38e6b21686d8bac4a862bbf19a13c6c4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8382,7 +8382,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 639e02682e676b142833ed5b543ca148, type: 3}
+  m_Texture: {fileID: 2800000, guid: 7fa04878654db89469bb46102cfe1f2d, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -9802,11 +9802,14 @@ MonoBehaviour:
   - Map3
   - Map4
   LevelDescriptions:
-  - 'Poziom 0: Tutorial'
-  - Poziom 1
-  - Poziom 2
-  - Poziom 3
-  - Poziom 4
+  - "Poziom 0: Tutorial\n\nJako nowy dow\xF3dcz armii, musisz przej\u015B\u0107 trening."
+  - "Poziom 1: Wioska\n\nWioska zosta\u0142a przej\u0119ta, odbij j\u0105."
+  - 'Poziom 2: Kopalnie
+
+
+    Zabezpiecz kopalnie azbestu.'
+  - "Poziom 3: Rzeka\n\nUtrzymaj ob\xF3z do przybycia posi\u0142k\xF3w.\n"
+  - "Poziom 4: Zamek\n\nZdob\u0105d\u017A zamek i zako\u0144cz wojn\u0119."
   levelButtons:
   - {fileID: 1046640579}
   - {fileID: 1954743672}
@@ -10446,9 +10449,9 @@ RectTransform:
   - {fileID: 960985574}
   m_Father: {fileID: 1383862956}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.4, y: 29.3}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 47, y: -29}
   m_SizeDelta: {x: 14, y: 14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1954743672
@@ -10465,7 +10468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 1954743674}
   text: {fileID: 960985575}
-  NormalSprite: {fileID: 21300000, guid: 75d6f17764c50254e90254bb95ffce60, type: 3}
+  NormalSprite: {fileID: 21300000, guid: 38e6b21686d8bac4a862bbf19a13c6c4, type: 3}
   SelectedSprite: {fileID: 21300000, guid: 171752ef379b8d944aa126de7f5be735, type: 3}
   normalTextColor: {r: 1, g: 1, b: 1, a: 1}
   selectedTextColor: {r: 0, g: 0, b: 0, a: 1}
@@ -10545,7 +10548,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 75d6f17764c50254e90254bb95ffce60, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 38e6b21686d8bac4a862bbf19a13c6c4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
