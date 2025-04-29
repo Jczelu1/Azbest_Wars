@@ -610,10 +610,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2707895391717398428}
-        m_TargetAssemblyTypeName: SidebarController, Assembly-CSharp
-        m_MethodName: HideSettingsMenu
-        m_Mode: 1
+      - m_Target: {fileID: 2631927498152588227}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -44782,9 +44782,9 @@ RectTransform:
   - {fileID: 3087737218503589467}
   m_Father: {fileID: 7313113091471414445}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -64}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 8}
   m_SizeDelta: {x: 64, y: 9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4597665349286204338
