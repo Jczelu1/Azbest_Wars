@@ -23,7 +23,7 @@ public partial class MapTextureSystem : SystemBase
         int height = MainGridScript.Instance.Height;
         if (baseTexture == null)
         {
-            baseTexture = new Texture2D(width, height);
+            baseTexture = new Texture2D(width, height, TextureFormat.RGBA32, false);
             baseTexture.filterMode = FilterMode.Point;
             for (int x = 0; x < width; x++)
             {
@@ -42,9 +42,13 @@ public partial class MapTextureSystem : SystemBase
             baseTexture.Apply();
         }
         int playerTeam = TeamManager.Instance.PlayerTeam;
-        mapTexture = new Texture2D(width, height);
-        mapTexture.filterMode = FilterMode.Point;
+        if (mapTexture == null)
+        {
+            mapTexture = new Texture2D(width, height, TextureFormat.RGBA32, false);
+            mapTexture.filterMode = FilterMode.Point;
+        }
         mapTexture.SetPixels(baseTexture.GetPixels());
+
         Entities.WithoutBurst().ForEach((Entity entity, ref CaptureAreaData captureArea, ref GridPosition gridPosition, ref TeamData team) =>
         {
             for (int dx = -captureArea.Size.x; dx <= captureArea.Size.x; dx++)

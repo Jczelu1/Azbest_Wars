@@ -10,17 +10,16 @@ GameObject:
   m_Component:
   - component: {fileID: 9153553499527495149}
   - component: {fileID: 3919340474292109091}
+  - component: {fileID: 1253389448388900597}
+  - component: {fileID: 8817951671874931478}
   - component: {fileID: 1412421132524329922}
   - component: {fileID: 8175523642127263365}
-  - component: {fileID: 1253389448388900597}
   - component: {fileID: 6882743947922048988}
   - component: {fileID: 5293835506063145565}
   - component: {fileID: 4188344278372315030}
   - component: {fileID: 3409472165718113789}
-  - component: {fileID: 2711106226111639404}
   - component: {fileID: 848292831573254917}
   - component: {fileID: 2337041545834962185}
-  - component: {fileID: 8817951671874931478}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Untagged
@@ -100,6 +99,35 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1253389448388900597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3225467431724674756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d2d9329bb2c2134fab04c5f6d9ef6c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 8
+--- !u!114 &8817951671874931478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3225467431724674756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b87170eda9fb35429a18addc53745a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 2
+  range: 8
+  attackCooldown: 2
+  moveCooldown: 1
 --- !u!114 &1412421132524329922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,19 +155,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9eccc38c0d82e2439ffed9c77d84967, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1253389448388900597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3225467431724674756}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d2d9329bb2c2134fab04c5f6d9ef6c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 8
 --- !u!114 &6882743947922048988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,27 +205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3191b46586d28bb4db0812624f47f4fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2711106226111639404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3225467431724674756}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1681cfb7034f4b4468f7573a03c7d8e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseSprite: {fileID: 696563377253852856, guid: b0a5781f4d43b314bba0649a01653946, type: 3}
-  walkingAnimation:
-  - {fileID: 2548126851062163064, guid: b0a5781f4d43b314bba0649a01653946, type: 3}
-  - {fileID: -6059920034774951819, guid: b0a5781f4d43b314bba0649a01653946, type: 3}
-  attackingAnimation:
-  - {fileID: 6013928922496261813, guid: b0a5781f4d43b314bba0649a01653946, type: 3}
-  - {fileID: -1855850583290124411, guid: b0a5781f4d43b314bba0649a01653946, type: 3}
-  - {fileID: -1855850583290124411, guid: b0a5781f4d43b314bba0649a01653946, type: 3}
-  - {fileID: -1334505423942346114, guid: b0a5781f4d43b314bba0649a01653946, type: 3}
 --- !u!114 &848292831573254917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,22 +231,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitTypeId: 7
---- !u!114 &8817951671874931478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3225467431724674756}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b87170eda9fb35429a18addc53745a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 2
-  range: 8
-  attackCooldown: 2
-  moveCooldown: 1
 --- !u!1 &3325331128031058194
 GameObject:
   m_ObjectHideFlags: 0

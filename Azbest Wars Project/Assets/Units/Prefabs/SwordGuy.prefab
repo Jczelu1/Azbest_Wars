@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 5854223275870690519}
   - component: {fileID: 762758008648008784}
   - component: {fileID: 3939128792352672775}
-  - component: {fileID: 1247459215721745316}
   - component: {fileID: 8798342441943331497}
   - component: {fileID: 7030477581639917330}
   m_Layer: 0
@@ -206,27 +205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3191b46586d28bb4db0812624f47f4fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1247459215721745316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 124054065340737986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1681cfb7034f4b4468f7573a03c7d8e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseSprite: {fileID: -4436402487726637914, guid: fda03b2ae2f3cb04690e3ab39a6c9e8c, type: 3}
-  walkingAnimation:
-  - {fileID: -931881445165996357, guid: fda03b2ae2f3cb04690e3ab39a6c9e8c, type: 3}
-  - {fileID: -5044201626123509222, guid: fda03b2ae2f3cb04690e3ab39a6c9e8c, type: 3}
-  attackingAnimation:
-  - {fileID: 3829055628262569576, guid: fda03b2ae2f3cb04690e3ab39a6c9e8c, type: 3}
-  - {fileID: -6729111268461757284, guid: fda03b2ae2f3cb04690e3ab39a6c9e8c, type: 3}
-  - {fileID: -6729111268461757284, guid: fda03b2ae2f3cb04690e3ab39a6c9e8c, type: 3}
-  - {fileID: -4436402487726637914, guid: fda03b2ae2f3cb04690e3ab39a6c9e8c, type: 3}
 --- !u!114 &8798342441943331497
 MonoBehaviour:
   m_ObjectHideFlags: 0

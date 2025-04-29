@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5100649428496965106}
   - component: {fileID: 8712655693726093120}
   - component: {fileID: 1531159648681572622}
+  - component: {fileID: 6326760858778995275}
   m_Layer: 0
   m_Name: KnightType
   m_TagString: Untagged
@@ -65,6 +66,27 @@ MonoBehaviour:
   Name: Rycerz
   description: "HP: 48\nDmg/Tick: 4\nZasi\u0119g: 1\n"
   baseSprite: {fileID: 4495478712733764576, guid: 68a82e6fc151d2f4fab1c6e47cdbeda3, type: 3}
+--- !u!114 &6326760858778995275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 13704420108977569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1681cfb7034f4b4468f7573a03c7d8e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseSprite: {fileID: 4495478712733764576, guid: 68a82e6fc151d2f4fab1c6e47cdbeda3, type: 3}
+  walkingAnimation:
+  - {fileID: -2735361975599426438, guid: 68a82e6fc151d2f4fab1c6e47cdbeda3, type: 3}
+  - {fileID: 5410854522603319429, guid: 68a82e6fc151d2f4fab1c6e47cdbeda3, type: 3}
+  attackingAnimation:
+  - {fileID: -5936517905134697562, guid: 68a82e6fc151d2f4fab1c6e47cdbeda3, type: 3}
+  - {fileID: -979383578, guid: 68a82e6fc151d2f4fab1c6e47cdbeda3, type: 3}
+  - {fileID: -979383578, guid: 68a82e6fc151d2f4fab1c6e47cdbeda3, type: 3}
+  - {fileID: 4495478712733764576, guid: 68a82e6fc151d2f4fab1c6e47cdbeda3, type: 3}
 --- !u!1 &246222630395706326
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,6 +98,7 @@ GameObject:
   - component: {fileID: 3438004008836859971}
   - component: {fileID: 1637570451455161324}
   - component: {fileID: 2590202528244989524}
+  - component: {fileID: 787885673812640905}
   m_Layer: 0
   m_Name: SpearInfantryType
   m_TagString: Untagged
@@ -130,6 +153,27 @@ MonoBehaviour:
   Name: "\u017Bo\u0142nie\u017C z w\u0142\xF3czni\u0105"
   description: "HP: 12\nDmg/Tick: 1\nZasi\u0119g: 2"
   baseSprite: {fileID: 3834385465485835948, guid: 09f643f4f6631ba4582454c71076b007, type: 3}
+--- !u!114 &787885673812640905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246222630395706326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1681cfb7034f4b4468f7573a03c7d8e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseSprite: {fileID: 3834385465485835948, guid: 09f643f4f6631ba4582454c71076b007, type: 3}
+  walkingAnimation:
+  - {fileID: -5021666831352043469, guid: 09f643f4f6631ba4582454c71076b007, type: 3}
+  - {fileID: -2746248628074282883, guid: 09f643f4f6631ba4582454c71076b007, type: 3}
+  attackingAnimation:
+  - {fileID: -5703133519100246276, guid: 09f643f4f6631ba4582454c71076b007, type: 3}
+  - {fileID: 1782371080320830621, guid: 09f643f4f6631ba4582454c71076b007, type: 3}
+  - {fileID: -4874950540573153209, guid: 09f643f4f6631ba4582454c71076b007, type: 3}
+  - {fileID: -5703133519100246276, guid: 09f643f4f6631ba4582454c71076b007, type: 3}
 --- !u!1 &289305396442081168
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,6 +185,7 @@ GameObject:
   - component: {fileID: 3638811089929876751}
   - component: {fileID: 3319474185726239322}
   - component: {fileID: 1063141967513614566}
+  - component: {fileID: 8974393827532567483}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Untagged
@@ -195,6 +240,27 @@ MonoBehaviour:
   Name: "\u0141ucznik"
   description: "HP: 8\nDmg/Tick: 0.66\nZasi\u0119g: 8"
   baseSprite: {fileID: 696563377253852856, guid: b0a5781f4d43b314bba0649a01653946, type: 3}
+--- !u!114 &8974393827532567483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289305396442081168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1681cfb7034f4b4468f7573a03c7d8e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseSprite: {fileID: 696563377253852856, guid: b0a5781f4d43b314bba0649a01653946, type: 3}
+  walkingAnimation:
+  - {fileID: 2548126851062163064, guid: b0a5781f4d43b314bba0649a01653946, type: 3}
+  - {fileID: -6059920034774951819, guid: b0a5781f4d43b314bba0649a01653946, type: 3}
+  attackingAnimation:
+  - {fileID: 6013928922496261813, guid: b0a5781f4d43b314bba0649a01653946, type: 3}
+  - {fileID: -1855850583290124411, guid: b0a5781f4d43b314bba0649a01653946, type: 3}
+  - {fileID: -1855850583290124411, guid: b0a5781f4d43b314bba0649a01653946, type: 3}
+  - {fileID: -1334505423942346114, guid: b0a5781f4d43b314bba0649a01653946, type: 3}
 --- !u!1 &338391471233152926
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,6 +272,7 @@ GameObject:
   - component: {fileID: 3081503242584144230}
   - component: {fileID: 8177438088166847083}
   - component: {fileID: 3894837164153407597}
+  - component: {fileID: 3385279569756573147}
   m_Layer: 0
   m_Name: SwordInfantryType
   m_TagString: Untagged
@@ -260,6 +327,27 @@ MonoBehaviour:
   Name: "\u017Bo\u0142nie\u017C z mieczem"
   description: "HP: 16\nDmg/Tick: 2\nZasi\u0119g: 1"
   baseSprite: {fileID: -7365781975991240709, guid: 97a97b8ca069838478de5c60f4256bca, type: 3}
+--- !u!114 &3385279569756573147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 338391471233152926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1681cfb7034f4b4468f7573a03c7d8e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseSprite: {fileID: -7365781975991240709, guid: 97a97b8ca069838478de5c60f4256bca, type: 3}
+  walkingAnimation:
+  - {fileID: -6687257905205872128, guid: 97a97b8ca069838478de5c60f4256bca, type: 3}
+  - {fileID: -2304256806583619390, guid: 97a97b8ca069838478de5c60f4256bca, type: 3}
+  attackingAnimation:
+  - {fileID: -381550962, guid: 97a97b8ca069838478de5c60f4256bca, type: 3}
+  - {fileID: 991402928, guid: 97a97b8ca069838478de5c60f4256bca, type: 3}
+  - {fileID: 991402928, guid: 97a97b8ca069838478de5c60f4256bca, type: 3}
+  - {fileID: -7365781975991240709, guid: 97a97b8ca069838478de5c60f4256bca, type: 3}
 --- !u!1 &2494682485781307137
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,6 +359,7 @@ GameObject:
   - component: {fileID: 4586423151794085873}
   - component: {fileID: 6178676589007832638}
   - component: {fileID: 3098924344062835203}
+  - component: {fileID: 8049419009468078237}
   m_Layer: 0
   m_Name: ScytheGuyType
   m_TagString: Untagged
@@ -325,6 +414,27 @@ MonoBehaviour:
   Name: "Ch\u0142op z kos\u0105"
   description: "HP: 6\nDmg/Tick: 1\nZasi\u0119g: 2"
   baseSprite: {fileID: -5184565986660012554, guid: 89a7e92f62828934c9ab3177a749d29c, type: 3}
+--- !u!114 &8049419009468078237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2494682485781307137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1681cfb7034f4b4468f7573a03c7d8e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseSprite: {fileID: -5184565986660012554, guid: 89a7e92f62828934c9ab3177a749d29c, type: 3}
+  walkingAnimation:
+  - {fileID: -7605212705134400504, guid: 89a7e92f62828934c9ab3177a749d29c, type: 3}
+  - {fileID: -191921298338276003, guid: 89a7e92f62828934c9ab3177a749d29c, type: 3}
+  attackingAnimation:
+  - {fileID: -438399417211777444, guid: 89a7e92f62828934c9ab3177a749d29c, type: 3}
+  - {fileID: -4346753986954313149, guid: 89a7e92f62828934c9ab3177a749d29c, type: 3}
+  - {fileID: -2300752266792622254, guid: 89a7e92f62828934c9ab3177a749d29c, type: 3}
+  - {fileID: -438399417211777444, guid: 89a7e92f62828934c9ab3177a749d29c, type: 3}
 --- !u!1 &3104964469080144698
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,6 +626,7 @@ GameObject:
   - component: {fileID: 4690507725340482967}
   - component: {fileID: 5550634288072240381}
   - component: {fileID: 8863210658982793328}
+  - component: {fileID: 1322007353486301780}
   m_Layer: 0
   m_Name: GuardType
   m_TagString: Untagged
@@ -570,6 +681,27 @@ MonoBehaviour:
   Name: "Stra\u017Cnik"
   description: "HP: 32\nDmg/Tick: 3\nZasi\u0119g: 2"
   baseSprite: {fileID: 8426817888908902439, guid: 2ba29482482bd0047b8aa795ad222ad6, type: 3}
+--- !u!114 &1322007353486301780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4014804248487054167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1681cfb7034f4b4468f7573a03c7d8e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseSprite: {fileID: 8426817888908902439, guid: 2ba29482482bd0047b8aa795ad222ad6, type: 3}
+  walkingAnimation:
+  - {fileID: -6557464283307180578, guid: 2ba29482482bd0047b8aa795ad222ad6, type: 3}
+  - {fileID: -9191970194228111346, guid: 2ba29482482bd0047b8aa795ad222ad6, type: 3}
+  attackingAnimation:
+  - {fileID: 4089389326833356611, guid: 2ba29482482bd0047b8aa795ad222ad6, type: 3}
+  - {fileID: -9149248715622306189, guid: 2ba29482482bd0047b8aa795ad222ad6, type: 3}
+  - {fileID: -846891349781450667, guid: 2ba29482482bd0047b8aa795ad222ad6, type: 3}
+  - {fileID: 4089389326833356611, guid: 2ba29482482bd0047b8aa795ad222ad6, type: 3}
 --- !u!1 &4203265957676941120
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,6 +713,7 @@ GameObject:
   - component: {fileID: 6884600020145760302}
   - component: {fileID: 8009883303606065591}
   - component: {fileID: 3229332829074146997}
+  - component: {fileID: 5155190624935234716}
   m_Layer: 0
   m_Name: AxeInfantryType
   m_TagString: Untagged
@@ -635,6 +768,27 @@ MonoBehaviour:
   Name: "\u017Bo\u0142nie\u017C z siekier\u0105"
   description: "HP: 16\nDmg/Tick: 1\nZasi\u0119g: 1\nAtakuje 3 jednostki"
   baseSprite: {fileID: -4939748101659649795, guid: 655f693488054c74fbad41bb19074e65, type: 3}
+--- !u!114 &5155190624935234716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4203265957676941120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1681cfb7034f4b4468f7573a03c7d8e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseSprite: {fileID: -4939748101659649795, guid: 655f693488054c74fbad41bb19074e65, type: 3}
+  walkingAnimation:
+  - {fileID: -4285521199900738101, guid: 655f693488054c74fbad41bb19074e65, type: 3}
+  - {fileID: 6430905765437235474, guid: 655f693488054c74fbad41bb19074e65, type: 3}
+  attackingAnimation:
+  - {fileID: -375637030, guid: 655f693488054c74fbad41bb19074e65, type: 3}
+  - {fileID: 593487267, guid: 655f693488054c74fbad41bb19074e65, type: 3}
+  - {fileID: 593487267, guid: 655f693488054c74fbad41bb19074e65, type: 3}
+  - {fileID: -4939748101659649795, guid: 655f693488054c74fbad41bb19074e65, type: 3}
 --- !u!1 &4494533496941542627
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,6 +800,7 @@ GameObject:
   - component: {fileID: 8048806138923128248}
   - component: {fileID: 4049848920690404259}
   - component: {fileID: 1211471050957789175}
+  - component: {fileID: 4463343507335323869}
   m_Layer: 0
   m_Name: VikingType
   m_TagString: Untagged
@@ -700,6 +855,27 @@ MonoBehaviour:
   Name: Viking
   description: "HP: 24\nDmg/Tick: 2\nZasi\u0119g: 1\nAtakuje 3 jednostki"
   baseSprite: {fileID: -7684046354676129167, guid: cf82288fbeb07744eb281ad77c6b363f, type: 3}
+--- !u!114 &4463343507335323869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4494533496941542627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1681cfb7034f4b4468f7573a03c7d8e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseSprite: {fileID: -7684046354676129167, guid: cf82288fbeb07744eb281ad77c6b363f, type: 3}
+  walkingAnimation:
+  - {fileID: 3959750611451651010, guid: cf82288fbeb07744eb281ad77c6b363f, type: 3}
+  - {fileID: -5361405758967311711, guid: cf82288fbeb07744eb281ad77c6b363f, type: 3}
+  attackingAnimation:
+  - {fileID: 151880425, guid: cf82288fbeb07744eb281ad77c6b363f, type: 3}
+  - {fileID: -918915269, guid: cf82288fbeb07744eb281ad77c6b363f, type: 3}
+  - {fileID: -918915269, guid: cf82288fbeb07744eb281ad77c6b363f, type: 3}
+  - {fileID: -7684046354676129167, guid: cf82288fbeb07744eb281ad77c6b363f, type: 3}
 --- !u!1 &6000630002957809509
 GameObject:
   m_ObjectHideFlags: 0
@@ -711,6 +887,7 @@ GameObject:
   - component: {fileID: 7955941213644429715}
   - component: {fileID: 4801662980702165732}
   - component: {fileID: 4636572773459662278}
+  - component: {fileID: 2144746460614821275}
   m_Layer: 0
   m_Name: SwordGuyType
   m_TagString: Untagged
@@ -765,6 +942,27 @@ MonoBehaviour:
   Name: "Ch\u0142op z mieczem"
   description: "HP: 8\nDmg/Tick: 1\nZasi\u0119g: 1"
   baseSprite: {fileID: -4436402487726637914, guid: fda03b2ae2f3cb04690e3ab39a6c9e8c, type: 3}
+--- !u!114 &2144746460614821275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6000630002957809509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1681cfb7034f4b4468f7573a03c7d8e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseSprite: {fileID: -4436402487726637914, guid: fda03b2ae2f3cb04690e3ab39a6c9e8c, type: 3}
+  walkingAnimation:
+  - {fileID: -931881445165996357, guid: fda03b2ae2f3cb04690e3ab39a6c9e8c, type: 3}
+  - {fileID: -5044201626123509222, guid: fda03b2ae2f3cb04690e3ab39a6c9e8c, type: 3}
+  attackingAnimation:
+  - {fileID: 3829055628262569576, guid: fda03b2ae2f3cb04690e3ab39a6c9e8c, type: 3}
+  - {fileID: -6729111268461757284, guid: fda03b2ae2f3cb04690e3ab39a6c9e8c, type: 3}
+  - {fileID: -6729111268461757284, guid: fda03b2ae2f3cb04690e3ab39a6c9e8c, type: 3}
+  - {fileID: -4436402487726637914, guid: fda03b2ae2f3cb04690e3ab39a6c9e8c, type: 3}
 --- !u!1 &6848867967031043293
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,6 +1100,7 @@ GameObject:
   - component: {fileID: 3077699787095174803}
   - component: {fileID: 291386029568575875}
   - component: {fileID: 5450067092046353973}
+  - component: {fileID: 2682627248595413186}
   m_Layer: 0
   m_Name: AxeGuyType
   m_TagString: Untagged
@@ -956,6 +1155,27 @@ MonoBehaviour:
   Name: "Ch\u0142op z siekier\u0105"
   description: "HP: 8\nDmg/Tick: 0.5\nZasi\u0119g: 1\nAtakuje 3 jednostki"
   baseSprite: {fileID: 3328362872707813444, guid: 7d14a933f36fc594eb0f6be4295d9ba5, type: 3}
+--- !u!114 &2682627248595413186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7260073466429157980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1681cfb7034f4b4468f7573a03c7d8e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseSprite: {fileID: 3328362872707813444, guid: 7d14a933f36fc594eb0f6be4295d9ba5, type: 3}
+  walkingAnimation:
+  - {fileID: 1179681579049947376, guid: 7d14a933f36fc594eb0f6be4295d9ba5, type: 3}
+  - {fileID: -3578350713471216068, guid: 7d14a933f36fc594eb0f6be4295d9ba5, type: 3}
+  attackingAnimation:
+  - {fileID: -6089641545560761197, guid: 7d14a933f36fc594eb0f6be4295d9ba5, type: 3}
+  - {fileID: -3266036684486800071, guid: 7d14a933f36fc594eb0f6be4295d9ba5, type: 3}
+  - {fileID: -3266036684486800071, guid: 7d14a933f36fc594eb0f6be4295d9ba5, type: 3}
+  - {fileID: 3328362872707813444, guid: 7d14a933f36fc594eb0f6be4295d9ba5, type: 3}
 --- !u!1 &8138376426590134002
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,6 +1299,7 @@ GameObject:
   - component: {fileID: 912755830450757970}
   - component: {fileID: 2331094661962400400}
   - component: {fileID: 5400049596010125762}
+  - component: {fileID: 7550997440341865130}
   m_Layer: 0
   m_Name: CrossbowerType
   m_TagString: Untagged
@@ -1133,6 +1354,27 @@ MonoBehaviour:
   Name: Kusznik
   description: "HP: 12\nDmg/Tick: 1.2\nZasi\u0119g: 10"
   baseSprite: {fileID: 6172420534387897435, guid: 66b86cc2d02703c4ca5be84101b41545, type: 3}
+--- !u!114 &7550997440341865130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996944831889673704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1681cfb7034f4b4468f7573a03c7d8e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseSprite: {fileID: 6172420534387897435, guid: 66b86cc2d02703c4ca5be84101b41545, type: 3}
+  walkingAnimation:
+  - {fileID: 2922361114892511439, guid: 66b86cc2d02703c4ca5be84101b41545, type: 3}
+  - {fileID: 5498971702628476183, guid: 66b86cc2d02703c4ca5be84101b41545, type: 3}
+  attackingAnimation:
+  - {fileID: 6894653708733759349, guid: 66b86cc2d02703c4ca5be84101b41545, type: 3}
+  - {fileID: 6894653708733759349, guid: 66b86cc2d02703c4ca5be84101b41545, type: 3}
+  - {fileID: -2426281541041417492, guid: 66b86cc2d02703c4ca5be84101b41545, type: 3}
+  - {fileID: 4249780527715285674, guid: 66b86cc2d02703c4ca5be84101b41545, type: 3}
 --- !u!1 &9002949752020604323
 GameObject:
   m_ObjectHideFlags: 0
@@ -1144,6 +1386,7 @@ GameObject:
   - component: {fileID: 1244971234339130648}
   - component: {fileID: 2985587922438304998}
   - component: {fileID: 250580766813439323}
+  - component: {fileID: 7860673997681007715}
   m_Layer: 0
   m_Name: BowGuy
   m_TagString: Untagged
@@ -1198,3 +1441,24 @@ MonoBehaviour:
   Name: "Ch\u0142op z \u0141ukiem"
   description: "HP: 4\nDmg/Tick: 0.33\nZasi\u0119g: 6"
   baseSprite: {fileID: 709344346830458, guid: afc70b3b944550847ad02152c276ec3e, type: 3}
+--- !u!114 &7860673997681007715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9002949752020604323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1681cfb7034f4b4468f7573a03c7d8e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseSprite: {fileID: 709344346830458, guid: afc70b3b944550847ad02152c276ec3e, type: 3}
+  walkingAnimation:
+  - {fileID: 5846662158478490359, guid: afc70b3b944550847ad02152c276ec3e, type: 3}
+  - {fileID: -6939624786193220761, guid: afc70b3b944550847ad02152c276ec3e, type: 3}
+  attackingAnimation:
+  - {fileID: 7204167837586994614, guid: afc70b3b944550847ad02152c276ec3e, type: 3}
+  - {fileID: -3372518288164868675, guid: afc70b3b944550847ad02152c276ec3e, type: 3}
+  - {fileID: -3372518288164868675, guid: afc70b3b944550847ad02152c276ec3e, type: 3}
+  - {fileID: 5776575146507098995, guid: afc70b3b944550847ad02152c276ec3e, type: 3}

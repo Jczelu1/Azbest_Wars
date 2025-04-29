@@ -94,5 +94,7 @@ public class LevelController : MonoBehaviour
         WinConditionSystem.startDelay = 2;
         //CaptureSystem
         CaptureSystem.areaMarked = false;
+        //UnitAnimatorSystem
+        UnitAnimatorSystem.started = false;
     }
 }

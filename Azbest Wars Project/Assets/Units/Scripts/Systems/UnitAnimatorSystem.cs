@@ -1,16 +1,39 @@
 using System.Collections.Generic;
 using Unity.Entities;
 using Unity.Transforms;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [UpdateInGroup(typeof(SubTickSystemGroup))]
 [UpdateBefore(typeof(SubTickManagerSystem))]
 public partial class UnitAnimatorSystem : SystemBase
 {
+    public static List<UnitAnimatorData> animators = new List<UnitAnimatorData>();
+    public static bool started = false;
+    protected override void OnCreate()
+    {
+        RequireForUpdate<UnitAnimatorData>();
+    }
     protected override void OnUpdate()
     {
-        Entities.WithoutBurst().ForEach((Entity entity, ref UnitStateData unitState, in UnitAnimatorData animator) =>
+        if (SetupSystem.startDelay != -1) return;
+        if (!started)
         {
+            started = true;
+            animators.Clear();
+            Entities.WithoutBurst().ForEach((in UnitTypeData unitType, in UnitAnimatorData animator) =>
+            {
+                while (animators.Count <= unitType.Id)
+                {
+                    animators.Add(animator);
+                }
+                animators[unitType.Id] = animator;
+            }).Run();
+        }
+        Entities.WithoutBurst().ForEach((Entity entity, in UnitStateData unitState, in UnitTypeId typeId) =>
+        {
+            if (animators.Count <= typeId.Id) return;
+            UnitAnimatorData animator = animators[typeId.Id];
             SpriteRenderer spriteRenderer = EntityManager.GetComponentObject<SpriteRenderer>(entity);
             int subTickNumber = SubTickSystemGroup.subTickNumber;
             if (unitState.Moved && animator.WalkingAnimation.Count != 0)

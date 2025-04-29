@@ -10,15 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 8846682362671068879}
   - component: {fileID: 8476604090163508261}
+  - component: {fileID: 7172626163880832577}
+  - component: {fileID: 1099275452461169279}
   - component: {fileID: 1771875329429501034}
   - component: {fileID: 1060788579720642809}
-  - component: {fileID: 7172626163880832577}
   - component: {fileID: 2870449214654411729}
   - component: {fileID: 627702659384841039}
   - component: {fileID: 4466551038537516052}
-  - component: {fileID: 1099275452461169279}
   - component: {fileID: 4152518714519839308}
-  - component: {fileID: 6038671306258582303}
   - component: {fileID: 3517761953204736527}
   - component: {fileID: 1346169511485499047}
   m_Layer: 0
@@ -100,6 +99,35 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7172626163880832577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137924443287163154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d2d9329bb2c2134fab04c5f6d9ef6c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 12
+--- !u!114 &1099275452461169279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137924443287163154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae66b9bd0af667640ab89e45702a88fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 2
+  attackType: 2
+  attackCooldown: 0
+  moveCooldown: 1
 --- !u!114 &1771875329429501034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,19 +155,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9eccc38c0d82e2439ffed9c77d84967, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7172626163880832577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2137924443287163154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d2d9329bb2c2134fab04c5f6d9ef6c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 12
 --- !u!114 &2870449214654411729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,22 +193,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7879e0a9235573942a4b08ff82d1d6e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1099275452461169279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2137924443287163154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae66b9bd0af667640ab89e45702a88fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 2
-  attackType: 2
-  attackCooldown: 0
-  moveCooldown: 1
 --- !u!114 &4152518714519839308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,27 +205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3191b46586d28bb4db0812624f47f4fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6038671306258582303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2137924443287163154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1681cfb7034f4b4468f7573a03c7d8e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseSprite: {fileID: 3834385465485835948, guid: 09f643f4f6631ba4582454c71076b007, type: 3}
-  walkingAnimation:
-  - {fileID: -5021666831352043469, guid: 09f643f4f6631ba4582454c71076b007, type: 3}
-  - {fileID: -2746248628074282883, guid: 09f643f4f6631ba4582454c71076b007, type: 3}
-  attackingAnimation:
-  - {fileID: -5703133519100246276, guid: 09f643f4f6631ba4582454c71076b007, type: 3}
-  - {fileID: 1782371080320830621, guid: 09f643f4f6631ba4582454c71076b007, type: 3}
-  - {fileID: -4874950540573153209, guid: 09f643f4f6631ba4582454c71076b007, type: 3}
-  - {fileID: -5703133519100246276, guid: 09f643f4f6631ba4582454c71076b007, type: 3}
 --- !u!114 &3517761953204736527
 MonoBehaviour:
   m_ObjectHideFlags: 0
