@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class MusicPlayer : MonoBehaviour
 {
     public bool playOnStart = true;
+    public bool isMenu = false;
     public static MusicPlayer Instance;
     private void Awake()
     {
@@ -23,6 +24,8 @@ public class MusicPlayer : MonoBehaviour
     [SerializeField]
     AudioSource endTheme;
     [SerializeField]
+    AudioSource menuTheme;
+    [SerializeField]
     float fadeDuration = 2f;
     AudioSource currentTheme;
     int currentIndex;
@@ -31,6 +34,11 @@ public class MusicPlayer : MonoBehaviour
     
     void Start()
     {
+        if (isMenu)
+        {
+            menuTheme.Play();
+            return;
+        }
         if (playOnStart)
         {
             currentTheme = startTheme;
@@ -42,6 +50,7 @@ public class MusicPlayer : MonoBehaviour
 
     void Update()
     {
+        if (isMenu) return;
         if (currentTheme != null && !currentTheme.isPlaying)
         {
             currentTheme.Stop();
@@ -62,6 +71,7 @@ public class MusicPlayer : MonoBehaviour
             }
             startTheme.volume = volume;
             endTheme.volume = volume;
+            menuTheme.volume = volume;
         }
     }
     public void StopMusic()

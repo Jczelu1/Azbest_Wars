@@ -10,6 +10,7 @@ public class TextWriter : MonoBehaviour
 
     public float timePerCharacter = 0.05f;
     public float timePerNewline = 1f;
+    public float endTime = 3f;
     public int maxLines = 10;
 
     public InputAction skipAction;
@@ -121,7 +122,7 @@ public class TextWriter : MonoBehaviour
         }
 
         // Completed writing
-        yield return new WaitForSeconds(timePerNewline * 2);
+        yield return new WaitForSeconds(endTime);
         OnFinishWriting?.Invoke();
     }
 

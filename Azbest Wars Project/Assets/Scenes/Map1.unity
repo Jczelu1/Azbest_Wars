@@ -20797,6 +20797,10 @@ PrefabInstance:
       propertyPath: 'startingResources.Array.data[0]'
       value: 10000
       objectReference: {fileID: 0}
+    - target: {fileID: 3580959950437207349, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: eb615be247d12434b92ce51469947054, type: 3}
     - target: {fileID: 3605773585316821996, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_Name
       value: Level
