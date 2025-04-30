@@ -78,11 +78,149 @@ public partial struct PathfindOnTickJob : IJobEntity
     [ReadOnly]
     public ComponentLookup<RangedAttackData> rangedAttackLookup;
 
+    public void AttackPathfind(Entity entity, int sortKey, ref UnitStateData unitState, ref GridPosition gridPosition)
+    {
+        int team = teamLookup[entity].Team;
+        int2 startPos = gridPosition.Position;
+        // Maximum possible number of nodes in the search area
+        int maxNodes = (AUTO_FIND_ENEMY_DISTANCE * 2 + 1) * (AUTO_FIND_ENEMY_DISTANCE * 2 + 1);
+        NativeList<int2> queue = new NativeList<int2>(maxNodes, Allocator.Temp);
+        NativeHashMap<int2, int2> searched = new NativeHashMap<int2, int2>(maxNodes, Allocator.Temp);
+
+        // Initialize the search with the starting position.
+        queue.Add(startPos);
+        searched.Add(startPos, new int2(-1, -1));
+
+        int2 enemyPosition = new int2(-1, -1);
+        bool foundEnemy = false;
+        int head = 0; // Use a head pointer for FIFO behavior
+
+        // Breadth-first search loop.
+        while (head < queue.Length && !foundEnemy)
+        {
+            int2 current = queue[head];
+            head++;
+
+            for (int i = 0; i < Pathfinder.directions.Length; i++)
+            {
+                int2 offset = Pathfinder.directions[i];
+                int2 neighbor = current + offset;
+
+                // Skip if already visited.
+                if (searched.ContainsKey(neighbor))
+                    continue;
+
+                // Skip if outside grid bounds.
+                if (!occupied.IsInGrid(neighbor))
+                    continue;
+                //unwalkable
+                if (!isWalkable[neighbor])
+                    continue;
+
+
+                // Ensure neighbor is within the auto-find search radius.
+                if (math.abs(neighbor.x - startPos.x) > AUTO_FIND_ENEMY_DISTANCE ||
+                    math.abs(neighbor.y - startPos.y) > AUTO_FIND_ENEMY_DISTANCE)
+                    continue;
+
+                //maybe also continue if tile also occupied by other unit
+                if (occupied[neighbor] != Entity.Null && occupied[neighbor] != entity)
+                {
+                    Entity enemyEntity = occupied[neighbor];
+                    // Check if the enemy is on a different team.
+                    if (teamLookup[enemyEntity].Team != team)
+                    {
+                        // Mark enemy as found
+                        enemyPosition = neighbor;
+                        searched.Add(neighbor, current);
+                        foundEnemy = true;
+                        break;
+                    }
+                    else if (unitState.Stuck != 0) continue;
+                }
+
+                // Enqueue valid neighbor.
+                queue.Add(neighbor);
+                searched.Add(neighbor, current);
+            }
+        }
+
+        // If no enemy was found, dispose temporary collections and exit.
+        if (enemyPosition.x == -1)
+        {
+            queue.Dispose();
+            searched.Dispose();
+            return;
+        }
+        if (rangedAttackLookup.HasComponent(entity))
+        {
+            int maxrange = rangedAttackLookup[entity].Range;
+            int range = math.max(math.abs(gridPosition.Position.x - enemyPosition.x), math.abs(gridPosition.Position.y - enemyPosition.y));
+            if (range <= maxrange)
+            {
+                ecb.RemoveComponent<PathNode>(sortKey, entity);
+                ecb.AddBuffer<PathNode>(sortKey, entity);
+                queue.Dispose();
+                searched.Dispose();
+                return;
+            }
+        }
+
+        // Backtrack from the enemy position to build the path.
+        NativeList<int2> path = new NativeList<int2>(Allocator.Temp);
+        int2 pathNode = enemyPosition;
+        while (pathNode.x != -1)
+        {
+            path.Add(pathNode);
+            pathNode = searched[pathNode];
+        }
+        if (path.Length <= 2)
+        {
+            queue.Dispose();
+            searched.Dispose();
+            return;
+        }
+
+        //maybe do this
+        if (meleAttackLookup.HasComponent(entity))
+        {
+            if (meleAttackLookup[entity].AttackType == 2 && path.Length <= 3)
+            {
+                ecb.RemoveComponent<PathNode>(sortKey, entity);
+                ecb.AddBuffer<PathNode>(sortKey, entity);
+                queue.Dispose();
+                searched.Dispose();
+                return;
+            }
+        }
+        // Update the entity's path by removing the old path and appending new nodes in reverse order.
+        ecb.RemoveComponent<PathNode>(sortKey, entity);
+        ecb.AddBuffer<PathNode>(sortKey, entity);
+
+        ecb.AppendToBuffer<PathNode>(sortKey, entity, new PathNode { PathPos = path[path.Length - 2] });
+
+        // Reset pathData
+        unitState.PathIndex = 0;
+        unitState.Stuck = 0;
+        unitState.Destination = enemyPosition;
+        ecb.SetComponent(sortKey, entity, unitState);
+
+        // Dispose of temporary native collections.
+        queue.Dispose();
+        searched.Dispose();
+        path.Dispose();
+    }
 
     public void Execute(Entity entity, [EntityIndexInQuery] int sortKey, ref UnitStateData unitState, ref GridPosition gridPosition, ref SelectedData selected)
     {
         unitState.MoveProcessed = false;
-        int team = teamLookup[entity].Team;
+        
+        
+        //pathfind to enemy
+        if (unitState.MovementState == 1)
+        {
+            AttackPathfind(entity, sortKey, ref unitState, ref gridPosition);
+        }
         //unstuck
         if (unitState.Stuck == 1)
         {
@@ -93,290 +231,27 @@ public partial struct PathfindOnTickJob : IJobEntity
             if (path.Length == 0)
             {
                 unitState.Stuck = 2;
-                //maybe do
-                //unitState.MovementState = 2;
                 path.Dispose();
-                return;
             }
-
-            ecb.RemoveComponent<PathNode>(sortKey, entity);
-            ecb.AddBuffer<PathNode>(sortKey, entity);
-
-            //Append the new path nodes in reverse order.
-            for (int i = path.Length - 2; i >= 0; i--)
+            else
             {
-                ecb.AppendToBuffer<PathNode>(sortKey, entity, new PathNode { PathPos = path[i] });
+                ecb.RemoveComponent<PathNode>(sortKey, entity);
+                ecb.AddBuffer<PathNode>(sortKey, entity);
+
+                //Append the new path nodes in reverse order.
+                for (int i = path.Length - 2; i >= 0; i--)
+                {
+                    ecb.AppendToBuffer<PathNode>(sortKey, entity, new PathNode { PathPos = path[i] });
+                }
+
+                //Reset pathData
+                var newPathData = unitState;
+                newPathData.PathIndex = 0;
+                newPathData.Stuck = 0;
+                ecb.SetComponent(sortKey, entity, newPathData);
+
+                path.Dispose();
             }
-
-            //Reset pathData
-            var newPathData = unitState;
-            newPathData.PathIndex = 0;
-            newPathData.Stuck = 0;
-            ecb.SetComponent(sortKey, entity, newPathData);
-
-            path.Dispose();
         }
-        //pathfind to enemy
-        else if (unitState.MovementState == 1)
-        {
-            int2 startPos = gridPosition.Position;
-            // Maximum possible number of nodes in the search area
-            int maxNodes = (AUTO_FIND_ENEMY_DISTANCE * 2 + 1) * (AUTO_FIND_ENEMY_DISTANCE * 2 + 1);
-            NativeList<int2> queue = new NativeList<int2>(maxNodes, Allocator.Temp);
-            NativeHashMap<int2, int2> searched = new NativeHashMap<int2, int2>(maxNodes, Allocator.Temp);
-
-            // Initialize the search with the starting position.
-            queue.Add(startPos);
-            searched.Add(startPos, new int2(-1, -1));
-
-            int2 enemyPosition = new int2(-1, -1);
-            bool foundEnemy = false;
-            int head = 0; // Use a head pointer for FIFO behavior
-
-            // Breadth-first search loop.
-            while (head < queue.Length && !foundEnemy)
-            {
-                int2 current = queue[head];
-                head++;
-
-                for (int i = 0; i < Pathfinder.directions.Length; i++)
-                {
-                    int2 offset = Pathfinder.directions[i];
-                    int2 neighbor = current + offset;
-
-                    // Skip if already visited.
-                    if (searched.ContainsKey(neighbor))
-                        continue;
-
-                    // Skip if outside grid bounds.
-                    if (!occupied.IsInGrid(neighbor))
-                        continue;
-                    //unwalkable
-                    if (!isWalkable[neighbor])
-                        continue;
-
-
-                    // Ensure neighbor is within the auto-find search radius.
-                    if (math.abs(neighbor.x - startPos.x) > AUTO_FIND_ENEMY_DISTANCE ||
-                        math.abs(neighbor.y - startPos.y) > AUTO_FIND_ENEMY_DISTANCE)
-                        continue;
-
-                    //maybe also continue if tile also occupied by other unit
-                    if (occupied[neighbor] != Entity.Null && occupied[neighbor] != entity)
-                    {
-                        Entity enemyEntity = occupied[neighbor];
-                        // Check if the enemy is on a different team.
-                        if (teamLookup[enemyEntity].Team != team)
-                        {
-                            // Mark enemy as found
-                            enemyPosition = neighbor;
-                            searched.Add(neighbor, current);
-                            foundEnemy = true;
-                            break;
-                        }
-                        else if (unitState.Stuck != 0) continue;
-                    }
-
-                    // Enqueue valid neighbor.
-                    queue.Add(neighbor);
-                    searched.Add(neighbor, current);
-                }
-            }
-
-            // If no enemy was found, dispose temporary collections and exit.
-            if (enemyPosition.x == -1)
-            {
-                queue.Dispose();
-                searched.Dispose();
-                return;
-            }
-            if (rangedAttackLookup.HasComponent(entity))
-            {
-                int maxrange = rangedAttackLookup[entity].Range;
-                int range = math.max(math.abs(gridPosition.Position.x - enemyPosition.x), math.abs(gridPosition.Position.y - enemyPosition.y));
-                if (range <= maxrange)
-                {
-                    ecb.RemoveComponent<PathNode>(sortKey, entity);
-                    ecb.AddBuffer<PathNode>(sortKey, entity);
-                    queue.Dispose();
-                    searched.Dispose();
-                    return;
-                }
-            }
-
-            // Backtrack from the enemy position to build the path.
-            NativeList<int2> path = new NativeList<int2>(Allocator.Temp);
-            int2 pathNode = enemyPosition;
-            while (pathNode.x != -1)
-            {
-                path.Add(pathNode);
-                pathNode = searched[pathNode];
-            }
-            if (path.Length <= 2)
-            {
-                queue.Dispose();
-                searched.Dispose();
-                return;
-            }
-
-            //maybe do this
-            if (meleAttackLookup.HasComponent(entity))
-            {
-                if (meleAttackLookup[entity].AttackType == 2 && path.Length <= 3)
-                {
-                    ecb.RemoveComponent<PathNode>(sortKey, entity);
-                    ecb.AddBuffer<PathNode>(sortKey, entity);
-                    queue.Dispose();
-                    searched.Dispose();
-                    return;
-                }
-            }
-            // Update the entity's path by removing the old path and appending new nodes in reverse order.
-            ecb.RemoveComponent<PathNode>(sortKey, entity);
-            ecb.AddBuffer<PathNode>(sortKey, entity);
-
-            ecb.AppendToBuffer<PathNode>(sortKey, entity, new PathNode { PathPos = path[path.Length - 2] });
-            //for (int i = path.Length - 2; i >= 1; i--)
-            //{
-            //    ecb.AppendToBuffer<PathNode>(sortKey, entity, new PathNode { PathPos = path[i] });
-            //}
-
-            // Reset pathData
-            unitState.PathIndex = 0;
-            unitState.Stuck = 0;
-            unitState.Destination = enemyPosition;
-            ecb.SetComponent(sortKey, entity, unitState);
-
-            // Dispose of temporary native collections.
-            queue.Dispose();
-            searched.Dispose();
-            path.Dispose();
-        }
-
-
-        //retreat
-        //else if (unitState.MovementState == 2)
-        //{
-        //    int2 startPos = gridPosition.Position;
-        //    // Maximum possible number of nodes in the search area
-        //    int maxNodes = (autoFindEnemyDistance * 2 + 1) * (autoFindEnemyDistance * 2 + 1);
-        //    NativeList<int2> queue = new NativeList<int2>(maxNodes, Allocator.Temp);
-        //    NativeHashMap<int2, int2> searched = new NativeHashMap<int2, int2>(maxNodes, Allocator.Temp);
-
-        //    // Initialize the search with the starting position.
-        //    queue.Add(startPos);
-        //    searched.Add(startPos, new int2(-1, -1));
-
-        //    int2 enemyPosition = new int2(-1, -1);
-        //    bool foundEnemy = false;
-        //    int head = 0; // Use a head pointer for FIFO behavior
-
-        //    // Breadth-first search loop.
-        //    while (head < queue.Length && !foundEnemy)
-        //    {
-        //        int2 current = queue[head];
-        //        head++;
-
-        //        for (int i = 0; i < Pathfinder.directions.Length; i++)
-        //        {
-        //            int2 offset = Pathfinder.directions[i];
-        //            int2 neighbor = current + offset;
-
-        //            // Skip if already visited.
-        //            if (searched.ContainsKey(neighbor))
-        //                continue;
-
-        //            // Skip if outside grid bounds.
-        //            if (!occupied.IsInGrid(neighbor))
-        //                continue;
-        //            //unwalkable
-        //            if (!isWalkable[neighbor])
-        //                continue;
-
-        //            // Ensure neighbor is within the auto-find search radius.
-        //            if (math.abs(neighbor.x - startPos.x) > autoFindEnemyDistance ||
-        //                math.abs(neighbor.y - startPos.y) > autoFindEnemyDistance)
-        //                continue;
-
-        //            //maybe also continue if tile also occupied by other unit
-        //            if (occupied[neighbor] != Entity.Null && occupied[neighbor] != entity)
-        //            {
-        //                Entity enemyEntity = occupied[neighbor];
-        //                // Check if the enemy is on a different team.
-        //                if (teamLookup[enemyEntity].Team != team)
-        //                {
-        //                    // Mark enemy as found
-        //                    enemyPosition = neighbor;
-        //                    searched.Add(neighbor, current);
-        //                    foundEnemy = true;
-        //                    break;
-        //                }
-        //            }
-
-        //            // Enqueue valid neighbor.
-        //            queue.Add(neighbor);
-        //            searched.Add(neighbor, current);
-        //        }
-        //    }
-
-        //    // If no enemy was found, dispose temporary collections and exit.
-        //    if (enemyPosition.x == -1)
-        //    {
-        //        queue.Dispose();
-        //        searched.Dispose();
-        //        return;
-        //    }
-        //    int2 enemyDirection = math.sign(new int2(gridPosition.Position.x - enemyPosition.x, gridPosition.Position.y - enemyPosition.y));
-        //    int2 bestOption = new int2(-1, -1);
-        //    float bestDistance = math.lengthsq(gridPosition.Position - enemyPosition) + .1f;
-        //    for (int i = 0; i < 8; i++)
-        //    {
-        //        int2 retreatDir = Pathfinder.directions[i];
-        //        int2 newPos = gridPosition.Position + retreatDir;
-
-        //        // Validate position
-        //        if (!occupied.IsInGrid(newPos)) continue;
-        //        if (!isWalkable[newPos]) continue;
-        //        if (unitState.Stuck == 1 && occupied[newPos] != Entity.Null) continue;
-
-        //        // Check if moving away from enemy
-        //        float newDistance = math.lengthsq(newPos - enemyPosition);
-        //        if (newDistance <= bestDistance) continue;
-        //        bestDistance = newDistance;
-        //        // Check occupancy
-        //        //if (occupied[newPos] != Entity.Null && occupied[newPos] != entity) continue;
-
-        //        bestOption = retreatDir + gridPosition.Position;
-        //    }
-
-        //    if (bestOption.x == -1)
-        //    {
-        //        queue.Dispose();
-        //        searched.Dispose();
-        //        return;
-        //    }
-
-        //    // Update the entity's path by removing the old path and appending new nodes in reverse order.
-        //    ecb.RemoveComponent<PathNode>(sortKey, entity);
-        //    ecb.AddBuffer<PathNode>(sortKey, entity);
-
-        //    ecb.AppendToBuffer<PathNode>(sortKey, entity, new PathNode { PathPos = bestOption });
-        //    //for (int i = path.Length - 2; i >= 1; i--)
-        //    //{
-        //    //    ecb.AppendToBuffer<PathNode>(sortKey, entity, new PathNode { PathPos = path[i] });
-        //    //}
-
-        //    // Reset pathData
-        //    unitState.PathIndex = 0;
-        //    unitState.Stuck = 0;
-        //    unitState.Destination = enemyPosition;
-        //    ecb.SetComponent(sortKey, entity, unitState);
-
-        //    // Dispose of temporary native collections.
-        //    queue.Dispose();
-        //    searched.Dispose();
-        //}
-
-        //unstuck
     }
 }

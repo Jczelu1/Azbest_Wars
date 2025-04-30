@@ -168,7 +168,6 @@ public partial struct RangedAttackSystem : ISystem
                             foundEnemy = true;
                             break;
                         }
-                        else if (unitState.Stuck == 1) continue;
                     }
 
                     // Enqueue valid neighbor.
