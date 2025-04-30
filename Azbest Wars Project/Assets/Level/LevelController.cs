@@ -96,5 +96,7 @@ public class LevelController : MonoBehaviour
         CaptureSystem.areaMarked = false;
         //UnitAnimatorSystem
         UnitAnimatorSystem.started = false;
+
+        TextWriter.skipAll = false;
     }
 }

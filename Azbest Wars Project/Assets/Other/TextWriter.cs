@@ -23,8 +23,9 @@ public class TextWriter : MonoBehaviour
     public string fullText;
 
     private bool skip = false;
-    private bool skipAll = false;
+    public static bool skipAll = false;
     private bool newLine = false;
+
 
     void Awake()
     {
@@ -55,6 +56,10 @@ public class TextWriter : MonoBehaviour
     {
         TutorialSystem.startTutorial = true; ;
     }
+    public void ResetSkipAll()
+    {
+        skipAll = false;
+    }
 
     IEnumerator ShowText()
     {
@@ -65,7 +70,6 @@ public class TextWriter : MonoBehaviour
         {
             if (skipAll)
             {
-                skipAll = false;
                 textComponent.text = fullText.Replace("|", "");
                 OnFinishWriting?.Invoke();
                 yield break;
