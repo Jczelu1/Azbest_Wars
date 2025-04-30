@@ -13,9 +13,9 @@ public class TextWriter : MonoBehaviour
     public float endTime = 3f;
     public int maxLines = 10;
 
-    public InputAction skipAction;
-    public InputAction skipAllAction;
-    public InputAction leftClickAction;
+    private InputAction skipAction;
+    private InputAction skipAllAction;
+    private InputAction leftClickAction;
 
     public UnityEvent OnFinishWriting;
 

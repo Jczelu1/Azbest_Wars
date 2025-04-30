@@ -30012,6 +30012,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2561208842499828644, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: leftClickAction.m_Name
+      value: Left Click
+      objectReference: {fileID: 0}
     - target: {fileID: 2940103000404181524, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 10.200012
@@ -49155,6 +49159,10 @@ PrefabInstance:
     - target: {fileID: 5192465653582577040, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207285530630783088, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: leftClickAction.m_Name
+      value: Left Click
       objectReference: {fileID: 0}
     - target: {fileID: 5551266789489657187, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_IsActive
