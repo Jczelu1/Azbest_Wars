@@ -86,7 +86,6 @@ public partial struct PathfindOnTickJob : IJobEntity
         //unstuck
         if (unitState.Stuck == 1)
         {
-            Debug.Log("AAAA");
             NativeList<int2> path = new NativeList<int2>(Allocator.Temp);
             Pathfinder.FindPath(gridPosition.Position, unitState.Destination, gridSize, isWalkable.GridArray, occupied.GridArray, false, ref path);
 
