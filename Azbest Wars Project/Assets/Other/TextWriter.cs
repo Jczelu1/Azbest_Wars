@@ -15,6 +15,7 @@ public class TextWriter : MonoBehaviour
 
     public InputAction skipAction;
     public InputAction skipAllAction;
+    public InputAction leftClickAction;
 
     public UnityEvent OnFinishWriting;
 
@@ -31,6 +32,7 @@ public class TextWriter : MonoBehaviour
     {
         skipAction = InputSystem.actions.FindAction("Skip");
         skipAllAction = InputSystem.actions.FindAction("SkipAll");
+        leftClickAction = InputSystem.actions.FindAction("LeftClick");
         if (textComponent == null)
         {
             //textComponent = GetComponent<TMP_Text>();
@@ -45,7 +47,7 @@ public class TextWriter : MonoBehaviour
     }
     public void Update()
     {
-        if (skipAction.WasPressedThisFrame()) skip = true;
+        if (skipAction.WasPressedThisFrame() || leftClickAction.WasPressedThisFrame()) skip = true;
         if (skipAllAction.WasPressedThisFrame())  skipAll = true;
     }
     public void NotPauseOnSetup()
