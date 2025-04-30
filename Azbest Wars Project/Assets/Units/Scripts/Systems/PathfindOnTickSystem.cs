@@ -83,8 +83,42 @@ public partial struct PathfindOnTickJob : IJobEntity
     {
         unitState.MoveProcessed = false;
         int team = teamLookup[entity].Team;
+        //unstuck
+        if (unitState.Stuck == 1)
+        {
+            Debug.Log("AAAA");
+            NativeList<int2> path = new NativeList<int2>(Allocator.Temp);
+            Pathfinder.FindPath(gridPosition.Position, unitState.Destination, gridSize, isWalkable.GridArray, occupied.GridArray, false, ref path);
+
+            //no other path exists
+            if (path.Length == 0)
+            {
+                unitState.Stuck = 2;
+                //maybe do
+                //unitState.MovementState = 2;
+                path.Dispose();
+                return;
+            }
+
+            ecb.RemoveComponent<PathNode>(sortKey, entity);
+            ecb.AddBuffer<PathNode>(sortKey, entity);
+
+            //Append the new path nodes in reverse order.
+            for (int i = path.Length - 2; i >= 0; i--)
+            {
+                ecb.AppendToBuffer<PathNode>(sortKey, entity, new PathNode { PathPos = path[i] });
+            }
+
+            //Reset pathData
+            var newPathData = unitState;
+            newPathData.PathIndex = 0;
+            newPathData.Stuck = 0;
+            ecb.SetComponent(sortKey, entity, newPathData);
+
+            path.Dispose();
+        }
         //pathfind to enemy
-        if (unitState.MovementState == 1)
+        else if (unitState.MovementState == 1)
         {
             int2 startPos = gridPosition.Position;
             // Maximum possible number of nodes in the search area
@@ -345,37 +379,5 @@ public partial struct PathfindOnTickJob : IJobEntity
         //}
 
         //unstuck
-        if (unitState.Stuck == 1)
-        {
-            NativeList<int2> path = new NativeList<int2>(Allocator.Temp);
-            Pathfinder.FindPath(gridPosition.Position, unitState.Destination, gridSize, isWalkable.GridArray, occupied.GridArray, false, ref path);
-
-            //no other path exists
-            if (path.Length == 0)
-            {
-                unitState.Stuck = 2;
-                //maybe do
-                //unitState.MovementState = 2;
-                path.Dispose();
-                return;
-            }
-
-            ecb.RemoveComponent<PathNode>(sortKey, entity);
-            ecb.AddBuffer<PathNode>(sortKey, entity);
-
-            //Append the new path nodes in reverse order.
-            for (int i = path.Length - 2; i >= 0; i--)
-            {
-                ecb.AppendToBuffer<PathNode>(sortKey, entity, new PathNode { PathPos = path[i] });
-            }
-
-            //Reset pathData
-            var newPathData = unitState;
-            newPathData.PathIndex = 0;
-            newPathData.Stuck = 0;
-            ecb.SetComponent(sortKey, entity, newPathData);
-
-            path.Dispose();
-        }
     }
 }
