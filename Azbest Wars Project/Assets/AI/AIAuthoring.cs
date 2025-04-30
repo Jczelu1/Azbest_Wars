@@ -22,6 +22,8 @@ public class AIAuthoring : MonoBehaviour
     float ConserveChance = .5f;
     [SerializeField]
     int ConserveDuration = 10;
+    [SerializeField]
+    int StartDelay = 10;
     void Start()
     {
         ArtificialIdiot.AGGRESSIVE_CHANCE = AggressiveChance;
@@ -35,5 +37,6 @@ public class AIAuthoring : MonoBehaviour
         ArtificialIdiot.CONSERVE_DURATION = ConserveDuration;
         ArtificialIdiot.CONSERVE_CHANCE = ConserveChance;
         ArtificialIdiot.conserving = 0;
+        ArtificialIdiot.startDelay = StartDelay;
     }
 }

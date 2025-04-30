@@ -23,6 +23,7 @@ public partial class ArtificialIdiot : SystemBase
     public static int FORMATION_MAX_SIZE = 6;
     public static float CONSERVE_CHANCE = 0.5f;
     public static int CONSERVE_DURATION = 10;
+    public static int startDelay = 10;
     public static NativeList<Entity> captureAreas = new NativeList<Entity>(Allocator.Persistent);
     public static NativeList<Formation> formations = new NativeList<Formation>(Allocator.Persistent);
 
@@ -35,6 +36,11 @@ public partial class ArtificialIdiot : SystemBase
     {
         if (TutorialSystem.IsTutorial) return;
         if (SetupSystem.startDelay != -1) return;
+        if(startDelay != 0)
+        {
+            startDelay--;
+            return;
+        }
         byte AITeam = TeamManager.Instance.AITeam;
         //not started
         if (captureAreas.Length == 0)
