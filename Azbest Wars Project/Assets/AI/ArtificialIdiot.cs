@@ -138,7 +138,7 @@ public partial class ArtificialIdiot : SystemBase
                 spawner.Queued = unitsToQueue;
                 spawner.SpawnedUnit = unitTypeId;
                 resourceLeft -= SpawnerSystem.unitTypes[unitTypeId].Cost * unitsToQueue;
-                if (UnityEngine.Random.value < FORMATION_GROW_CHANCE)
+                if (UnityEngine.Random.value > FORMATION_GROW_CHANCE)
                 {
                     if (spawner.SetFormation != -1)
                     {
