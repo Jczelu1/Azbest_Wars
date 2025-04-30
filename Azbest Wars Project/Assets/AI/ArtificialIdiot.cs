@@ -183,6 +183,7 @@ public partial class ArtificialIdiot : SystemBase
                 bool maxdefend = false;
                 foreach (Entity e in captureAreas)
                 {
+                    if (UnityEngine.Random.value < DEST_RANDOMNESS) continue;
                     bool defend = false;
                     if (EntityManager.GetComponentData<TeamData>(e).Team == AITeam)
                     {
@@ -193,8 +194,6 @@ public partial class ArtificialIdiot : SystemBase
                         }
                         defend = true;
                     }
-                    else if (UnityEngine.Random.value < DEST_RANDOMNESS) continue;
-
                     int2 pos = EntityManager.GetComponentData<GridPosition>(e).Position;
                     pos.y -= 1;
                     float distance = math.distancesq(pos, formation.Position);
