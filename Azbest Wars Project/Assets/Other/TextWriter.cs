@@ -9,7 +9,7 @@ public class TextWriter : MonoBehaviour
     public TextMeshProUGUI textComponent;
 
     public float timePerCharacter = 0.05f;
-    public float timePerNewline = 1f;
+    public float timePerPause = 1f;
     public float endTime = 3f;
     public int maxLines = 10;
 
@@ -60,14 +60,13 @@ public class TextWriter : MonoBehaviour
     {
         int index = 0;
         int length = fullText.Length;
-        int currentLines = 1;
 
         while (index < length)
         {
             if (skipAll)
             {
                 skipAll = false;
-                textComponent.text = fullText;
+                textComponent.text = fullText.Replace("|", "");
                 OnFinishWriting?.Invoke();
                 yield break;
             }
@@ -81,42 +80,30 @@ public class TextWriter : MonoBehaviour
                 int nextNewline = fullText.IndexOf('\n', index);
                 if (nextNewline >= 0)
                 {
-                    textComponent.text += fullText.Substring(index, nextNewline - index + 1);
+                    textComponent.text += fullText.Substring(index, nextNewline - index + 1).Replace("|", "");
                     index = nextNewline + 1;
-                    currentLines++;
-
-                    if (currentLines > maxLines)
-                    {
-                        textComponent.text = string.Empty;
-                        currentLines = 1;
-                    }
 
                     yield return new WaitForSeconds(timePerCharacter);
                     continue;
                 }
-                textComponent.text = fullText;
-                yield return new WaitForSeconds(timePerNewline);
+                textComponent.text = fullText.Replace("|", ""); ;
+                yield return new WaitForSeconds(timePerPause);
                 OnFinishWriting?.Invoke();
                 yield break;
             }
 
-            char c = fullText[index++];
-            textComponent.text += c;
 
+            char c = fullText[index++];
             newLine = false;
-            if (c == '\n')
+            if (c == '|')
             {
                 newLine = true;
-                currentLines++;
-                if (currentLines > maxLines)
-                {
-                    textComponent.text = string.Empty;
-                    currentLines = 1;
-                }
-                yield return new WaitForSeconds(timePerNewline);
+                yield return new WaitForSeconds(timePerPause);
             }
             else
             {
+                
+                textComponent.text += c;
                 yield return new WaitForSeconds(timePerCharacter);
             }
         }

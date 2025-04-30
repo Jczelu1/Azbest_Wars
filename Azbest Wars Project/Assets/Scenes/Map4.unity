@@ -66564,6 +66564,17 @@ PrefabInstance:
       propertyPath: m_Tiles.Array.data[1928].second.m_TileObjectToInstantiateIndex
       value: 65535
       objectReference: {fileID: 0}
+    - target: {fileID: 5192465653582577040, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6334161924090326063, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: m_text
+      value: "Resztki armii niebieskich schroni\u0142y si\u0119\nw zamku.|\nJe\u015Bli
+        uda ci si\u0119 przej\u0105\u0107 zamek, mo\u017Cesz\nzako\u0144czy\u0107
+        t\u0105 wojn\u0119.|\nMusisz przej\u0105\u0107 zamek zanim wr\xF3g zbierze\nwystarczaj\u0105ce
+        si\u0142y na kontratak."
+      objectReference: {fileID: 0}
     - target: {fileID: 6484370149853546692, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: ReadjustChance
       value: 0.02
@@ -66619,6 +66630,14 @@ PrefabInstance:
     - target: {fileID: 8107631912978590160, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8960226902698819270, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: doWhatToWin
+      value: "Zdob\u0105d\u017A zamek"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8960226902698819270, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: progressDescription
+      value: 'Zdobyte zamki:'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

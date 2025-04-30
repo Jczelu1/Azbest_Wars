@@ -49162,9 +49162,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6334161924090326063, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_text
-      value: "Dawno dawno temu, w odleg\u0142ej krainie.\nIstnia\u0142y dwa kr\xF3lestwa.\nKt\xF3re
-        walczy\u0142y o azbest.\nDlaczego?\nNie wiem.\nW ka\u017Cdym razie,\nJeste\u015B
-        nowym dow\xF3dc\u0105 armii \u017C\xF3\u0142tych.\nA to jest tw\xF3j trening."
+      value: "Dawno dawno temu, w odleg\u0142ej krainie.|\nIstnia\u0142y dwa kr\xF3lestwa.|\nKt\xF3re
+        walczy\u0142y o azbest.|\nDlaczego?|  Nie wiem.|\nW ka\u017Cdym razie,|\nJeste\u015B
+        nowym dow\xF3dc\u0105 armii \u017C\xF3\u0142tych.|\nA to jest tw\xF3j trening."
       objectReference: {fileID: 0}
     - target: {fileID: 6633700133102319887, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_LocalPosition.x
@@ -49212,8 +49212,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7561005744286985474, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_text
-      value: "Uko\u0144czy\u0142e\u015B trening.\nJeste\u015B gotowy do dowodzenia
-        armi\u0105.\nArmia niebieskich szykuje si\u0119 do ataku.\nPowodzenia."
+      value: "Uko\u0144czy\u0142e\u015B trening.|\nJeste\u015B gotowy do dowodzenia
+        armi\u0105.|\nArmia niebieskich szykuje si\u0119 do ataku.|\nPowodzenia."
       objectReference: {fileID: 0}
     - target: {fileID: 7895317627543756593, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_LocalPosition.x
