@@ -34472,6 +34472,10 @@ PrefabInstance:
       value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 6484370149853546692, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: ChangeDestChance
+      value: 0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 6484370149853546692, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: ConserveDuration
       value: 30
       objectReference: {fileID: 0}

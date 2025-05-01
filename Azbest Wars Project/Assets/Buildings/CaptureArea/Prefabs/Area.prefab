@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1583137685
   m_SortingLayer: -2
-  m_SortingOrder: 1
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 46a414f601c5b1a41908a4555132c97f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -147,9 +147,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110dce70be38d8b478a1ee4e84065ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startGridPosition:
-    x: 0
-    y: 0
   width: 1
   height: 1
   isBuilding: 0
@@ -261,9 +258,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110dce70be38d8b478a1ee4e84065ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startGridPosition:
-    x: 19
-    y: 14
   width: 1
   height: 2
   isBuilding: 1
@@ -283,6 +277,8 @@ MonoBehaviour:
   requiredCapture: 5
   width: 3
   height: 3
+  hasSpawner: 0
+  winCondition: 0
 --- !u!114 &7675700106903253540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,7 +292,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 255
-  spriteRenderer: {fileID: 1314642870110036175}
 --- !u!114 &168912572338975670
 MonoBehaviour:
   m_ObjectHideFlags: 0

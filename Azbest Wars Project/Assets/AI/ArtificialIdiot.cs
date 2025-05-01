@@ -36,7 +36,7 @@ public partial class ArtificialIdiot : SystemBase
     {
         if (TutorialSystem.IsTutorial) return;
         if (SetupSystem.startDelay != -1) return;
-        if(startDelay != 0)
+        if(startDelay > 0)
         {
             startDelay--;
             return;
