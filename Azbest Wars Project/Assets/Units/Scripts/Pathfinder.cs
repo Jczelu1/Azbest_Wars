@@ -1,13 +1,7 @@
 using Unity.Collections;
-using UnityEngine;
 using Unity.Mathematics;
-using Unity.Jobs;
 using Unity.Burst;
 using System.Runtime.InteropServices;
-using Unity.VisualScripting;
-using NUnit;
-using System.IO;
-using System;
 using Unity.Entities;
 
 [BurstCompile]

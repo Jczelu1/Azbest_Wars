@@ -1,7 +1,6 @@
 using TMPro;
 using System;
 using UnityEngine;
-using UnityEngine.Diagnostics;
 using Unity.Mathematics;
 
 public class Grid<TGridObject>

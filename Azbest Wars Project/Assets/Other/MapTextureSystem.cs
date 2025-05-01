@@ -1,11 +1,7 @@
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Transforms;
-using Unity.VisualScripting;
 using UnityEngine;
 
-//[UpdateInGroup(typeof(TickSystemGroup))]
-//[UpdateAfter(typeof(MoveSystem))]
 public partial class MapTextureSystem : SystemBase
 {
     public static Texture2D baseTexture = null;

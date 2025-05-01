@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using Unity.Entities;
-using Unity.Transforms;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [UpdateInGroup(typeof(SubTickSystemGroup))]

@@ -23,7 +23,7 @@ public partial class ArtificialIdiot : SystemBase
     public static int FORMATION_MAX_SIZE = 6;
     public static float CONSERVE_CHANCE = 0.5f;
     public static int CONSERVE_DURATION = 10;
-    public static int startDelay = 10;
+    public static int startDelay = 0;
     public static NativeList<Entity> captureAreas = new NativeList<Entity>(Allocator.Persistent);
     public static NativeList<Formation> formations = new NativeList<Formation>(Allocator.Persistent);
 
@@ -50,18 +50,6 @@ public partial class ArtificialIdiot : SystemBase
                 captureAreas.Add(entity);
                 Debug.Log("adding area");
             }).Run();
-            //Entities.WithoutBurst().ForEach((Entity entity, ref SpawnerData spawner, ref TeamData team, ref GridPosition gridPosition) =>
-            //{
-            //    if (team.Team != AITeam) return;
-            //    spawner.SetFormation = formations.Length;
-            //    formations.Add(new Formation
-            //    {
-            //        Position = gridPosition.Position,
-            //        Destination = new int2(-1, -1),
-            //        numberOfUnits = 0,
-            //        IsDefending = false
-            //    });
-            //}).Run();
         }
         int resourceLeft = TeamManager.Instance.teamResources[AITeam];
         if(conserving != 0)

@@ -1,5 +1,3 @@
-using NUnit.Framework;
-using TMPro;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;

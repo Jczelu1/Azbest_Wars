@@ -1,17 +1,8 @@
-using System;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Threading;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
-using Unity.Entities.UniversalDelegates;
-using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
-using UnityEngine;
 
 [BurstCompile]
 [UpdateInGroup(typeof(TickSystemGroup))]
@@ -33,13 +24,11 @@ public partial struct CaptureAreaSystem : ISystem
     {
         if (SetupSystem.startDelay != -1) return;
         _teamLookup.Update(ref state);
-        //move job
         CaptureJob captureJob = new CaptureJob()
         {
             teamLookup = _teamLookup,
             occupied = MainGridScript.Instance.Occupied,
         };
-        //not parallel because race conditions when moving to a tile
         state.Dependency = captureJob.Schedule(state.Dependency);
     }
     [BurstCompile]

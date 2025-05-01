@@ -1,11 +1,7 @@
-using System;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
-using Unity.Mathematics;
-using Unity.Transforms;
-using UnityEngine;
 
 [UpdateInGroup(typeof(TickSystemGroup))]
 [BurstCompile]
@@ -35,7 +31,6 @@ public partial struct ResourceExtractorSystem : ISystem
     [BurstCompile]
     public partial struct ExtractJob : IJobEntity
     {
-        //[NativeDisableParallelForRestriction]
         public NativeArray<int> resources;
         public NativeArray<int> resourceGains;
         public void Execute(in TeamData team, in ResourceSourceData source)

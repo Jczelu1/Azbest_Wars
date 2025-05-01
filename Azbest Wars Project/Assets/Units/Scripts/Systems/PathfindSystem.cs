@@ -1,7 +1,3 @@
-using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -35,8 +31,6 @@ public partial struct PathfindSystem : ISystem
     }
     public void OnUpdate(ref SystemState state)
     {
-        var stopwatch = new Stopwatch();
-        stopwatch.Start();
         _teamLookup.Update(ref state);
 
         var ecbSingleton = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
@@ -117,8 +111,6 @@ public partial struct PathfindSystem : ISystem
 
 
         //pathfind job
-        //UnityEngine.Debug.Log(MainGridScript.Instance.Occupied[0]);
-
         PathfindJob pathfindJob = new PathfindJob()
         {
             gridSize = new int2(MainGridScript.Instance.Width, MainGridScript.Instance.Height),
@@ -142,8 +134,6 @@ public partial struct PathfindSystem : ISystem
         }
         //Ensure ECB commands are played back safely
         ecbSystem.Update(state.WorldUnmanaged);
-        stopwatch.Stop();
-        //UnityEngine.Debug.Log($"Pathfinding took {stopwatch.Elapsed}");
     }
 }
 

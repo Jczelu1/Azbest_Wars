@@ -55,7 +55,6 @@ public class MusicPlayer : MonoBehaviour
         {
             currentTheme.Stop();
             PlayRandomTheme();
-            //Invoke("PlayRandomTheme", 2f);
         }
     }
     public void SetVolume()

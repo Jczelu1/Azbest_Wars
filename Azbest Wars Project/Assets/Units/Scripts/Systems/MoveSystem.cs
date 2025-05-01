@@ -1,15 +1,8 @@
-using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
-using Unity.Entities.UniversalDelegates;
-using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 [BurstCompile]

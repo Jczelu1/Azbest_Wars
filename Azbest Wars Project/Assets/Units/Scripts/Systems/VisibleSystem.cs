@@ -1,6 +1,6 @@
-using Unity.Entities;
-using Unity.Transforms;
-using UnityEngine;
+//using Unity.Entities;
+//using Unity.Transforms;
+//using UnityEngine;
 
 //[UpdateInGroup(typeof(TickSystemGroup))]
 //[UpdateAfter(typeof(FogOfWarSystem))]

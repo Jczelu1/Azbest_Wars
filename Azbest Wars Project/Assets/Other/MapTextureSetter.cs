@@ -1,5 +1,4 @@
 using UnityEngine;
-using Unity.Mathematics;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(RawImage))]
@@ -12,7 +11,6 @@ public class MapTextureSetter : MonoBehaviour
 
         Texture2D texture = MapTextureSystem.mapTexture;
         if (texture == null) return;
-        //MapTextureSystem.mapTexture.Apply();
         rawImage.texture = MapTextureSystem.mapTexture;
 
     }

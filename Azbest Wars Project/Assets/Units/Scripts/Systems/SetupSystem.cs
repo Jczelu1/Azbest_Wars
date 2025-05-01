@@ -5,9 +5,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
-//[UpdateInGroup(typeof(TickSystemGroup))]
-//[UpdateBefore(typeof(PathfindSystem))]
-//[UpdateBefore(typeof(MoveSystem))]
+
 [BurstCompile]
 [UpdateInGroup(typeof(TickSystemGroup))]
 public partial class SetupSystem : SystemBase

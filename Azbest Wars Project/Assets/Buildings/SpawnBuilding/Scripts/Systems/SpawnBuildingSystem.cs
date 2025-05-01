@@ -1,14 +1,11 @@
 using Unity.Entities;
 using Unity.Transforms;
 using Unity.Burst;
-using UnityEngine.Rendering;
 using Unity.Mathematics;
 using Unity.Collections;
-using Unity.Jobs;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
-using static SelectSystem;
+
 
 [BurstCompile]
 [UpdateInGroup(typeof(TickSystemGroup))]

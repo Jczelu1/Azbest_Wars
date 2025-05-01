@@ -1,5 +1,3 @@
-using TMPro;
-using System;
 using UnityEngine;
 using Unity.Mathematics;
 
@@ -9,9 +7,6 @@ public class DummyGrid
     public int Width { get; private set; }
     private float CellSize;
     private Vector3 GridPosition;
-    //public TextMeshPro[,] gridText;
-
-    //private bool debugText = false;
     public DummyGrid(int width, int height, float cellSize, Vector3 gridOrigin)
     {
         Height = height;

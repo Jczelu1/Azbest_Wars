@@ -1,5 +1,3 @@
-using TMPro;
-using System;
 using UnityEngine;
 using Unity.Mathematics;
 
@@ -39,17 +37,6 @@ public class UIGrid
     {
         return new Vector2(pos.x * CellSize - (UITransform.rect.width / 2) + CellSize / 2, pos.y * CellSize - (UITransform.rect.height / 2) + CellSize / 2);
     }
-    //public void ShowDebugLines()
-    //{
-    //    for (int x = 0; x < Width; x++)
-    //    {
-    //        Debug.DrawLine(GetWorldPosition(x, 0) - new Vector3(CellSize, CellSize) * .5f, GetWorldPosition(x, Height) - new Vector3(CellSize, CellSize) * .5f, Color.red, 100f);
-    //    }
-    //    for (int y = 0; y < Height; y++)
-    //    {
-    //        Debug.DrawLine(GetWorldPosition(0, y) - new Vector3(CellSize, CellSize) * .5f, GetWorldPosition(Width, y) - new Vector3(CellSize, CellSize) * .5f, Color.red, 100f);
-    //    }
-    //}
     public GameObject CreateSprite(GameObject selectPrefab, int2 position)
     {
         GameObject obj = GameObject.Instantiate(selectPrefab);
@@ -57,23 +44,4 @@ public class UIGrid
         obj.GetComponent<RectTransform>().localPosition = GetLocalPosition(position);
         return obj;
     }
-    //public void ShowDebugtext()
-    //{
-    //    debugText = true;
-    //    gridText = new TextMeshPro[Width, Height];
-    //    for (int x = 0; x < Width; x++)
-    //    {
-    //        for (int y = 0; y < Height; y++)
-    //        {
-    //            gridText[x, y] = Utils.CreateWorldText(GridArray[x, y].ToString(), null, GetWorldPosition(x, y));
-    //        }
-    //    }
-    //}
-    //public void SetDebugText(int x, int y, string text)
-    //{
-    //    if (gridText[x, y] != null)
-    //    {
-    //        gridText[x, y].text = text;
-    //    }
-    //}
 }

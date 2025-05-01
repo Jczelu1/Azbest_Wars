@@ -88,8 +88,6 @@ public partial class ArrowSystem : SystemBase
                         SpawnedArrows.Add(instance);                    
                     }
                 }
-                // Remove processed arrow
-                //SpawnedArrows.RemoveAtSwapBack(i);
             }
         }
         

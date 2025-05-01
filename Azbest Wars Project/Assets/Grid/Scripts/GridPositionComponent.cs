@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GridPositionComponent : MonoBehaviour
 {
-    //private Vector3 WorldPosition;
     [SerializeField]
     int width = 1;
     [SerializeField]

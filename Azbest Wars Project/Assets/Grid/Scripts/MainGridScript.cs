@@ -92,8 +92,6 @@ public class MainGridScript : MonoBehaviour
 
     private void Start()
     {
-        //MainGrid.ShowDebugtext();
-        //MainGrid.ShowDebugLines();
         leftClickAction = InputSystem.actions.FindAction("LeftClick");
         rightClickAction = InputSystem.actions.FindAction("RightClick");
         middleClickAction = InputSystem.actions.FindAction("MiddleClick");
@@ -154,7 +152,6 @@ public class MainGridScript : MonoBehaviour
         int2 cameraGridPosition = MainGrid.GetXY(cameraMover.GetPosition());
         cameraGridPosition.x = (int)(cameraGridPosition.x * ((float)Minimap.Width / Width));
         cameraGridPosition.y = (int)(cameraGridPosition.y * ((float)Minimap.Height / Height));
-        //Debug.Log(cameraGridPosition);
         MinimapCameraMarker.localPosition = Minimap.GetLocalPosition(cameraGridPosition);
     }
     private void OnDestroy()
@@ -302,7 +299,6 @@ public class MainGridScript : MonoBehaviour
         }
         if (leftClickAction.WasReleasedThisFrame() && Selecting)
         {
-            //Debug.Log(SelectStartPosition + " " + SelectEndPosition);
             foreach (var sprite in SelectSprites)
             {
                 Destroy(sprite);
@@ -367,11 +363,9 @@ public class MainGridScript : MonoBehaviour
     }
     public void MinimapPressed()
     {
-        // Debug.Log(Utils.GetMouseLocalPosition(MinimapTransform));
         int2 clickPos = Minimap.GetXY(Utils.GetMouseLocalPosition(MinimapTransform));
         clickPos.x = (int)(clickPos.x * ((float)Width / Minimap.Width));
         clickPos.y = (int)(clickPos.y * ((float)Height / Minimap.Height));
-        //Debug.Log(clickPos);
         MoveCameraTo(clickPos);
     }
     private void MoveCameraTo(int2 pos)

@@ -5,8 +5,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
-//[UpdateInGroup(typeof(TickSystemGroup))]
-//[UpdateBefore(typeof(PathfindSystem))]
+
 [BurstCompile]
 public partial class SelectSystem : SystemBase
 {
@@ -125,12 +124,6 @@ public partial class SelectSystem : SystemBase
             if (unitsSelected != 0) return;
             Entities.WithoutBurst().ForEach((Entity entity, ref SelectedData selected, in DynamicBuffer<Child> children, in GridPosition gridPosition, in TeamData team, in BuildingIdData buildingId) =>
             {
-                //temporary
-                //if (!EntityManager.HasComponent<SpawnerData>(entity))
-                //{
-                //    return;
-                //}
-                //if (team.Team != playerTeam) return;
                 int entityMinX = gridPosition.Position.x;
                 int entityMinY = gridPosition.Position.y;
                 int entityMaxX = entityMinX + gridPosition.Size.x - 1;
@@ -180,8 +173,6 @@ public partial class SelectSystem : SystemBase
             }
         }
     }
-    //[UpdateInGroup(typeof(TickSystemGroup))]
-    //[UpdateAfter(typeof(SpawnerSystem))]
     [BurstCompile]
     public partial class UpdateSpawnerUISystem : SystemBase
     {
