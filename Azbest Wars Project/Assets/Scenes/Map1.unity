@@ -20799,7 +20799,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2777137989076031455, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: 'startingResources.Array.data[0]'
-      value: 10000
+      value: 8000
       objectReference: {fileID: 0}
     - target: {fileID: 3580959950437207349, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_audioClip
@@ -34458,6 +34458,10 @@ PrefabInstance:
       value: "Wioska na terenie twojego kr\xF3lestwa zosta\u0142a\nzaatakowana i
         przej\u0119ta przez kr\xF3lestwo\nniebieskich.|\nMusisz odbi\u0107 wiosk\u0119
         i wypch\u0105\u0107 wroga z twojego\nterytorium."
+      objectReference: {fileID: 0}
+    - target: {fileID: 6484370149853546692, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: StartDelay
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6484370149853546692, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: ConserveChance
