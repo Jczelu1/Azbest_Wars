@@ -74,15 +74,16 @@ public class WinConditionUI : MonoBehaviour
             {
                 if (_won)
                 {
-                    InfoBoardUI.Instance.ShowInfo("Wygraliœmy!");
+                    MusicPlayer.Instance.PlayEndMusic();
+                    InfoBoardUI.Instance.ShowInfo("-Wygraliœmy!");
                 }
                 else
                 {
-                    InfoBoardUI.Instance.ShowInfo("Przegraliœmy.");
+                    MusicPlayer.Instance.StopMusic();
+                    InfoBoardUI.Instance.ShowInfo("-Przegraliœmy.");
                 }
             }
             TickSystemGroup.SetTickrate(0);
-            MusicPlayer.Instance.PlayEndMusic();
             StartCoroutine(ShowEndScreenWithDelay());
         }
         if(WinConditionSystem.Ended && _endedHandled)

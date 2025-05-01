@@ -27338,24 +27338,6 @@ MonoBehaviour:
   timePerPause: 1.5
   endTime: 3
   maxLines: 10
-  skipAction:
-    m_Name: Skip
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: f9d9751b-a6de-44f2-ac3e-d4efa1d6b457
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  skipAllAction:
-    m_Name: Skip All
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 1c43440d-aa6e-4c36-a9aa-97f7cfc56079
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
   OnFinishWriting:
     m_PersistentCalls:
       m_Calls:
@@ -44160,24 +44142,6 @@ MonoBehaviour:
   timePerPause: 1.5
   endTime: 3
   maxLines: 10
-  skipAction:
-    m_Name: Skip
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: f9d9751b-a6de-44f2-ac3e-d4efa1d6b457
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  skipAllAction:
-    m_Name: Skip All
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 1c43440d-aa6e-4c36-a9aa-97f7cfc56079
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
   OnFinishWriting:
     m_PersistentCalls:
       m_Calls:

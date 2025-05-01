@@ -11,18 +11,18 @@ public partial class TutorialSystem : SystemBase
     public static float delay = 2;
     public static bool startTutorial = false;
 
-    private string tutorial1 = "Witaj na polu bitwy!";
-    private string tutorial2 = "No nie do koñca, to tylko æwiczenia.";
-    private string tutorial3 = "Ale to praktycznie to samo.";
-    private string tutorial4 = "Rozejrzyj siê.";
-    private string tutorial5 = "Dobrze, teraz zaznacz jednostki.";
-    private string tutorial6 = "Widzisz t¹ strefê na pó³noc od naszej pozycji? Przemieœæ tam jednostki.";
-    private string tutorial7 = "Dziêki strefom zdobywasz azbest, za który mo¿esz produkowaæ jednostki.";
-    private string tutorial8 = "Masz wystarczaj¹co azbestu. Zaznacz obóz i wyprodukuj jednostkê.";
-    private string tutorial9 = "Jednostki mog¹ broniæ lub atakowaæ. Jeœli atakuj¹, bêd¹ przemieszczaæ siê w kierunku wroga. Mo¿esz te¿ zatrzymaæ jednostki.";
-    private string tutorial10 = "W okolicy strefy znajduj¹ siê jednostki wroga, zaznacz swoje jednostki, wydaj rozkaz ataku i je pokonaj.";
-    private string tutorial11 = "Œwietnie, pokona³eœ jednostki wroga.";
-    private string tutorial12 = "Wystarczy ci treningu. Powodzenia.";
+    private string tutorial1 = "-Witaj na polu bitwy!";
+    private string tutorial2 = "-No nie do koñca, to tylko æwiczenia.";
+    private string tutorial3 = "-Ale to praktycznie to samo.";
+    private string tutorial4 = "-Rozejrzyj siê.";
+    private string tutorial5 = "-Dobrze, teraz zaznacz jednostki.";
+    private string tutorial6 = "-Widzisz t¹ strefê na pó³noc od naszej pozycji? Przemieœæ tam jednostki.";
+    private string tutorial7 = "-Dziêki strefom zdobywasz azbest, za który mo¿esz produkowaæ jednostki.";
+    private string tutorial8 = "-Masz wystarczaj¹co azbestu. Zaznacz obóz i wyprodukuj jednostkê.";
+    private string tutorial9 = "-Jednostki mog¹ broniæ lub atakowaæ. Jeœli atakuj¹, bêd¹ przemieszczaæ siê w kierunku wroga. Mo¿esz te¿ zatrzymaæ jednostki.";
+    private string tutorial10 = "-W okolicy strefy znajduj¹ siê jednostki wroga, zaznacz swoje jednostki, wydaj rozkaz ataku i je pokonaj.";
+    private string tutorial11 = "-Œwietnie, pokona³eœ jednostki wroga.";
+    private string tutorial12 = "-Wystarczy ci treningu. Powodzenia.";
 
     protected override void OnCreate()
     {
@@ -174,7 +174,7 @@ public partial class TutorialSystem : SystemBase
                 InfoBoardUI.Instance.ShowInfo(tutorial9);
                 TutorialUI.Instance.tutorialControls[6].SetActive(false);
                 TutorialState++;
-                delay = 14;
+                delay = 10;
                 break;
             case 16:
                 InfoBoardUI.Instance.ShowInfo(tutorial10);
