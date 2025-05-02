@@ -65,9 +65,33 @@ W grze jest 12 typów jednostek
 
 
 ### d. Budynki
+W grze są 3 typy budynków:
+#### Budynki zasobów
+Budynki zasobów produkują określoną wartość azbestu co tick.
+Lista budynków:
+- Dom (2 Azbest/Tick)
+- Młyn (4 Azbest/Tick)
+- Kopalnia (8 Azbest/Tick)
 
+#### Spawnery
+Spawnery produkują jednostki za zasoby. Gracz może ustawić ilość i typ produkowanych jednostek.
+W grze jest tylko jeden Spawner: Obóz 
+
+#### Strefy
+W grze jest tylko jeden typ stref. W strefach mogą znajdować się wyżej wymienione budynki. Strefy są przejmowane przez jednostki. Strefy mają różne ilości wymaganych punktów przejęcia (100-1000). Punkty przejęcia są naliczane co Tick i są równe ilości jednostek przejmującego w strefie odjąć ilość jednostek broniącego, maksymalna wartość to 10 na Tick. Jeśli przejmujący ma mniej jednostek w strefie od broniącego, lub przejmujący ma zero jednostek w strefie, punkty przejęcia są resetowane.
+Strefy stanowią jedyny punkt odniesienia na mapie dla Bota, który wysyła jednostki jedynie do stref.
 
 ### e. Bot
+Bot, lub "AI" (Artificial Idiot) jest dosyć prosty. Bot ma takie same możliwości co gracz, czyli może zaznaczać jednostki, przemieszczać jednostki, zmieniać tryb jednostek, oraz wybierać typ i ilość produkcji jednostek, dodatkowo, bot zdobywa taką samą ilość zasobów z budynków co gracz.
+
+- Bot ma kilka parametrów które różnią się między poziomami.
+- Na początku Bot przechodzi przez wszystkie Spawnery które kontroluje. Jeśli któryś nie produkuje aktualnie jednostek (ma kolejkę = 0), Bot losuje typ jednostek oraz ich liczbę (3 - 6), aż trafi na kombinacje na którą ma wystarczająco zasobów. Bot ma też losową szansę na nie wybranie żadnego typu i włączenie trybu oszczędzania, trwającego ilość Ticków zależną od parametrów. Wyprodukowane jednostki zostaną przypisane do "Formacji". Po wybraniu, Bot losuje czy dalej powiększać formację czy wysłać ją do boju.
+- Potem, bot przechodzi przez wszystkie Formacje. Jeśli formacja została ukończona i nie ma jeszcze przypisanego celu. Bot wybiera cel z listy stref. Wybierany jest najbliższy cel, jednak jest szansa (zależna od parametru) na odrzucenie celu. Szansa na to, czy bot wyśle formację do celu który już kontroluje, też jest paramertem. Bot ustawia jednostkom tryb ataku jeśli wysyła je do strefy której nie kontroluje, w przeciwnym wypadku ma 50% szansy na ustawienie jednostek w tryb obrony.
+- Jeśli formacja przejęła strefę, do której została wysłana, bot może odrazu wysłać jednostki do kolejnej strefy, lub pozostawić je w przejętej strefie. Szansa na to też jest parametrem.
+- Jest też mała szansa, że bot "poprawi" pozycję jednostek, czyli jeszcze raz przemieści je do strefy, oraz jeszcze mniejsza szansa na to, że bot zmieni cel formacji.
+- Na koniec, bot wybiera jednostki z formacji dla której został ustawiony nowy cel i je przemieszcza.
+- Jeśli jednostka bota została zaatakowana, jej tryb jest ustawiany na tryb ataku.
+
 
 ### f. Poziomy
 
