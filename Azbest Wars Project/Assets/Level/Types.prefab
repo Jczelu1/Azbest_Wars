@@ -1438,7 +1438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af4794c09ee7ec4c8f9ae2b4e2d7e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: "Ch\u0142op z \u0141ukiem"
+  Name: "Ch\u0142op z \u0142ukiem"
   description: "HP: 4\nDmg/Tick: 0.33\nZasi\u0119g: 6"
   baseSprite: {fileID: 709344346830458, guid: afc70b3b944550847ad02152c276ec3e, type: 3}
 --- !u!114 &7860673997681007715

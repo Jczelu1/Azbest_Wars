@@ -127,7 +127,7 @@ MonoBehaviour:
   damage: 1
   attackType: 2
   attackCooldown: 0
-  moveCooldown: 0
+  moveCooldown: 1
 --- !u!114 &1033821865170656035
 MonoBehaviour:
   m_ObjectHideFlags: 0
