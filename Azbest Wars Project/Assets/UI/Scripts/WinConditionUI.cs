@@ -83,6 +83,10 @@ public class WinConditionUI : MonoBehaviour
                     InfoBoardUI.Instance.ShowInfo("-Przegraliœmy.");
                 }
             }
+            else
+            {
+                MusicPlayer.Instance.PlayEndMusic();
+            }
             TickSystemGroup.SetTickrate(0);
             StartCoroutine(ShowEndScreenWithDelay());
         }

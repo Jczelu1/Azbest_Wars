@@ -49235,6 +49235,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8821363650886686036, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: eb615be247d12434b92ce51469947054, type: 3}
+    - target: {fileID: 8821363650886686036, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: eb615be247d12434b92ce51469947054, type: 3}
     - target: {fileID: 8960226902698819270, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: doWhatToWin
       value: "Uko\u0144cz tutorial."
