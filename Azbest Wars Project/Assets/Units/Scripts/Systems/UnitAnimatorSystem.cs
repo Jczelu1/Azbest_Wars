@@ -14,7 +14,7 @@ public partial class UnitAnimatorSystem : SystemBase
     }
     protected override void OnUpdate()
     {
-        if (SetupSystem.startDelay != -1) return;
+        if (!SetupSystem.started) return;
         if (!started)
         {
             started = true;

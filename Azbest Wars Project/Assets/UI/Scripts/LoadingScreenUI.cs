@@ -4,7 +4,7 @@ public class LoadingScreenUI : MonoBehaviour
 {
     void Update()
     {
-        if(SetupSystem.startDelay == -1)
+        if(!SetupSystem.started)
         {
             this.gameObject.SetActive(false);
         }

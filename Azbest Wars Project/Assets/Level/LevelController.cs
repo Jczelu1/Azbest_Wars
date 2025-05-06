@@ -38,7 +38,7 @@ public class LevelController : MonoBehaviour
         MapTextureSystem.mapTexture = null;
         MapTextureSystem.baseTexture = null;
         //TickSystemGroup
-        TickSystemGroup.SetTickrate(2);
+        TickSystemGroup.SetTickrate(0);
         //DescriptionController
         DescriptionController.close = false;
         DescriptionController.show = false;
@@ -76,8 +76,9 @@ public class LevelController : MonoBehaviour
         SelectSystem.spawnerSelected = false;
         SelectSystem.selectedEntity = Entity.Null;
         //SetupSystem
-        SetupSystem.startDelay = 6;
-        SetupSystem.pauseOnSetup = true;
+        SetupSystem.delay = 2;
+        SetupSystem.started = false;
+        SetupSystem.unpauseOnSetup = false;
         //SmoothMoveSystem
         SmoothMoveSystem.enabled = true;
         //ArtificialIdiot

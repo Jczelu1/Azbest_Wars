@@ -23,7 +23,7 @@ public partial class WinConditionSystem : SystemBase
     }
     protected override void OnUpdate()
     {
-        if (SetupSystem.startDelay != -1) return;
+        if (!SetupSystem.started) return;
         if(startDelay > 0)
         {
             Debug.Log(startDelay);

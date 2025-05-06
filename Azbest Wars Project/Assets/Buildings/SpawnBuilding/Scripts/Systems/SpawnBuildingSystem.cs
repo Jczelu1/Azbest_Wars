@@ -36,7 +36,7 @@ public partial struct SpawnerSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
-        if (SetupSystem.startDelay != -1) return;
+        if (!SetupSystem.started) return;
         float2 gridOrigin = MainGridScript.Instance.GridOrigin;
         float cellSize = MainGridScript.Instance.CellSize;
         FlatGrid<Entity> occupied = MainGridScript.Instance.Occupied;

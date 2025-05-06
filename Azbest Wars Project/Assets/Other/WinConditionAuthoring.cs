@@ -30,14 +30,14 @@ public class WinConditionAuthoring : MonoBehaviour
             {
                 MusicPlayer.Instance.PlayRandomTheme();
                 TutorialSystem.startTutorial = true;
-                SetupSystem.pauseOnSetup = false;
+                SetupSystem.unpauseOnSetup = true;
             }
         }
         else
         {
             MusicPlayer.Instance.PlayRandomTheme();
             TutorialSystem.startTutorial = true;
-            SetupSystem.pauseOnSetup = false;
+            SetupSystem.unpauseOnSetup = true;
         }
     }
 }

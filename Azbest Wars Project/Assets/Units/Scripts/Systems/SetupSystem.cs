@@ -7,11 +7,11 @@ using UnityEngine;
 
 
 [BurstCompile]
-[UpdateInGroup(typeof(TickSystemGroup))]
 public partial class SetupSystem : SystemBase
 {
-    public static int startDelay = 6;
-    public static bool pauseOnSetup = true;
+    public static float delay = 2;
+    public static bool unpauseOnSetup = false;
+    public static bool started = false;
     protected override void OnCreate()
     {
         RequireForUpdate<GridPosition>();
@@ -19,34 +19,36 @@ public partial class SetupSystem : SystemBase
 
     protected override void OnUpdate()
     {
-        if(startDelay >= 0)
+        if (delay >= 0)
         {
-            if(startDelay == 1)
+            delay -= SystemAPI.Time.DeltaTime;
+        }
+        else if (!started)
+        {
+            Debug.Log("SETUP");
+            started = true;
+            Entities.WithoutBurst().ForEach((Entity entity, ref GridPosition gridPosition, ref LocalToWorld worldTransform) =>
             {
-                Entities.WithoutBurst().ForEach((Entity entity, ref GridPosition gridPosition, ref LocalToWorld worldTransform) =>
+                Vector3 position = worldTransform.Position;
+                position.x -= ((float)gridPosition.Size.x / 2) - .5f;
+                position.y -= ((float)gridPosition.Size.y / 2) - .5f;
+                gridPosition.Position = MainGridScript.Instance.MainGrid.GetXY(position);
+                if (gridPosition.isBuilding)
                 {
-                    Vector3 position = worldTransform.Position;
-                    position.x -= ((float)gridPosition.Size.x / 2) - .5f;
-                    position.y -= ((float)gridPosition.Size.y / 2) - .5f;
-                    gridPosition.Position = MainGridScript.Instance.MainGrid.GetXY(position);
-                    if (gridPosition.isBuilding)
+                    for (int x = 0; x < gridPosition.Size.x; x++)
                     {
-                        for (int x = 0; x < gridPosition.Size.x; x++)
+                        for (int y = 0; y < gridPosition.Size.y; y++)
                         {
-                            for (int y = 0; y < gridPosition.Size.y; y++)
-                            {
-                                MainGridScript.Instance.IsWalkable[new int2(x + gridPosition.Position.x, y + gridPosition.Position.y)] = false;
-                            }
+                            MainGridScript.Instance.IsWalkable[new int2(x + gridPosition.Position.x, y + gridPosition.Position.y)] = false;
                         }
                     }
-                }).Run();
-            }
-            if(startDelay == 0 && pauseOnSetup)
+                }
+            }).Run();
+            if (unpauseOnSetup)
             {
-                TickSystemGroup.SetTickrate(0);
+                TickSystemGroup.SetTickrate(2);
             }
-            startDelay--;
-            Debug.Log(startDelay);
+            TickSystemGroup.TickStep = true;
         }
     }
 }

@@ -50,10 +50,6 @@ public class TextWriter : MonoBehaviour
         if (skipAction.WasPressedThisFrame() || leftClickAction.WasPressedThisFrame()) skip = true;
         if (skipAllAction.WasPressedThisFrame())  skipAll = true;
     }
-    public void NotPauseOnSetup()
-    {
-        SetupSystem.pauseOnSetup = false;
-    }
     public void StartTutorial()
     {
         TutorialSystem.startTutorial = true; ;

@@ -31,7 +31,7 @@ public partial class TutorialSystem : SystemBase
     protected override void OnUpdate()
     {
         if (!IsTutorial) return;
-        if (SetupSystem.startDelay != -1) return;
+        if (!SetupSystem.started) return;
         if (!startTutorial) return;
         if (delay >= 0)
         {

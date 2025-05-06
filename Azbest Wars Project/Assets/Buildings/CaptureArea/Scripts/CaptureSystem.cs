@@ -20,7 +20,7 @@ public partial class CaptureSystem : SystemBase
     public static Entity areaMarkerPrefab;
     protected override void OnUpdate()
     {
-        if (SetupSystem.startDelay != -1) return;
+        if (!SetupSystem.started) return;
         if (!areaMarked)
         {
             

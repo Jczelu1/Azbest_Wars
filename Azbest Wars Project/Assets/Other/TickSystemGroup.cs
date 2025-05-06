@@ -8,9 +8,10 @@ public partial class TickSystemGroup : ComponentSystemGroup
     public static uint Tickrate { get; private set; } = 500;
     const uint BaseTickrate = 1000;
     public static readonly float TimePerTick = .5f;
-    const byte startLevel = 2;
+    const byte startLevel = 0;
     private static bool Pause = false;
     private static bool ChangeTickrate = false;
+    public static bool TickStep = false;
 
     public static void SetTickrate(byte level)
     {
@@ -41,7 +42,7 @@ public partial class TickSystemGroup : ComponentSystemGroup
     }
     protected override void OnUpdate()
     {
-        if (Pause) return;
+        if (Pause && !TickStep) return;
         if (ChangeTickrate)
         {
             ChangeTickrate = false;
@@ -78,6 +79,7 @@ public partial class TickManagerSystem : SystemBase
     protected override void OnUpdate()
     {
         //Debug.Log("tick");
+        TickSystemGroup.TickStep = false;
         SubTickSystemGroup.subTickNumber = 0;
     }
 }

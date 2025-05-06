@@ -20764,22 +20764,6 @@ PrefabInstance:
       propertyPath: m_Tiles.Array.data[1782].second.m_TileObjectToInstantiateIndex
       value: 65535
       objectReference: {fileID: 0}
-    - target: {fileID: 2561208842499828644, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
-      propertyPath: OnFinishWriting.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2561208842499828644, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
-      propertyPath: OnFinishWriting.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
-      value: TextWriter, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 2561208842499828644, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
-      propertyPath: OnFinishWriting.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_StringArgument
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2561208842499828644, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
-      propertyPath: OnFinishWriting.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 2777137989076031455, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: 'startingResources.Array.data[0]'
       value: 8000

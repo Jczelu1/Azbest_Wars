@@ -35,7 +35,7 @@ public partial class ArtificialIdiot : SystemBase
     protected override void OnUpdate()
     {
         if (TutorialSystem.IsTutorial) return;
-        if (SetupSystem.startDelay != -1) return;
+        if (!SetupSystem.started) return;
         if(startDelay > 0)
         {
             startDelay--;
