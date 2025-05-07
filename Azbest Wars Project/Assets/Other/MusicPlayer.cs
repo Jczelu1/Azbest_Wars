@@ -28,7 +28,7 @@ public class MusicPlayer : MonoBehaviour
     [SerializeField]
     float fadeDuration = 2f;
     AudioSource currentTheme;
-    int currentIndex;
+    int currentIndex = -1;
 
     public static int Volume = 50;
     
