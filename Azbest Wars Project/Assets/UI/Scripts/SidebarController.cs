@@ -16,6 +16,9 @@ public class SidebarController : MonoBehaviour
     GameObject SettingsMenu;
 
     [SerializeField]
+    GameObject ControlsMenu;
+
+    [SerializeField]
     GameObject YouSureExit;
     [SerializeField]
     GameObject YouSureRestart;
@@ -94,6 +97,7 @@ public class SidebarController : MonoBehaviour
         YouSureRestart.SetActive(false);
         YouSureExit.SetActive(false);
         SettingsMenu.SetActive(false);
+        ControlsMenu.SetActive(false);
         PauseMenuActive = false;
     }
     public void ShowYouSureExit()

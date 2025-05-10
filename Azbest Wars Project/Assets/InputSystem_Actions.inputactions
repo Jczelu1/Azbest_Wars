@@ -871,7 +871,7 @@
                 {
                     "name": "",
                     "id": "4e00b601-011c-47fe-b294-ae2715997f90",
-                    "path": "<Keyboard>/a",
+                    "path": "<Keyboard>/x",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse;Gamepad;Touch;Joystick;XR",
