@@ -100,7 +100,7 @@ W grze jest tylko jeden typ stref. W strefach mogą znajdować się wyżej wymie
 Strefy stanowią jedyny punkt odniesienia na mapie dla Bota, który wysyła jednostki jedynie do stref.
 
 ### f. Bot
-Bot, lub "AI" (Artificial Idiot) jest dosyć prosty. Bot ma takie same możliwości co gracz, czyli może zaznaczać jednostki, przemieszczać jednostki, zmieniać tryb jednostek, oraz wybierać typ i ilość produkcji jednostek, dodatkowo, bot zdobywa taką samą ilość zasobów z budynków co gracz.
+Bot, lub "AI", jest dosyć prosty. Bot ma takie same możliwości co gracz, czyli może zaznaczać jednostki, przemieszczać jednostki, zmieniać tryb jednostek, oraz wybierać typ i ilość produkcji jednostek, dodatkowo, bot zdobywa taką samą ilość zasobów z budynków co gracz.
 
 - Bot ma kilka parametrów które różnią się między poziomami.
 - Na początku Bot przechodzi przez wszystkie Spawnery które kontroluje. Jeśli któryś nie produkuje aktualnie jednostek (ma kolejkę = 0), Bot losuje typ jednostek oraz ich liczbę (3 - 6), aż trafi na kombinacje na którą ma wystarczająco zasobów. Bot ma też losową szansę na nie wybranie żadnego typu i włączenie trybu oszczędzania, trwającego ilość Ticków zależną od parametrów. Wyprodukowane jednostki zostaną przypisane do "Formacji". Po wybraniu, Bot losuje czy dalej powiększać formację czy wysłać ją do boju.
