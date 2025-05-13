@@ -184,10 +184,12 @@ public partial class TutorialSystem : SystemBase
                 if (SelectSystem.unitsSelected > 0)
                 {
                     TutorialUI.Instance.tutorialControls[7].SetActive(true);
+                    TutorialUI.Instance.tutorialControls[2].SetActive(false);
                 }
                 else
                 {
                     TutorialUI.Instance.tutorialControls[7].SetActive(false);
+                    TutorialUI.Instance.tutorialControls[2].SetActive(true);
                 }
                 int enemyUnits = 0;
                 Entities.ForEach((in UnitStateData unitState, in TeamData team) =>
@@ -202,6 +204,7 @@ public partial class TutorialSystem : SystemBase
                     TutorialProgress++;
                     TutorialState++;
                     delay = 2;
+                    TutorialUI.Instance.tutorialControls[7].SetActive(false);
                     TutorialUI.Instance.tutorialControls[7].SetActive(false);
                 }
                 break;
