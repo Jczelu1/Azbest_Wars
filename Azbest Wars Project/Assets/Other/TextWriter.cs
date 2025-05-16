@@ -26,6 +26,7 @@ public class TextWriter : MonoBehaviour
     private bool skip = false;
     public static bool skipAll = false;
     private bool newLine = false;
+    private bool skipped = false;
 
 
     void Awake()
@@ -79,13 +80,14 @@ public class TextWriter : MonoBehaviour
             if (skip)
             {
                 skip = false;
-                int nextNewline = fullText.IndexOf('\n', index);
+                skipped = true;
+                int nextNewline = fullText.IndexOf('|', index);
                 if (nextNewline >= 0)
                 {
                     textComponent.text += fullText.Substring(index, nextNewline - index + 1).Replace("|", "");
                     index = nextNewline + 1;
-
-                    yield return new WaitForSeconds(timePerCharacter);
+                    newLine = true;
+                    yield return new WaitForSeconds(timePerPause/2);
                     continue;
                 }
                 textComponent.text = fullText.Replace("|", ""); ;
@@ -99,12 +101,20 @@ public class TextWriter : MonoBehaviour
             newLine = false;
             if (c == '|')
             {
-                newLine = true;
-                yield return new WaitForSeconds(timePerPause);
+                if (skipped)
+                {
+                    yield return new WaitForSeconds(timePerCharacter);
+                }
+                else
+                {
+                    newLine = true;
+                    yield return new WaitForSeconds(timePerPause);
+                }
+                
             }
             else
             {
-                
+                skipped = false;
                 textComponent.text += c;
                 yield return new WaitForSeconds(timePerCharacter);
             }
