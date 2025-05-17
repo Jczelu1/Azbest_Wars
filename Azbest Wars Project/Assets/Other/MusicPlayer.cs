@@ -31,9 +31,11 @@ public class MusicPlayer : MonoBehaviour
     int currentIndex = -1;
 
     public static int Volume = 50;
-    
+
     void Start()
     {
+        if (VolumeSlider != null)
+            VolumeSlider.value = Volume;
         if (isMenu)
         {
             menuTheme.Play();
@@ -44,8 +46,6 @@ public class MusicPlayer : MonoBehaviour
             currentTheme = startTheme;
             currentTheme.Play();
         }
-        if(VolumeSlider != null)
-            VolumeSlider.value = Volume;
     }
 
     void Update()

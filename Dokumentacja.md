@@ -6,7 +6,7 @@ Jest to gra PvE, w krórej gracz kontroluje armię jednostek i walczy przeciwko 
 Celem gry jest przejście wszystkich poziomów. Powodzenia.
 
 ## 2. Wymagania Systemowe
-Ta wersja gry jest przeznaczona dla systemu Windows x64
+Ta wersja gry jest przeznaczona dla systemu Windows
 
 ## 3. Instrukcja Kompilacji
 - Otwórz (lub zainstaluj) Unity Hub
