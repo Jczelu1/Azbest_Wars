@@ -7,10 +7,10 @@ using UnityEngine;
 [UpdateAfter(typeof(CaptureAreaSystem))]
 public partial class CaptureSystem : SystemBase
 {
-    string PlayerStartedCapturingMessage = "-Przejmujesz strefê.";
-    string EnemyStartedCapturingMessage = "-Przeciwnik przejmuje strefê.";
-    string PlayerCapturedMessage = "-Zdoby³eœ strefê.";
-    string EnemyCapturedMessage = "-Przeciwnik zdoby³ strefê.";
+    string PlayerStartedCapturingMessage = "-You are taking an area";
+    string EnemyStartedCapturingMessage = "-Enemyh is taking an area.";
+    string PlayerCapturedMessage = "-You took an area.";
+    string EnemyCapturedMessage = "-Enemy took an area.";
     protected override void OnCreate()
     {
         base.OnCreate();

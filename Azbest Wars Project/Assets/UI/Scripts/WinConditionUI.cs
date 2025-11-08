@@ -75,12 +75,12 @@ public class WinConditionUI : MonoBehaviour
                 if (_won)
                 {
                     MusicPlayer.Instance.PlayEndMusic();
-                    InfoBoardUI.Instance.ShowInfo("-Wygraliœmy!");
+                    InfoBoardUI.Instance.ShowInfo("-We won!");
                 }
                 else
                 {
                     MusicPlayer.Instance.StopMusic();
-                    InfoBoardUI.Instance.ShowInfo("-Przegraliœmy.");
+                    InfoBoardUI.Instance.ShowInfo("-We lost.");
                 }
             }
             else

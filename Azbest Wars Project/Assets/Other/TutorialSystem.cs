@@ -11,18 +11,18 @@ public partial class TutorialSystem : SystemBase
     public static float delay = 2;
     public static bool startTutorial = false;
 
-    private string tutorial1 = "-Witaj na polu bitwy!";
-    private string tutorial2 = "-No nie do koñca, to tylko æwiczenia.";
-    private string tutorial3 = "-Ale to praktycznie to samo.";
-    private string tutorial4 = "-Rozejrzyj siê.";
-    private string tutorial5 = "-Dobrze, teraz zaznacz jednostki.";
-    private string tutorial6 = "-Widzisz t¹ strefê na pó³noc od naszej pozycji? Przemieœæ tam jednostki.";
-    private string tutorial7 = "-Dziêki strefom zdobywasz azbest, za który mo¿esz produkowaæ jednostki.";
-    private string tutorial8 = "-Masz wystarczaj¹co azbestu. Zaznacz obóz i wyprodukuj jednostkê.";
-    private string tutorial9 = "-Jednostki mog¹ broniæ lub atakowaæ. Jeœli atakuj¹, bêd¹ przemieszczaæ siê w kierunku wroga. Mo¿esz te¿ zatrzymaæ jednostki.";
-    private string tutorial10 = "-W okolicy strefy znajduj¹ siê jednostki wroga, zaznacz swoje jednostki, wydaj rozkaz ataku i je pokonaj.";
-    private string tutorial11 = "-Œwietnie, pokona³eœ jednostki wroga.";
-    private string tutorial12 = "-Wystarczy ci treningu. Powodzenia.";
+    private string tutorial1 = "-Welcome to the battlefield!";
+    private string tutorial2 = "-Well, not really, it's just a training exercise.";
+    private string tutorial3 = "-But it's practically the same thing.";
+    private string tutorial4 = "-Look around.";
+    private string tutorial5 = "-Okay, now select your units.";
+    private string tutorial6 = "-See that zone north of our position? Move your units there.";
+    private string tutorial7 = "-Thanks to zones, you gain asbestos, which you can use to produce units.";
+    private string tutorial8 = "-You have enough asbestos. Select a camp and produce a unit.";
+    private string tutorial9 = "-Units can defend or attack. If they attack, they will move towards the enemy. You can also stop your units.";
+    private string tutorial10 ="-There are enemy units near the zone. Select your units, issue an attack order, and defeat them.";
+    private string tutorial11 ="-Great, you've defeated the enemy units.";
+    private string tutorial12 = "-Enough training. Good luck.";
 
     protected override void OnCreate()
     {

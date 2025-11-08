@@ -677,7 +677,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Licznik azbestu
+  m_text: Asbestos counter
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -813,7 +813,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Zaznacz jednostki
+  m_text: Select Units
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -1173,7 +1173,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Wyb\xF3r jednostki"
+  m_text: Unit selection
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -1309,7 +1309,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Kliknij obrazek aby zobaczy\u0107 opis jednostki"
+  m_text: Click on the image to see the unit description
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -1964,7 +1964,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Przemie\u015B\u0107 jednostki\nDo strefy"
+  m_text: Move units to area
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -2153,7 +2153,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Zaznacz budynek
+  m_text: Select a building
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -2441,8 +2441,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Przewi\u0144 aby przybli\u017Cy\u0107/oddali\u0107.\nKliknij aby w\u0142\u0105czy\u0107
-    widok ca\u0142ej mapy"
+  m_text: 'Scroll to zoom in/out
+
+    Press to see the whole map'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -2532,6 +2533,14 @@ PrefabInstance:
     - target: {fileID: 190793413086460346, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: isTutorial
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 610997865990910455, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1306658531199187248, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: m_text
+      value: Skip
       objectReference: {fileID: 0}
     - target: {fileID: 1319290292349919316, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_Tiles.Array.size
@@ -30025,6 +30034,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2113622875573854636, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: m_text
+      value: Skip All
+      objectReference: {fileID: 0}
     - target: {fileID: 2561208842499828644, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: leftClickAction.m_Name
       value: Left Click
@@ -30036,6 +30049,10 @@ PrefabInstance:
     - target: {fileID: 3605773585316821996, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_Name
       value: Level
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772810158087234967, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: m_text
+      value: Skip
       objectReference: {fileID: 0}
     - target: {fileID: 3996613114647109267, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_Tiles.Array.size
@@ -49183,9 +49200,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6334161924090326063, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_text
-      value: "Dawno dawno temu, w odleg\u0142ej krainie.|\nIstnia\u0142y dwa kr\xF3lestwa.|\nKt\xF3re
-        walczy\u0142y o azbest.|\nDlaczego?|  Nie wiem.|\nW ka\u017Cdym razie,|\nJeste\u015B
-        nowym dow\xF3dc\u0105 armii \u017C\xF3\u0142tych.|\nA to jest tw\xF3j trening."
+      value: 'A long time ago, in a land far away.|
+
+        There were two kingdoms.|
+
+        That
+        fought over asbestos.|
+
+        Why?| I don''t know.|
+
+        Anyway,|
+
+        You
+        are the new commander of the yellow army.|
+
+        And this is your training.'
       objectReference: {fileID: 0}
     - target: {fileID: 6633700133102319887, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_LocalPosition.x
@@ -49233,8 +49262,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7561005744286985474, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_text
-      value: "Uko\u0144czy\u0142e\u015B trening.|\nJeste\u015B gotowy do dowodzenia
-        armi\u0105.|\nArmia niebieskich szykuje si\u0119 do ataku.|\nPowodzenia."
+      value: 'You have completed your training.|
+
+        You are ready to lead
+        an army.|
+
+        The blue army is preparing an attack.|
+
+        Good
+        luck.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7747908997374749982, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: m_text
+      value: Skip All
       objectReference: {fileID: 0}
     - target: {fileID: 7895317627543756593, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_LocalPosition.x
@@ -49248,6 +49288,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8331591741500167584, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
+      propertyPath: m_text
+      value: 'Time left:'
+      objectReference: {fileID: 0}
     - target: {fileID: 8821363650886686036, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_Resource
       value: 
@@ -49258,7 +49302,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: eb615be247d12434b92ce51469947054, type: 3}
     - target: {fileID: 8960226902698819270, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: doWhatToWin
-      value: "Uko\u0144cz tutorial."
+      value: Complete the tutorial.
       objectReference: {fileID: 0}
     - target: {fileID: 8960226902698819270, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: progressDescription
@@ -49409,7 +49453,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Poruszaj kamer\u0105."
+  m_text: Move the camera
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -49953,7 +49997,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Kolejka produkcji
+  m_text: Production queue
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -50762,11 +50806,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '-Tryb Obrony
+  m_text: '-Defense Mode
 
-    -Tryb Ataku (To ustaw)
+    -Attack Mode (Set this)
 
-    -Zatrzymaj jednostki'
+    -Stop Units'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
