@@ -176,7 +176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Przemieszczanie jednostek.
+  m_text: Move unit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -856,7 +856,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "G\u0142o\u015Bno\u015B\u0107"
+  m_text: Volume
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -2178,7 +2178,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &469468049
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2953,7 +2953,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Wr\xF3\u0107"
+  m_text: Return
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -3589,7 +3589,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Graj
+  m_text: Play
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -4451,7 +4451,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Przybli\u017Cenie, widok ca\u0142ej mapy"
+  m_text: Zoom, Map view
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -4739,7 +4739,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Pauza, pr\u0119dko\u015B\u0107 symulacji"
+  m_text: Pause, simulation speed
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -4875,7 +4875,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Ruszanie kamer\u0105"
+  m_text: Camera movement
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -6419,7 +6419,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Zaznaczanie
+  m_text: Select unit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -7599,7 +7599,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Wr\xF3\u0107"
+  m_text: 'Return
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -9790,14 +9792,23 @@ MonoBehaviour:
   - Map3
   - Map4
   LevelDescriptions:
-  - "Poziom 0: Tutorial\n\nJako nowy dow\xF3dca armii, musisz przej\u015B\u0107 trening."
-  - "Poziom 1: Wioska\n\nWioska zosta\u0142a przej\u0119ta, odbij j\u0105."
-  - 'Poziom 2: Kopalnie
+  - 'Level 0: Tutorial
 
 
-    Zabezpiecz kopalnie azbestu.'
-  - "Poziom 3: Rzeka\n\nUtrzymaj ob\xF3z do przybycia posi\u0142k\xF3w.\n"
-  - "Poziom 4: Zamek\n\nZdob\u0105d\u017A zamek i zako\u0144cz wojn\u0119."
+    As a new army commander, you must undergo training.'
+  - 'Level 1: Village
+
+
+    The village has been taken, retake it.'
+  - 'Level 2: Mines
+
+
+    Hold the camp until reinforcements arrive.'
+  - "Level 3: River\n\nUtrzymaj ob\xF3z do przybycia posi\u0142k\xF3w.\n"
+  - 'Level 4: Castle
+
+
+    Capture the castle and end the war.'
   levelButtons:
   - {fileID: 1046640579}
   - {fileID: 1954743672}
@@ -10683,7 +10694,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tryb obrony, Tryb ataku, Zatrzymaj jednostki
+  m_text: Defence mode, Attack mode, Stop
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -10894,7 +10905,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Zaznacz wiele razy
+  m_text: Multi select
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
