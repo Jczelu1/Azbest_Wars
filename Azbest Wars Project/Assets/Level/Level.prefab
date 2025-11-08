@@ -1121,7 +1121,7 @@ MonoBehaviour:
   m_margin: {x: -0.000016212463, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &389609873279262026
@@ -1887,7 +1887,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Wyjd\u017A"
+  m_text: Exit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -2023,7 +2023,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Koszt:'
+  m_text: 'Cost:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -2091,7 +2091,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &654014388539110186
@@ -2159,7 +2159,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Przybli\u017Cenie, widok ca\u0142ej mapy"
+  m_text: Zoom, whole map view
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -21425,7 +21425,7 @@ MonoBehaviour:
   m_margin: {x: 1.0284672, y: 0, z: 0.94935036, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1666510259850720808
@@ -22430,7 +22430,7 @@ MonoBehaviour:
   m_margin: {x: -6.224262, y: -6.0168457, z: -0.070396416, w: -0.016071329}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &2176612167208200649
@@ -22650,7 +22650,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Pomi\u0144"
+  m_text: Skip
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -23054,7 +23054,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Zaznacz wiele razy
+  m_text: Multi select
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -24239,7 +24239,7 @@ MonoBehaviour:
   m_margin: {x: 0.23131084, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &2870097436477419409
@@ -24748,7 +24748,7 @@ MonoBehaviour:
   m_margin: {x: -6.224262, y: -6.0168457, z: -0.070396416, w: -0.016071329}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &3076936689796145971
@@ -25436,7 +25436,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Pomi\u0144 wszystko"
+  m_text: Skip All
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -26135,7 +26135,7 @@ MonoBehaviour:
   m_margin: {x: -6.224262, y: -6.0168457, z: -0.070396416, w: -0.016071329}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &3574969452275750910
@@ -26307,7 +26307,7 @@ MonoBehaviour:
   m_margin: {x: -6.224262, y: -6.0168457, z: -0.070396416, w: -0.016071329}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &3603688047137015083
@@ -26792,7 +26792,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Czy napewno chcesz wyj\u015B\u0107?\nGra nie zostanie zapisana."
+  m_text: 'Are you sure you want to exit?
+
+    The game will not be saved.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -26928,7 +26930,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Ruszanie kamer\u0105"
+  m_text: Camera movement
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -27683,7 +27685,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tryb obrony, Tryb ataku, Zatrzymaj jednostki
+  m_text: Defense Mode, Attack Mode, Stop Units
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -28156,7 +28158,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Anuluj
+  m_text: Cancel
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -28292,7 +28294,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Pozosta\u0142y czas:"
+  m_text: 'Time left:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -29097,7 +29099,7 @@ MonoBehaviour:
   m_margin: {x: -6.224262, y: -6.0168457, z: -0.070396416, w: -0.016071329}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &4779890227698745229
@@ -29165,7 +29167,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Anuluj
+  m_text: Cancel
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -43589,7 +43591,7 @@ MonoBehaviour:
   m_margin: {x: 2.2095542, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &5136894602453394572
@@ -44338,7 +44340,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3616823532027547970
 RectTransform:
   m_ObjectHideFlags: 0
@@ -45612,7 +45614,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Czy napewno chcesz restartowa\u0107?\nGra nie zostanie zapisana."
+  m_text: 'Are you sure you want to restart?
+
+    The game will not be saved.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -45884,7 +45888,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Wyjd\u017A"
+  m_text: Exit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -46807,7 +46811,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Ustawienia
+  m_text: Settings
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -46943,7 +46947,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Kolejka:'
+  m_text: 'Queue:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -47011,7 +47015,7 @@ MonoBehaviour:
   m_margin: {x: 2.0064611, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &6564538643570143502
@@ -47288,7 +47292,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Przemieszczanie jednostek.
+  m_text: Unim movement
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -47648,7 +47652,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Pauza, pr\u0119dko\u015B\u0107 symulacji"
+  m_text: Pause, Simulation speed
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -47949,7 +47953,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Zaznaczanie
+  m_text: Unit Selection
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -48784,7 +48788,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Pomi\u0144"
+  m_text: Skip
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -49404,7 +49408,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Zwyci\u0119stwo"
+  m_text: Victory
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0c897041b7ed94a4abede200b73bdc26, type: 2}
   m_sharedMaterial: {fileID: -7620525202343175991, guid: 0c897041b7ed94a4abede200b73bdc26, type: 2}
@@ -50320,7 +50324,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Wyjd\u017A"
+  m_text: Exit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -50456,7 +50460,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Czas
+  m_text: Time
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -50524,7 +50528,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &7867238145299095607
@@ -51357,7 +51361,7 @@ MonoBehaviour:
   m_margin: {x: -6.224262, y: -6.0168457, z: -0.070396416, w: -0.016071329}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &8275084732752561500
@@ -52866,7 +52870,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Wyjd\u017A"
+  m_text: Exit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -53002,7 +53006,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Przegrana
+  m_text: Defeat
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0c897041b7ed94a4abede200b73bdc26, type: 2}
   m_sharedMaterial: {fileID: -7620525202343175991, guid: 0c897041b7ed94a4abede200b73bdc26, type: 2}
@@ -53213,7 +53217,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sterowanie
+  m_text: Contorls
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
@@ -53349,7 +53353,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Pomi\u0144 wszystko"
+  m_text: Skip
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}
   m_sharedMaterial: {fileID: 1472577255827303738, guid: 677586cca8d767849bb7c27cb1c3332a, type: 2}

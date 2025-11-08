@@ -37986,9 +37986,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6334161924090326063, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_text
-      value: "Wioska na terenie twojego kr\xF3lestwa zosta\u0142a\nzaatakowana i
-        przej\u0119ta przez kr\xF3lestwo\nniebieskich.|\nMusisz odbi\u0107 wiosk\u0119
-        i wypch\u0105\u0107 wroga z twojego\nterytorium."
+      value: 'A village in your kingdom has been attacked and taken over by the heavenly
+        kingdom.|
+
+        You must retake the village and push the enemy out of
+        your territory.'
       objectReference: {fileID: 0}
     - target: {fileID: 6484370149853546692, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: StartDelay
@@ -38052,9 +38054,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7561005744286985474, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_text
-      value: "Uda\u0142o ci si\u0119 odbi\u0107 wiosk\u0119 i reszt\u0119 teren\xF3w.|\nArmia
-        niebieskich b\u0119dzie musia\u0142a si\u0119\nprzegrupowa\u0107 i uderzy
-        w innym miejscu."
+      value: 'You managed to retake the village and the rest of the area.|
+
+        The
+        blue army will have to regroup and strike elsewhere.'
       objectReference: {fileID: 0}
     - target: {fileID: 7895317627543756593, guid: 9c59d182b6e9e9d4da5e79f911c8fd60, type: 3}
       propertyPath: m_LocalPosition.x
